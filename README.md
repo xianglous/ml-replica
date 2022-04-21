@@ -12,11 +12,11 @@ The perceptron algorithm is the building block of deep learning. It updates on o
 *Pseudocode*
 <pre>
 k=0, w=0
-<b>while<\b> not all correctly classified and k < max step:
-    for i in 1...n:
-        if yi(w.Xi) <= 0: // misclassified
-            w = w + yi*Xi // the Update
+<b>while</b> not all correctly classified and k < max step:
+    <b>for</b> i in 1...n:
+        <b>if</b> yi(w.Xi) <= 0: // misclassified
+            w = w + yi\*Xi // the Update
             k++
-<\pre>
+</pre>
 
 
