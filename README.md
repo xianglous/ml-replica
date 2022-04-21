@@ -1,5 +1,6 @@
 # ml-replica
 Replication of basic &amp; advanced ML models.
+Author: Xianglong Li
 - [ml-replica](#ml-replica)
     - [Linear Clasiifiers](#linear-clasiifiers)
       - [Perceptron](#perceptron)
