@@ -19,7 +19,7 @@ k=0, w=0
 <b>while</b> not all correctly classified <b>and</b> k < max step:
     <b>for</b> i in 1...n:
         <b>if</b> yi(w.Xi) <= 0: // misclassified
-            w = w + yi\*Xi // the Update
+            w = w + yiXi // the Update
             k++
 </pre>
 *Pseudocode* (w/ offset)
@@ -28,7 +28,7 @@ k=0, w=0, b=0
 <b>while</b> not all correctly classified <b>and</b> k < max step:
     <b>for</b> i in 1...n:
         <b>if</b> yi(w.Xi+b) <= 0: // misclassified
-            w = w + yi\*Xi // the Update
+            w = w + yiXi // the Update
             b = b + yi // offset update
             k++
 </pre>
