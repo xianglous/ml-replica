@@ -20,7 +20,7 @@ def perceptron_accuracy(X, y, weights):
     return acc
 
 
-def perceptron_algorithm(X, y, max_iter=10):
+def perceptron_algorithm(X, y, max_iter=1000):
     """
     X: (n, m)
     y: (n, )
@@ -33,9 +33,9 @@ def perceptron_algorithm(X, y, max_iter=10):
         for i in range(n):
             if y[i] * (weights @ X[i].T) <= 0:
                 weights = weights + y[i] * X[i]
+                num_iter += 1
         acc = perceptron_accuracy(X, y, weights)
         # print(f"iter: {num_iter}, acc: {acc}")
-        num_iter += 1
     return weights
 
 
