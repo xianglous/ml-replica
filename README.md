@@ -14,8 +14,8 @@ The perceptron algorithm is the building block of deep learning. It updates on o
 k=0, w=0
 while not all correctly classified and k < max step:
     for i in 1...n:
-        if yi(w•Xi) <= 0: // misclassified
-            w = w + yi\*Xi // the Update
+        if yi(w.Xi) <= 0: // misclassified
+            w = w + yi*Xi // the Update
             k++
 ```
 
