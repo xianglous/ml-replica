@@ -32,5 +32,6 @@ k=0, w=0, b=0
             b = b + yi // offset update
             k++
 </pre>
+*Note*: we can convert the w/ offset version to w/o by transforming `X` to `[1, X]`, then the first resulting weight parameter would be the offset.
 *Code*: [perceptron.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
 
