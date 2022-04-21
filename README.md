@@ -11,7 +11,7 @@ Replication of basic &amp; advanced ML models.<br>
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
 
-#### Perceptron 
+#### [Perceptron](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py) 
 The perceptron algorithm is the building block of deep learning. It updates on one data point at each time and moves in the right direction based on that point. <br><br>
 *Pseudocode*
 <pre>
