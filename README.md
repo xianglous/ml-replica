@@ -35,3 +35,11 @@ k=0, w=0, b=0
 *Note*: we can convert the w/ offset version to w/o by transforming `X` to `[1, X]`, then the first resulting weight parameter would be the offset.
 *Code*: [perceptron.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
 
+### Stochastic Gradient Descent
+Perceptron is nice and simple, but it has an important restriction: it only converges on linearly-separable data. <br>
+To make it work for non-separable data, we need to change the way it approaches the best model. 
+
+#### Loss Functions
+<img src="https://latex.codecogs.com/svg.image?\sum_{i=1}^n{\[\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}\leq&space;0]]}"/>
+But this loss function does not measures the distance between the predicted and actual value. So another loss function we can use instead is the **Hinge Loss**:
+<img src=https://latex.codecogs.com/svg.image?\frac{1}{n}\sum_{i=1}^n{max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}/>
