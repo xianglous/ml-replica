@@ -41,9 +41,9 @@ To make it work for non-separable data, we need to change the way it approaches 
 
 #### Loss Functions
 In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function: <br>
-<img src="https://latex.codecogs.com/svg.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;0]}"/><br>
+<img src="https://latex.codecogs.com/svg.image?\bg{white}{\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;0]}}"/><br>
 A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
 So another loss function we can use instead is the **Hinge Loss** :<br>
-<img src="https://latex.codecogs.com/svg.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}"/><br>
+<img src="https://latex.codecogs.com/svg.image?\bg{white}{\frac{1}{n}\sum_{i=1}^n{max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}}"/><br>
 This loss will penalize any imperfect prediction, so the distances between the predicted and actual values are taken into account.
