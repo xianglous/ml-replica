@@ -45,7 +45,7 @@ To make it work for non-separable data, we need to change the way it approaches 
 
 But this loss function does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
-So another loss function we can use instead is the **Hinge Loss** :<br>
+So another loss function we can use instead is the **Hinge Loss** :
 
 <img src=https://latex.codecogs.com/svg.image?\frac{1}{n}\sum_{i=1}^n{max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}/>
 
