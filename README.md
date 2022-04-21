@@ -23,5 +23,5 @@ k=0, w=0
             k++
 </pre>
 
-*Code*: [`perceptron.py`](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
+*Code*: [perceptron.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
 
