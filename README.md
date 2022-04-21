@@ -4,6 +4,7 @@ Replication of basic &amp; advanced ML models.<br>
 ## Author
 [xianglous](https://github.com/xianglous)
 
+## Table of Content
 - [ml-replica](#ml-replica)
     - [Linear Clasiifiers](#linear-clasiifiers)
       - [Perceptron](#perceptron)
