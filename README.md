@@ -40,10 +40,14 @@ Perceptron is nice and simple, but it has an important restriction: it only conv
 To make it work for non-separable data, we need to change the way it approaches the best model. 
 
 #### Loss Functions
-In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function: <br>
-<img align="center" src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;0]}"/><br>
+In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;0]}"/>
+</p>
 A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
-So another loss function we can use instead is the **Hinge Loss** :<br>
-<img align="center" src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}"/><br>
+So another loss function we can use instead is the **Hinge Loss** :
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}"/>
+</p>
 This loss will penalize any imperfect prediction.
