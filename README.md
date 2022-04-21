@@ -5,9 +5,8 @@ Replication of basic &amp; advanced ML models.<br>
 [xianglous](https://github.com/xianglous)
 
 ## Table of Content
-- [ml-replica](#ml-replica)
-    - [Linear Clasiifiers](#linear-clasiifiers)
-      - [Perceptron](#perceptron)
+- [Linear Clasiifiers](#linear-clasiifiers)
+  - [Perceptron](#perceptron)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
