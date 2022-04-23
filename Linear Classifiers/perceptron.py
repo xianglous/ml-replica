@@ -1,15 +1,6 @@
 import numpy as np
 import pandas as pd
-
-
-def prepare_data(filename, x_cols, y_col, ratio=0.8, random_state=42):
-    df = pd.read_csv(filename)
-    df[y_col] = df[y_col] * 2 - 1 # -1 or 1
-    train_df = df.sample(frac=ratio, random_state=random_state)
-    test_df = df.drop(train_df.index)
-    X_train, y_train = train_df[x_cols].to_numpy(), train_df[y_col].to_numpy()
-    X_test, y_test = test_df[x_cols].to_numpy(), test_df[y_col].to_numpy()
-    return X_train, y_train, X_test, y_test
+from utils import prepare_data, model_str
 
 
 def perceptron_accuracy(X, y, weights):
@@ -39,16 +30,16 @@ def perceptron_algorithm(X, y, max_iter=1000):
     return weights
 
 
-def evaluate(filename, features, y_col, offset_enabled=False, max_iter=1000):
+def evaluate(filename, x_cols, y_col, offset_enabled=False, max_iter=1000):
     print("==========================")
-    X_train, y_train, X_test, y_test = prepare_data(filename, features, y_col)
+    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col)
     if offset_enabled:
         X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
         X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
     weights = perceptron_algorithm(X_train, y_train, max_iter)
     train_acc = perceptron_accuracy(X_train, y_train, weights)
     test_acc = perceptron_accuracy(X_test, y_test, weights)
-    print(f"Model: {y_col} = {'w_0 + ' if offset_enabled else ''}{' + '.join([f'w_{i+1} * {x_cols[i]}' for i in range(len(x_cols))])}")
+    print(model_str(x_cols, y_col, offset_enabled))
     print(f"Train accuracy: {train_acc}")
     print(f"Test accuracy: {test_acc}")
     print("==========================")
