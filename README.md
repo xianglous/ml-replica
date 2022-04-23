@@ -72,6 +72,7 @@ By moving the the weights in the direction of the gradient, we will likely decre
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\bar{w}^{(k&plus;1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X,&space;\bar{y},&space;\bar{w})}"/>
 </p>
 η is the step size, or the learning rate<br><br>
+
 *Pseudocode*
 <pre>
 k=0, w=0
@@ -81,7 +82,8 @@ k=0, w=0
 </pre>
 
 #### Stochastic Gradient Descent
-The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br>
+The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br><br>
+
 *Pseudocode*
 <pre>
 k=0, w=0
