@@ -76,7 +76,11 @@ By moving the the weights in the direction of the gradient, we will likely decre
 <pre>
 k=0, w=0
 <b>while</b> criterion not met:
-    w = w - η▽L // the Gradient Descent
+    grad = 0
+    <b>for<b> i in 1...n:
+        <b>if<b> yi(w.Xi+b)<1:
+            grad = grad + yiXi
+    w = w + η*grad/n // the Descent
     k++
 </pre>
 η is the step size, or the learning rate.
@@ -89,6 +93,9 @@ The problem with gradient descent is that we need to compute the gradient of eac
 k=0, w=0
 <b>while</b> criterion not met:
     <b>for</b> i in 1...n:
-        w = w - η▽h // the Gradient Descent
-        k++
+        <b>if<b> yi(w.Xi+b)<1:
+            w = w + η*yiXi // the Descent
+            k++
 </pre>
+
+*Code*: [sgd.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/sgd.py)
