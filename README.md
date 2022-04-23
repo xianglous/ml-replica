@@ -80,7 +80,7 @@ k=0, w=0
     <b>for</b> i in 1...n:
         <b>if</b> yi(w.Xi)<1:
             g = g - yiXi/n
-    w = w - ηg // the Descent
+    w = w - η*g // the Descent
     k++
 </pre>
 η is the step size, or the learning rate.
