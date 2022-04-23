@@ -45,16 +45,16 @@ def stochastic_gradient_descent(X, y, lr=1e-3, threshold=1e-3, max_iter=1000):
     return weights
 
 
-def evaluate(filename, x_cols, y_col, sgd=True, lr=1e-3, threshold=1e-3, max_iter=1000):
+def evaluate(filename, x_cols, y_col, stochastic=True, lr=1e-3, threshold=1e-3, max_iter=1000):
     print("==========================")
     X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col)
     X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
     X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
-    weights = stochastic_gradient_descent(X_train, y_train, lr, threshold, max_iter) if sgd \
+    weights = stochastic_gradient_descent(X_train, y_train, lr, threshold, max_iter) if stochastic \
         else gradient_descent(X_train, y_train, lr, threshold, max_iter)
     train_acc = perceptron_accuracy(X_train, y_train, weights)
     test_acc = perceptron_accuracy(X_test, y_test, weights)
-    print(model_str(x_cols, y_col, True)+f" using {'S' if sgd else ''}GD")
+    print(model_str(x_cols, y_col, True)+f" using {'S' if stochastic else ''}GD")
     print(f"Train accuracy: {train_acc}")
     print(f"Test accuracy: {test_acc}")
     print("==========================")
