@@ -14,7 +14,7 @@ def gradient_descent(X, y, lr=1e-3, threshold=1e-3, max_iter=1000):
     num_iter = 0
     loss, prev_loss = None, None
     while num_iter < max_iter:
-        conds = (y * (weights @ X.T) < 1)
+        conds = (y * (weights @ X.T) < 1) # condition check
         weights = weights + lr * (conds * X.T) @ (conds * y) / n
         prev_loss = loss
         loss = np.sum(np.maximum(y * (weights @ X.T), 0))
