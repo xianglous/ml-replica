@@ -8,7 +8,7 @@ Replication of basic &amp; advanced ML models.<br>
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
-    - [Loss Function](#loss-function)
+    - [Loss Functions](#loss-functions)
     - [Gradient Descent](#gradient-descent)
     - [Stochastic Gradient Descent](#stochastic-gradient-descent)
 
