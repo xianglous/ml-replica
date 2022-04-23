@@ -78,9 +78,9 @@ k=0, w=0
 <b>while</b> criterion not met:
     g = 0
     <b>for</b> i in 1...n:
-        <b>if</b> yi(w.Xi+b)<1:
-            g = g + yiXi
-    w = w + ηg/n // the Descent
+        <b>if</b> yi(w.Xi)<1:
+            g = g - yiXi/n
+    w = w - ηg // the Descent
     k++
 </pre>
 η is the step size, or the learning rate.
@@ -93,7 +93,7 @@ The problem with gradient descent is that we need to compute the gradient of eac
 k=0, w=0
 <b>while</b> criterion not met:
     <b>for</b> i in 1...n:
-        <b>if</b> yi(w.Xi+b)<1:
+        <b>if</b> yi(w.Xi)<1:
             w = w + η*yiXi // the Descent
             k++
 </pre>
