@@ -58,7 +58,7 @@ And for the whole model, the loss function is defined as:
 This loss will penalize any imperfect prediction.
 
 #### Gradient Descent
-The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient for a single data point is: 
+The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}=\left\{\begin{matrix}-y^{(i)}\bar{x}^{(i)}&\text{if&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\\mathbf{0}&space;&&space;\text{otherwise}\end{matrix}\right."/>
 </p>
@@ -66,19 +66,26 @@ And the gradient of the whole training data is:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{L(X,&space;\bar{y},\bar{w})}=\frac{1}{n}\sum_{i=1}^n{\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}}"/>
 </p>
-By moving the the weights in the direction of the gradient, we will likely decrease the loss of our model. So the "descent" is defined as:
+By moving the the weights in the direction of the gradient, we will likely decrease the loss of our model. So the **Gradient Descent** is defined as:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\bar{w}^{(k&plus;1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X,&space;\bar{y},&space;\bar{w})}"/>
 </p>
-The η is the step size, or the learning rate
+η is the step size, or the learning rate
 *Pseudocode*
 <pre>
 k=0, w=0
-<b>while</b> not all correctly classified <b>and</b> k < max step:
+<b>while</b> criterion not met:
+    w = w + η▽L // the Gradient Descent
+    k++
+</pre>
+
+#### Stochastic Gradient Descent
+The problem with gradient descent is that if we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.
+*Pseudocode*
+<pre>
+k=0, w=0
+<b>while</b> criterion not met:
     <b>for</b> i in 1...n:
-        w = w + η*▽L // the Gradient Descent
+        w = w + η▽h // the Gradient Descent
         k++
 </pre>
-*Pseudocode* (w/ offset)
-<pre>
-
