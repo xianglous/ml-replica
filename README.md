@@ -7,6 +7,10 @@ Replication of basic &amp; advanced ML models.<br>
 ## Table of Contents
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
+  - [Stochastic Gradient Descent](#stochastic-gradient-descent)
+    - [Loss Function](#loss-function)
+    - [Gradient Descent](#gradient-descent)
+    - [Stochastic Gradient Descent](#stochastic-gradient-descent)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
