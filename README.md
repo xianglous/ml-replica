@@ -43,26 +43,26 @@ To make it work for non-separable data, we need to change the way it approaches 
 #### Loss Functions
 In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;0]}"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,&space;\bar{y},&space;\bar{w})=\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;;0]}"/>
 </p>
 A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
 So another loss function we can use instead is the **Hinge Loss**, for each fitted value, the Hingle Loss is:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\bg{white}\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}h(\bar{x}^{(i)},&space;y^{(i)},&space;\bar{w})=\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)"/>
 </p>
 And for the whole model, the loss function is defined as:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\bg{white}\frac{1}{n}\sum_{i=1}^n{\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)}"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,&space;\bar{y},&space;\bar{w})=\frac{1}{n}\sum_{i=1}^n{\max(0,&space;1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})))}"/>
 </p>
 This loss will penalize any imperfect prediction.
 
 #### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. So we always want the loss of our model to decrease. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient of a function to measure the "direction." For Hinge Loss, the gradient for a single data point is: 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\frac{\partial{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}}{\partial{\bar{w}}}=\left\{\begin{matrix}-y^{(i)}\bar{x}^{(i)}&\text{if&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\\mathbf{0}&space;&&space;\text{otherwise}\end{matrix}\right."/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}=\left\{\begin{matrix}-y^{(i)}\bar{x}^{(i)}&\text{if&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\\mathbf{0}&space;&&space;\text{otherwise}\end{matrix}\right."/>
 </p>
 So the gradient of the whole training data is:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\frac{\partial{L(X,&space;\bar{y},\bar{w})}}{\partial{\bar{w}}}=\frac{1}{n}\sum_{i=1}^n{\frac{\partial{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}}{\partial{\bar{w}}}}"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{L(X,&space;\bar{y},\bar{w})}=\frac{1}{n}\sum_{i=1}^n{\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}}"/>
 </p>
