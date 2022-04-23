@@ -79,7 +79,7 @@ k=0, w=0
     w = w + η▽L // the Gradient Descent
     k++
 </pre>
-(η is the step size, or the learning rate.<br>)
+η is the step size, or the learning rate.
 
 #### Stochastic Gradient Descent
 The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br>
