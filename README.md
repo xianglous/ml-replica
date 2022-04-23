@@ -12,7 +12,7 @@ Replication of basic &amp; advanced ML models.<br>
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
 
 #### Perceptron
-The perceptron algorithm is the building block of deep learning. It updates on one data point at each time and moves in the right direction based on that point. <br><br>
+The perceptron algorithm is the building block of deep learning. It updates on one data point at each time and moves in the "right" direction based on that point. <br><br>
 *Pseudocode* (w/o offset)
 <pre>
 k=0, w=0
@@ -70,3 +70,15 @@ By moving the the weights in the direction of the gradient, we will likely decre
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\bar{w}^{(k&plus;1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X,&space;\bar{y},&space;\bar{w})}"/>
 </p>
+The <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\eta"/> is the step size, or the learning rate
+*Pseudocode*
+<pre>
+k=0, w=0
+<b>while</b> not all correctly classified <b>and</b> k < max step:
+    <b>for</b> i in 1...n:
+        w = w + lr*▽L // the Gradient Descent
+        k++
+</pre>
+*Pseudocode* (w/ offset)
+<pre>
+
