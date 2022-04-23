@@ -58,11 +58,11 @@ And for the whole model, the loss function is defined as:
 This loss will penalize any imperfect prediction.
 
 #### Gradient Descent
-The loss function tells us about how **bad** the current model fits the data. So we always want the loss of our model to decrease. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient of a function to measure the "direction." For Hinge Loss, the gradient for a single data point is: 
+The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient for a single data point is: 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}=\left\{\begin{matrix}-y^{(i)}\bar{x}^{(i)}&\text{if&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\\mathbf{0}&space;&&space;\text{otherwise}\end{matrix}\right."/>
 </p>
-So the gradient of the whole training data is:
+And the gradient of the whole training data is:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{L(X,&space;\bar{y},\bar{w})}=\frac{1}{n}\sum_{i=1}^n{\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}}"/>
 </p>
