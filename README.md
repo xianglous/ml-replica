@@ -10,7 +10,7 @@ Replication of basic &amp; advanced ML models.<br>
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
     - [Loss Functions](#loss-functions)
     - [Gradient Descent](#gradient-descent)
-    - [Stochastic Gradient Descent](#stochastic-gradient-descent)
+    - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
