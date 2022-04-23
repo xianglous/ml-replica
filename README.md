@@ -82,7 +82,7 @@ k=0, w=0
 </pre>
 
 #### Stochastic Gradient Descent
-The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br><br>
+The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br>
 
 *Pseudocode*
 <pre>
