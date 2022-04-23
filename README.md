@@ -49,7 +49,7 @@ A problem with this loss function is that it does not measures the distance betw
 
 So another loss function we can use instead is the **Hinge Loss**, for each fitted value, the Hingle Loss is:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}h(\bar{x}^{(i)},&space;y^{(i)},&space;\bar{w})=\max(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}),&space;0)"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}h(\bar{x}^{(i)},&space;y^{(i)},&space;\bar{w})=\max(0,&space;1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))"/>
 </p>
 And for the whole model, the loss function is defined as:
 <p align="center">
