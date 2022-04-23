@@ -77,8 +77,8 @@ By moving the the weights in the direction of the gradient, we will likely decre
 k=0, w=0
 <b>while</b> criterion not met:
     grad = 0
-    <b>for<b> i in 1...n:
-        <b>if<b> yi(w.Xi+b)<1:
+    <b>for</b> i in 1...n:
+        <b>if</b> yi(w.Xi+b)<1:
             grad = grad + yiXi
     w = w + η*grad/n // the Descent
     k++
@@ -93,7 +93,7 @@ The problem with gradient descent is that we need to compute the gradient of eac
 k=0, w=0
 <b>while</b> criterion not met:
     <b>for</b> i in 1...n:
-        <b>if<b> yi(w.Xi+b)<1:
+        <b>if</b> yi(w.Xi+b)<1:
             w = w + η*yiXi // the Descent
             k++
 </pre>
