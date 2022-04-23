@@ -70,13 +70,13 @@ By moving the the weights in the direction of the gradient, we will likely decre
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\bar{w}^{(k&plus;1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X,&space;\bar{y},&space;\bar{w})}"/>
 </p>
-The <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\eta"/> is the step size, or the learning rate
+The η is the step size, or the learning rate
 *Pseudocode*
 <pre>
 k=0, w=0
 <b>while</b> not all correctly classified <b>and</b> k < max step:
     <b>for</b> i in 1...n:
-        w = w + lr*▽L // the Gradient Descent
+        w = w + η*▽L // the Gradient Descent
         k++
 </pre>
 *Pseudocode* (w/ offset)
