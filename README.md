@@ -106,6 +106,7 @@ k=0, w=0
 
 As mentioned before, in linear classification problems we want to find a hyperplane that seperates training data well. But there can be infinitely many hyperplanes that seperate the data, we need to have additional measures to select the best ones. Consider the following example:
 
-:------|------:
+        |
+:------:|:------:
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/non_max_margin.png" width=300/>|<img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/max_margin.png" width=300/>
 
