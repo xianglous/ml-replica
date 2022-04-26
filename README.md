@@ -8,6 +8,7 @@ Replication of basic &amp; advanced ML models.<br>
     - [Loss Functions](#loss-functions)
     - [Gradient Descent](#gradient-descent)
     - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
+  - [Support Vector Machine](#support-vector-machine)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -100,3 +101,7 @@ k=0, w=0
 </pre>
 
 *Code*: [sgd.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/sgd.py)
+
+### Support Vector Machine
+
+As mentioned before, in linear classification problems we want to find a hyperplane that seperates training data well.
