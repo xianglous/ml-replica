@@ -9,6 +9,7 @@ Replication of basic &amp; advanced ML models.<br>
     - [Gradient Descent](#gradient-descent)
     - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
   - [Support Vector Machine](#support-vector-machine)
+    - [Maximum Margin Separator](#maximum-margin-separator)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -114,4 +115,7 @@ Consider the following example:
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/max_margin.png" width=300/>
 </p>
 
+The solid lines on each figure represents a classification boundary that separates the two training classes. They both perfectly classify the training data, but which one is better? We would consider the right one better because it maximizes the "margins" between the separator and the training data.<br>
+So while using the Hinge Loss alone may produce either of the above models, adding a constraint of maximum margin separator will give us the better model.
 
+#### 
