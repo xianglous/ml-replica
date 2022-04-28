@@ -116,6 +116,11 @@ Consider the following example:
 </p>
 
 The solid lines on each figure represents a classification boundary that separates the two training classes. They both perfectly classify the training data, but which one is better? We would consider the right one better because it maximizes the "margins" between the separator and the training data.<br>
-So while using the Hinge Loss alone may produce either of the above models, adding a constraint of maximum margin separator will give us the better model.
+So while using the Hinge Loss alone may produce either of the above models, adding a constraint of maximum margin separator will give us the better model. In another word, we want to maximize the distance from the closest point to the separating hyperplane:
+
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/max_margin_distance.png" width=300/>
+</p>
+
 
 #### 
