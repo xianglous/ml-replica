@@ -116,22 +116,28 @@ Consider the following example:
 </p>
 
 The solid lines on each figure represents a classification boundary that separates the two training classes. They both perfectly classify the training data, but which one is better? We would consider the right one better because it maximizes the "margins" between the separator and the training data.<br>
-So while using the Hinge Loss alone may produce either of the above models, adding a constraint of maximum margin separator will give us the better model. In another word, we want to maximize the distance from the closest point to the separating hyperplane:
+So while using the Hinge Loss may produce either of the above models, maximizing the margin will give us the better model. In another word, we want to maximize the distance from the closest point to the separating hyperplane:
 
 <p align="center">
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/max_margin_distance.png" width=300/>
 </p>
 
-If we look at the two margine lines, they are actually the decision lines <img src="https://latex.codecogs.com/png.image?\bg{white}\inline&space;\dpi{110}\bar{w}\cdot\bar{x}&plus;b=1" /> and <img src="https://latex.codecogs.com/png.image?\bg{white}\inline&space;\dpi{110}\bar{w}\cdot\bar{x}&plus;b=-1" /> beecause they are right on the border of being penalized by the hinge loss. So we can calculate the margin as:
+If we look at the two margine lines, they are actually the decision lines <img src="https://latex.codecogs.com/png.image?\bg{white}\inline&space;\dpi{110}\bar{w}\cdot\bar{x}&plus;b=1" /> and <img src="https://latex.codecogs.com/png.image?\bg{white}\inline&space;\dpi{110}\bar{w}\cdot\bar{x}&plus;b=-1" /> beecause they are right on the border of being penalized. So we can calculate the margin as the distance between the positive margin line and the decision boundary:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}d=\frac{|(1-b)-(-b)|}{\left\|\bar{w}\right\|}=\frac{1}{\left\|\bar{w}\right\|}"/>
 </p>
 
-So our constraint for the model is 
+And we want our model to maximize the margin:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\displaystyle\max_{\bar{w},&space;b}{\frac{1}{\left\|\bar{w}\right\|}}" />
 </p>
 
-#### 
+#### Hard-Margin SVM
+We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
+</p>
+
