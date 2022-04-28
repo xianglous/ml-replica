@@ -165,14 +165,16 @@ This is called the **primal formulation**. And we have **dual formulation**:
 
 The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. Under certain conditions (strong duality), the gap is 0.
 
-For our hard-margin SVM, the Lagrangian function is:
+For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}" />
 </p>
 
-To minimize the objective, we want the gradient of the Lagrangian with respect to `λ` and `w` be zero. So,
-
+To optimize, we need the gradient with respect to `w` to be 0:
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})=\bar{w}-\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}" />
+</p>
 
 #### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
