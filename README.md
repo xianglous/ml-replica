@@ -173,7 +173,7 @@ For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
 To optimize, we need the gradient with respect to `w` to be 0:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})=\bar{w}-\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\bar{w}-\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}\\\bar{w}^*&=\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}\end{align}&space;"/>
 </p>
 
 #### Soft-Margin SVM
