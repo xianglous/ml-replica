@@ -11,6 +11,7 @@ Replication of basic &amp; advanced ML models.<br>
   - [Support Vector Machine](#support-vector-machine)
     - [Maximum Margin Separator](#maximum-margin-separator)
     - [Hard-Margin SVM](#hard-margin-svm)
+    - [Lagrange Duality](#lagrange-duality)
     - [Soft-Margin SVM](#soft-margin-svm)
 
 ### Linear Clasiifiers
@@ -141,6 +142,13 @@ We can now formulate our problem as a constrained optimization. For computation 
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
+</p>
+
+#### Lagrange Duality
+For a constrained optimization problem, we can combine the objective function with the contraints using the Lagrange multipliers. For our hard-margin SVM, the Lagrangian function is:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}" />
 </p>
 
 #### Soft-Margin SVM
