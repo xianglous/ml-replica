@@ -145,7 +145,7 @@ We can now formulate our problem as a constrained optimization. For computation 
 </p>
 
 #### Lagrange Duality
-For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\bar{\theta})}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0,\forall&space;i\in\{1,...,n\}" />, we can combine the objective function with the contraints using the *Lagrange multipliers* <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_1,...,\lambda_n\geq0" />. 
+For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\bar{\theta})}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0,\forall&space;i\in\{1,...,n\}" />, we can combine the objective function with the contraints using the **Lagrange multipliers** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_1,...,\lambda_n\geq0" />. 
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}" />
