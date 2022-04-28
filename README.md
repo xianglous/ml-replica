@@ -157,6 +157,14 @@ From this formation, we observe that if a model satifies all the constraints, <i
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\min_{\bar{\theta}}\max_{\bar{\lambda},\lambda_i\geq0}{L(\bar{\theta},\bar{\lambda}})" />
 </p>
 
+This is called the **primal formulation**. And we have **dual formulation**:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\theta},\bar{\lambda}})" />
+</p>
+
+The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. Under certain conditions (strong duality), the gap is 0.
+
 For our hard-margin SVM, the Lagrangian function is:
 
 <p align="center">
