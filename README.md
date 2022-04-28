@@ -131,7 +131,7 @@ If we look at the two margine lines, they are actually the decision lines <img s
 So our constraint for the model is 
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}"/>
+<img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\displaystyle\max_{\bar{w},&space;b}{\frac{1}{\left\|\bar{w}\right\|}}" />
 </p>
 
 #### 
