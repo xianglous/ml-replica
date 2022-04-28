@@ -151,7 +151,11 @@ For a constrained optimization problem <img src="https://latex.codecogs.com/png.
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}" />
 </p>
 
-From this formation, we observe that if a model satifies all the constraints, <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}f(\bar{\theta})\geq&space;L(\bar{\theta},\bar{\lambda})" />
+From this formation, we observe that if a model satifies all the constraints, <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}f(\bar{\theta})\geq&space;L(\bar{\theta},\bar{\lambda})" />, so minimizing `f` is the same as minimizing the maximum of `L`, that is:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\min_{\bar{\theta}}\max_{\bar{\lambda},\lambda_i\geq0}{L(\bar{\theta},\bar{\lambda}})" />
+</p>
 
 For our hard-margin SVM, the Lagrangian function is:
 
