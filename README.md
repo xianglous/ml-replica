@@ -144,4 +144,8 @@ We can now formulate our problem as a constrained optimization. For computation 
 </p>
 
 #### Soft-Margin SVM
+However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
 
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/soft_margin.png" width=300/>
+</p>
