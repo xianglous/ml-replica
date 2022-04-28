@@ -141,15 +141,24 @@ And we want our model to maximize the margin:
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
 #### Lagrange Duality
-For a constrained optimization problem, we can combine the objective function with the contraints using the Lagrange multipliers. For our hard-margin SVM, the Lagrangian function is:
+For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\theta)}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0" />, we can combine the objective function with the contraints using the Lagrange multipliers. 
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih(\theta)}" />
+</p>
+
+For our hard-margin SVM, the Lagrangian function is:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}" />
 </p>
+
+To minimize the objective, we want the gradient of the Lagrangian with respect to `λ` and `w` be zero. So,
+
 
 #### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
@@ -161,5 +170,5 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification, i.e. a soft-margine, the final model may be more robust. The setup for a soft-margin SVM is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
