@@ -141,7 +141,7 @@ And we want our model to maximize the margin:
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w}}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
 #### Lagrange Duality
@@ -165,15 +165,21 @@ This is called the **primal formulation**. And we have **dual formulation**:
 
 The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. Under certain conditions (strong duality), the gap is 0.
 
-For our hard-margin SVM, the gap is 0. The Lagrangian function is:
+For our hard-margin SVM, the gap is 0. The Lagrangian function is (as always we can combine `w` and `b` by appending a column of 1's to `X`):
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}" />
 </p>
 
-To optimize, we need the gradient with respect to `w` to be 0:
+To optimize, we need the gradient with respect to `w` and `b` to be 0:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\bar{w}-\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}\\\bar{w}^*&=\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}\end{align}&space;"/>
+</p>
+
+Using the dual formation, our problem become:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}})&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\lambda_iy^{(i)}\sum_{j=1}^n{\lambda_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\sum_{i=1}^n{\lambda_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}"/>
 </p>
 
 #### Soft-Margin SVM
@@ -186,5 +192,5 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification, i.e. a soft-margine, the final model may be more robust. The setup for a soft-margin SVM is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
