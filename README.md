@@ -10,6 +10,8 @@ Replication of basic &amp; advanced ML models.<br>
     - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
   - [Support Vector Machine](#support-vector-machine)
     - [Maximum Margin Separator](#maximum-margin-separator)
+    - [Hard-Margin SVM](#hard-margin-svm)
+    - [Soft-Margin SVM](#soft-margin-svm)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -140,4 +142,6 @@ We can now formulate our problem as a constrained optimization. For computation 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
+
+#### Soft-Margin SVM
 
