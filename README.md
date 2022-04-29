@@ -2,7 +2,6 @@
 Replication of basic &amp; advanced ML models.<br>
 
 # Table of Contents
-- [Table of Contents](#table-of-contents)
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
