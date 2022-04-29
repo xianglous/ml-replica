@@ -274,3 +274,9 @@ We can see that only the inner product of the mappings are needed in training or
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\&\text{&space;s.t.&space;}\exists\phi:\mathcal{X}\rightarrow\mathcal{F},\forall&space;\bar{x},\bar{x}'\in\mathcal{X}\Rightarrow&space;K(\bar{x},\bar{x}')=\left<\phi(\bar{x}),\phi(\bar{x}')\right>\end{align}" />
 </p>
+
+Then we can rewrite the objective function as:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}\end{align}" />
+</p>
