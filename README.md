@@ -242,3 +242,13 @@ An observation that can be drawn from this result is that `C` is a hyperparamete
 
 #### Kernel Trick
 Soft-margin SVM seems to provide a decent approach to non-linearly separable data, but it only works well when there are a few "noisy" data. When the boundary between categories is inherently non-linear, it is not reasonable to use a soft-margin SVM. For [example](http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html):
+
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/non-sep.png" width=300/>
+</p>
+
+We cannot find a separating hyperplane, so the SVMs we have discussed will not work as expected. However, if we jump out of the 2-dimensional space, we can find hyperplanes that can separate the data:
+
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/feature-map.png" width=300/>
+</p>
