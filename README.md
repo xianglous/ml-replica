@@ -187,7 +187,7 @@ Using the dual formation, our problem become:
 According to the **complementary slackness** condition for optimum in Lagrange duality problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))=0" />:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\hat{\alpha}_i>0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b)=1&\text{&space;(support&space;vector)}\\\hat{\alpha}_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b)>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\alpha^*_i>0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1&\text{&space;(support&space;vector)}\\&\alpha^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
 </p>
 
 We can also compute the intercept `b` using the support vectors:
