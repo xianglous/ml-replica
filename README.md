@@ -2,17 +2,19 @@
 Replication of basic &amp; advanced ML models.<br>
 
 ## Table of Contents
-- [Linear Clasiifiers](#linear-clasiifiers)
-  - [Perceptron](#perceptron)
-  - [Stochastic Gradient Descent](#stochastic-gradient-descent)
-    - [Loss Functions](#loss-functions)
-    - [Gradient Descent](#gradient-descent)
-    - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
-  - [Support Vector Machine](#support-vector-machine)
-    - [Maximum Margin Separator](#maximum-margin-separator)
-    - [Hard-Margin SVM](#hard-margin-svm)
-    - [Lagrange Duality](#lagrange-duality)
-    - [Soft-Margin SVM](#soft-margin-svm)
+- [ml-replica](#ml-replica)
+  - [Table of Contents](#table-of-contents)
+    - [Linear Clasiifiers](#linear-clasiifiers)
+      - [Perceptron](#perceptron)
+    - [Stochastic Gradient Descent](#stochastic-gradient-descent)
+      - [Loss Functions](#loss-functions)
+      - [Gradient Descent](#gradient-descent)
+      - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
+    - [Support Vector Machine](#support-vector-machine)
+      - [Maximum Margin Separator](#maximum-margin-separator)
+      - [Hard-Margin SVM](#hard-margin-svm)
+      - [Lagrange Duality](#lagrange-duality)
+      - [Soft-Margin SVM](#soft-margin-svm)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -145,22 +147,22 @@ We can now formulate our problem as a constrained optimization. For computation 
 </p>
 
 #### Lagrange Duality
-For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\bar{\theta})}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0,\forall&space;i\in\{1,...,n\}" />, we can combine the objective function with the contraints using the **Lagrange multipliers** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_1,...,\lambda_n\geq0" />. 
+For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\bar{\theta})}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0,\forall&space;i\in\{1,...,n\}" />, we can combine the objective function with the contraints using the **Lagrange multipliers** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha_1,...,\alpha_n\geq0" />. 
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{\theta},\bar{\alpha})=f(\theta)+\sum_{i=1}^n{\alpha_ih_i(\bar{\theta})}" />
 </p>
 
-From this formation, we observe that if a model satifies all the constraints, <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}f(\bar{\theta})\geq&space;L(\bar{\theta},\bar{\lambda})" />, so minimizing `f` is the same as minimizing the maximum of `L`, that is:
+From this formation, we observe that if a model satifies all the constraints, <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}f(\bar{\theta})\geq&space;L(\bar{\theta},\bar{\alpha})" />, so minimizing `f` is the same as minimizing the maximum of `L`, that is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\min_{\bar{\theta}}\max_{\bar{\lambda},\lambda_i\geq0}{L(\bar{\theta},\bar{\lambda}})" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\min_{\bar{\theta}}\max_{\bar{\alpha},\alpha_i\geq0}{L(\bar{\theta},\bar{\alpha}})" />
 </p>
 
 This is called the **primal formulation**. And we have **dual formulation**:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\theta},\bar{\lambda}})" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{\theta}}{L(\bar{\theta},\bar{\alpha}})" />
 </p>
 
 The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. Under certain conditions (strong duality), the gap is 0.
@@ -168,24 +170,24 @@ The dual provides a lower bound for the primal solution, so there is a **duality
 For our hard-margin SVM, the gap is 0. The Lagrangian function is (as always we can combine `w` and `b` by appending a column of 1's to `X`):
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\lambda})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,\bar{y},\bar{w},\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}" />
 </p>
 
 To optimize, we need the gradient with respect to `w` to be 0:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\bar{w}-\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}\\\bar{w}^*&=\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}}\end{align}&space;"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\alpha})&=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}\\\bar{w}^*&=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\end{align}&space;"/>
 </p>
 
 Using the dual formation, our problem become:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}})&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\lambda_iy^{(i)}\sum_{j=1}^n{\lambda_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\sum_{i=1}^n{\lambda_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w}}\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})&plus;\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}"/>
 </p>
 
-According to the **complementary slackness** condition for optimum in Lagrange duality problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))=0" />:
+According to the **complementary slackness** condition for optimum in Lagrange duality problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))=0" />:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\hat{\lambda}_i>0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})=1&\text{&space;(support&space;vector)}\\\hat{\lambda}_i=0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\hat{\alpha}_i>0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})=1&\text{&space;(support&space;vector)}\\\hat{\alpha}_i=0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
 </p>
 
 #### Soft-Margin SVM
