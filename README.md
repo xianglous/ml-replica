@@ -262,3 +262,11 @@ Assume we have a feature mapping <img src="https://latex.codecogs.com/png.image?
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>}}\end{align}" />
 </p>
+
+One problem with this setup is that the computation can be slow because we need to 1) map the features to higher dimension, 2) compute the inner products between each pair of mapped features. Also, note that predicting the response for a new data point is:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>}}\end{align}" />
+</p>
+
+So instead of computing the mapping, we would like to compute the inner products of the mapped features directly.
