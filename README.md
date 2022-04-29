@@ -175,7 +175,7 @@ For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
 To optimize, we need the gradient with respect to `w` and `b` to be 0:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})&=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}\\\nabla_{b}L(\bar{w},b,\bar{\alpha})&=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\\bar{w}^*&=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\\sum_{i=1}^n{\alpha_iy^{(i)}}&=0\end{align}&space;"/>
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\\nabla_{b}L(\bar{w},b,\bar{\alpha})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\end{align}"/>
 </p>
 
 Using the dual formation, our problem become:
