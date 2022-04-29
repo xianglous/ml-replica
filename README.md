@@ -218,7 +218,7 @@ The Lagrangian is:
 We first find the gradient with respect to `w` `b`, and the slack vector:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\begin{bmatrix}&space;C-\alpha_1-\beta_1\\&space;\vdots\\C-\alpha_n-\beta_n\end{bmatrix}=\mathbf{0}\Rightarrow\alpha_i=C-\beta_i&\Rightarrow0\leq\alpha_i\leq&space;C\end{align}&space;" />
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\begin{bmatrix}&space;C-\alpha_1-\beta_1\\&space;\vdots\\C-\alpha_n-\beta_n\end{bmatrix}=\mathbf{0}&\Rightarrow\alpha_i=C-\beta_i\Rightarrow0\leq\alpha_i\leq&space;C\end{align}&space;" />
 </p>
 
 And the dual formulation is:
