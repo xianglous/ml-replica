@@ -260,5 +260,5 @@ The way we convert the lower-dimensional coordinates into higher ones is called 
 Assume we have a feature mapping <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\phi(\cdot):\mathbb{R}^m\rightarrow\mathbb{R}^M" /> and we fit this mapped data using SVM, then the objective function would be:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>}\end{align}" />
 </p>
