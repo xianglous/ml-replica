@@ -165,7 +165,11 @@ This is called the **primal formulation**. And we have **dual formulation**:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\theta},\bar{\lambda}})" />
 </p>
 
-The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. Under certain conditions (strong duality), the gap is 0.
+The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. The gap is 0 if the **Karush–Kuhn–Tucker** (**KKT**) conditions are satisfied:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\nabla_{\bar{\theta}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\\nabla_{\bar{\lambda}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\\lambda_ih_i(\bar{\theta})&=0\\h_i(\bar{\theta})&\leq0\\\lambda_i&\geq0\end{align}" />
+</p>
 
 For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
@@ -173,7 +177,7 @@ For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}" />
 </p>
 
-To optimize, we need the gradient with respect to `w` and `b` to be 0:
+To satisfy the **KKT** conditions, we need the gradient with respect to `w` and `b` to be 0:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\\nabla_{b}L(\bar{w},b,\bar{\alpha})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\end{align}"/>
 </p>
@@ -184,7 +188,7 @@ Using the dual formation, our problem become:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})&plus;\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}"/>
 </p>
 
-According to the **complementary slackness** condition for optimum in Lagrange duality problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha^*_i(1-y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0" />:
+According to the **complementary slackness** condition <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha^*_i(1-y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0" />:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\alpha^*_i>0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1&\text{&space;(support&space;vector)}\\&\alpha^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
@@ -227,7 +231,7 @@ And the dual formulation is:
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}&plus;C\sum_{i=1}^n{\xi_i}&plus;\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}&plus;\sum_{i=1}^n{\beta_i(-\xi_i)}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}&plus;\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}" />
 </p>
 
-We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum is <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha^*_i(1-\xi^*_iy^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0" /> **AND** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\beta^*_i(-\xi^*_i)=0" />, so combining them together:
+We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\alpha^*_i(1-\xi^*_iy^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0" /> **AND** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\beta^*_i(-\xi^*_i)=0" />, so combining them together:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&\alpha^*_i=0\Rightarrow\beta^*_i=C\Rightarrow\xi^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)\geq1-\xi^*_i=1&\text{&space;(non-support&space;vector)}\\&\alpha^*_i=C\Rightarrow\beta^*_i=0\Rightarrow\xi^*_i\geq0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)=1-\xi_i^*\leq1&\text{&space;(support&space;vector&space;off&space;the&space;margin)}\\&0<\alpha_i^*<C\Rightarrow0<\beta^*_i<C\Rightarrow\xi^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)=1-\xi^*_i=1&\text{&space;(support&space;vector&space;on&space;the&space;margin)}\end{align}" />
