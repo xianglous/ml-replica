@@ -182,6 +182,12 @@ Using the dual formation, our problem become:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}L(X,\bar{y},\bar{w},\bar{\lambda})&=\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{w}}\frac{\left\|\bar{w}\right\|^2}{2}&plus;\sum_{i=1}^n{\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\lambda_iy^{(i)}\bar{x}^{(i)}})&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\lambda_iy^{(i)}\sum_{j=1}^n{\lambda_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}&plus;\sum_{i=1}^n{\lambda_i}-\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\&=\max_{\bar{\lambda},\lambda_i\geq0}\sum_{i=1}^n{\lambda_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\lambda_i\lambda_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\end{align}"/>
 </p>
 
+According to the **complementary slackness** condition for optimum in Lagrange duality problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))=0" />:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\hat{\lambda}_i>0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})=1&\text{&space;(support&space;vector)}\\\hat{\lambda}_i=0\Rightarrow&space;y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
+</p>
+
 #### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
 
