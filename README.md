@@ -271,3 +271,6 @@ One problem with this setup is that the computation can be slow because we need 
 
 We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly. Therefore, we introduce the **kernel function** for our mapping:
 
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\&\text{&space;s.t.&space;}\exists\phi:\mathcal{X}\rightarrow\mathcal{F},\forall&space;\bar{x},\bar{x}'\in\mathcal{X}\Rightarrow&space;K(\bar{x},\bar{x}')=\left<\phi(\bar{x}),\phi(\bar{x}')\right>\end{align}" />
+</p>
