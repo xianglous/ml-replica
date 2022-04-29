@@ -269,4 +269,5 @@ One problem with this setup is that the computation can be slow because we need 
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\hat{y}&=\text{sgn}((\bar{w}^*)^\top\phi(\hat{\bar{x}})&plus;b^*)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}&plus;b^*)\\b^*&=y^{(k)}-(\bar{w}^*)^\top\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0\end{align}" />
 </p>
 
-We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly.
+We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly. Therefore, we introduce the **kernel function** for our mapping:
+
