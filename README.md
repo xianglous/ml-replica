@@ -202,3 +202,5 @@ If we use hard-margin SVM, the fitted model will be highly affected by the singl
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
+
+
