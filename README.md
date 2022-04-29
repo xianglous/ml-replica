@@ -200,13 +200,13 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification by adding in the **slack variables**, the final model may be more robust. The setup for a soft-margin SVM is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\nolinebreak\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w},b,\bar{\xi}}{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\&\text{&space;subject&space;to&space;}\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
 The Lagrangian is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle&space;L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;C\sum_{i=1}^n{\xi_i}&plus;\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}&plus;\sum_{i=1}^n{\beta_i(-\xi_i)}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nolinebreak\displaystyle&space;L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;C\sum_{i=1}^n{\xi_i}&plus;\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}&plus;\sum_{i=1}^n{\beta_i(-\xi_i)}" />
 </p>
 
 Now we first find the gradient with respect to `w` `b`, and the slack vector:
