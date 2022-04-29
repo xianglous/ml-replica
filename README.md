@@ -15,6 +15,7 @@ Replication of basic &amp; advanced ML models.<br>
       - [Hard-Margin SVM](#hard-margin-svm)
       - [Lagrange Duality](#lagrange-duality)
       - [Soft-Margin SVM](#soft-margin-svm)
+      - [Kernel Trick](#kernel-trick)
 
 ### Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -165,7 +166,7 @@ This is called the **primal formulation**. And we have **dual formulation**:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\theta},\bar{\lambda}})" />
 </p>
 
-The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. The gap is 0 if the **Karush–Kuhn–Tucker** (**KKT**) conditions are satisfied:
+The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. The gap is 0 if the [**Karush–Kuhn–Tucker**](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions) (**KKT**) conditions are satisfied:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\nabla_{\bar{\theta}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\\nabla_{\bar{\lambda}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\\lambda_ih_i(\bar{\theta})&=0\\h_i(\bar{\theta})&\leq0\\\lambda_i&\geq0\end{align}" />
@@ -236,3 +237,8 @@ We can see that soft-margin SVM has a same dual formulation as the hard-margin S
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&\alpha^*_i=0\Rightarrow\beta^*_i=C\Rightarrow\xi^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)\geq1-\xi^*_i=1&\text{&space;(non-support&space;vector)}\\&\alpha^*_i=C\Rightarrow\beta^*_i=0\Rightarrow\xi^*_i\geq0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)=1-\xi_i^*\leq1&\text{&space;(support&space;vector&space;off&space;the&space;margin)}\\&0<\alpha_i^*<C\Rightarrow0<\beta^*_i<C\Rightarrow\xi^*_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}&plus;b^*)=1-\xi^*_i=1&\text{&space;(support&space;vector&space;on&space;the&space;margin)}\end{align}" />
 </p>
+
+An observation that can be drawn from this result is that `C` is a hyperparameter that controls the "softness" of our SVM model. If `C` is big enough, the soft-margin SVM will become a hard-margin one.
+
+#### Kernel Trick
+Soft-margin SVM seems to provide a decent approach to non-linearly separable data, but it only works well when there are a few "noisy" data. When the boundary between categories is inherently non-linear, it is not reasonable to use a soft-margin SVM. For [example](http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html):
