@@ -190,6 +190,12 @@ According to the **complementary slackness** condition for optimum in Lagrange d
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\hat{\alpha}_i>0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b)=1&\text{&space;(support&space;vector)}\\\hat{\alpha}_i=0\Rightarrow&space;y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b)>1&\text{&space;(non-support&space;vector)}\end{align}&space;" />
 </p>
 
+We can also compute the intercept `b` using the support vectors:
+
+<p align-"center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&\forall\alpha_k>0,y^{(k)}(\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*)=1\Rightarrow\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*=y^{(k)}\\&\Rightarrow&space;b^*=y^{(k)}-\bar{w}^*\cdot\bar{x}^{(k)}\end{align}&space;" />
+</p>
+
 #### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
 
