@@ -192,7 +192,7 @@ According to the **complementary slackness** condition for optimum in Lagrange d
 
 We can also compute the intercept `b` using the support vectors:
 
-<p align-"center">
+<p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&\forall\alpha_k>0,y^{(k)}(\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*)=1\Rightarrow\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*=y^{(k)}\\&\Rightarrow&space;b^*=y^{(k)}-\bar{w}^*\cdot\bar{x}^{(k)}\end{align}&space;" />
 </p>
 
