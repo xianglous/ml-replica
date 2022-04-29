@@ -248,7 +248,7 @@ Soft-margin SVM seems to provide a decent approach to non-linearly separable dat
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/non-sep.png" width=300/>
 </p>
 
-**Feature Mapping**
+##### Feature Mapping
 We cannot find a separating hyperplane, so the SVMs we have discussed will not work as expected. However, if we jump out of the 2-dimensional space, we can find hyperplanes that can separate the data:
 
 <p align="center">
