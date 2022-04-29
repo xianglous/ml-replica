@@ -15,8 +15,8 @@ Replication of basic &amp; advanced ML models.<br>
       - [Hard-Margin SVM](#hard-margin-svm)
       - [Lagrange Duality](#lagrange-duality)
       - [Soft-Margin SVM](#soft-margin-svm)
+      - [Feature Mapping](#feature-mapping)
       - [Kernel Trick](#kernel-trick)
-        - [Feature Mapping](#feature-mapping)
 
 ## Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -241,18 +241,19 @@ We can see that soft-margin SVM has a same dual formulation as the hard-margin S
 
 An observation that can be drawn from this result is that `C` is a hyperparameter that controls the "softness" of our SVM model. If `C` is big enough, the soft-margin SVM will become a hard-margin one.
 
-#### Kernel Trick
+#### Feature Mapping
 Soft-margin SVM seems to provide a decent approach to non-linearly separable data, but it only works well when there are a few "noisy" data. When the boundary between categories is inherently non-linear, it is not reasonable to use a soft-margin SVM. For [example](http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html):
 
 <p align="center">
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/non-sep.png" width=300/>
 </p>
 
-##### Feature Mapping
 We cannot find a separating hyperplane, so the SVMs we have discussed will not work as expected. However, if we jump out of the 2-dimensional space, we can find hyperplanes that can separate the data:
 
 <p align="center">
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/feature-map.png" width=300/>
 </p>
 
-The way we convert the 2D coordinates into 3D ones is called a **feature mapping**
+The way we convert the lower-dimensional coordinates into higher ones is called a **feature mapping**.
+
+#### Kernel Trick
