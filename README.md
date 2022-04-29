@@ -4,23 +4,24 @@ Replication of basic &amp; advanced ML models.<br>
 ## Table of Contents
 - [ml-replica](#ml-replica)
   - [Table of Contents](#table-of-contents)
-    - [Linear Clasiifiers](#linear-clasiifiers)
-      - [Perceptron](#perceptron)
-    - [Stochastic Gradient Descent](#stochastic-gradient-descent)
-      - [Loss Functions](#loss-functions)
-      - [Gradient Descent](#gradient-descent)
-      - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
-    - [Support Vector Machine](#support-vector-machine)
-      - [Maximum Margin Separator](#maximum-margin-separator)
-      - [Hard-Margin SVM](#hard-margin-svm)
-      - [Lagrange Duality](#lagrange-duality)
-      - [Soft-Margin SVM](#soft-margin-svm)
-      - [Kernel Trick](#kernel-trick)
+  - [Linear Clasiifiers](#linear-clasiifiers)
+    - [Perceptron](#perceptron)
+  - [Stochastic Gradient Descent](#stochastic-gradient-descent)
+    - [Loss Functions](#loss-functions)
+    - [Gradient Descent](#gradient-descent)
+    - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
+  - [Support Vector Machine](#support-vector-machine)
+    - [Maximum Margin Separator](#maximum-margin-separator)
+    - [Hard-Margin SVM](#hard-margin-svm)
+    - [Lagrange Duality](#lagrange-duality)
+    - [Soft-Margin SVM](#soft-margin-svm)
+    - [Kernel Trick](#kernel-trick)
+      - [Feature Mapping](#feature-mapping)
 
-### Linear Clasiifiers
+## Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
 
-#### Perceptron
+### Perceptron
 The perceptron algorithm is the building block of deep learning. It updates on one data point at each time and moves in the "right" direction based on that point. <br><br>
 *Pseudocode* (w/o offset)
 <pre>
@@ -45,11 +46,11 @@ k=0, w=0, b=0
 
 *Code*: [perceptron.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
 
-### Stochastic Gradient Descent
+## Stochastic Gradient Descent
 Perceptron is nice and simple, but it has an important restriction: it only converges on linearly-separable data. <br>
 To make it work for non-separable data, we need to change the way it approaches the best model. 
 
-#### Loss Functions
+### Loss Functions
 In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}L(X,&space;\bar{y},&space;\bar{w})=\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq&space;;0]}"/>
@@ -66,7 +67,7 @@ And for the whole model, the loss function is defined as:
 </p>
 This loss will penalize any imperfect prediction.
 
-#### Gradient Descent
+### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nabla_{\bar{w}}{h(\bar{x}^{(i)},&space;y^{(i)},\bar{w})}=\left\{\begin{matrix}-y^{(i)}\bar{x}^{(i)}&\text{if&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\\mathbf{0}&space;&&space;\text{otherwise}\end{matrix}\right."/>
@@ -94,7 +95,7 @@ k=0, w=0
 </pre>
 η is the step size, or the learning rate.
 
-#### Stochastic Gradient Descent
+### Stochastic Gradient Descent
 The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br>
 
 *Pseudocode*
@@ -109,10 +110,10 @@ k=0, w=0
 
 *Code*: [sgd.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/sgd.py)
 
-### Support Vector Machine
+## Support Vector Machine
 As mentioned before, in linear classification problems we want to find a hyperplane that separates training data well. But there can be infinitely many hyperplanes that separate the data, we need to have additional measures to select the best ones. 
 
-#### Maximum Margin Separator
+### Maximum Margin Separator
 Consider the following example:
 
 <p align="center">
@@ -140,14 +141,14 @@ And we want our model to maximize the margin:
 <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\displaystyle\max_{\bar{w},&space;b}{\frac{1}{\left\|\bar{w}\right\|}}" />
 </p>
 
-#### Hard-Margin SVM
+### Hard-Margin SVM
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w}}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
-#### Lagrange Duality
+### Lagrange Duality
 For a constrained optimization problem <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\min_{\bar{\theta}}{f(\bar{\theta})}" /> subject to n constraints <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}h_i(\bar{\theta})\leq0,\forall&space;i\in\{1,...,n\}" />, we can combine the objective function with the contraints using the **Lagrange multipliers** <img src="https://latex.codecogs.com/png.image?\inline&space;\dpi{110}\bg{white}\lambda_1,...,\lambda_n\geq0" />. 
 
 <p align="center">
@@ -201,7 +202,7 @@ We can also compute the intercept `b` using the support vectors:
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&\forall\alpha_k>0,y^{(k)}(\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*)=1\Rightarrow\bar{w}^*\cdot\bar{x}^{(k)}&plus;b^*=y^{(k)}\\&\Rightarrow&space;b^*=y^{(k)}-\bar{w}^*\cdot\bar{x}^{(k)}\end{align}&space;" />
 </p>
 
-#### Soft-Margin SVM
+### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
 
 <p align="center">
@@ -240,14 +241,14 @@ We can see that soft-margin SVM has a same dual formulation as the hard-margin S
 
 An observation that can be drawn from this result is that `C` is a hyperparameter that controls the "softness" of our SVM model. If `C` is big enough, the soft-margin SVM will become a hard-margin one.
 
-#### Kernel Trick
+### Kernel Trick
 Soft-margin SVM seems to provide a decent approach to non-linearly separable data, but it only works well when there are a few "noisy" data. When the boundary between categories is inherently non-linear, it is not reasonable to use a soft-margin SVM. For [example](http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html):
 
 <p align="center">
 <img src="https://github.com/xianglous/ml-replica/blob/main/Illustration/non-sep.png" width=300/>
 </p>
 
-##### Feature Map
+#### Feature Mapping
 We cannot find a separating hyperplane, so the SVMs we have discussed will not work as expected. However, if we jump out of the 2-dimensional space, we can find hyperplanes that can separate the data:
 
 <p align="center">
