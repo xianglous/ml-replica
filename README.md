@@ -206,7 +206,7 @@ If we use hard-margin SVM, the fitted model will be highly affected by the singl
 The Lagrangian is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\nolinebreak\displaystyle&space;L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;C\sum_{i=1}^n{\xi_i}&plus;\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}&plus;\sum_{i=1}^n{\beta_i(-\xi_i)}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}\displaystyle&space;L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}&plus;C\sum_{i=1}^n{\xi_i}&plus;\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}&plus;b))}&plus;\sum_{i=1}^n{\beta_i(-\xi_i)}\end{align}" />
 </p>
 
 Now we first find the gradient with respect to `w` `b`, and the slack vector:
