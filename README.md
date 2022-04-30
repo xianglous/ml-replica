@@ -2,6 +2,10 @@
 Replication of basic &amp; advanced ML models.<br>
 
 # Table of Contents
+<details>
+  <summary>
+  - [Linear Clasiifiers](#linear-clasiifiers)
+  </summary>
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
@@ -15,6 +19,7 @@ Replication of basic &amp; advanced ML models.<br>
     - [Soft-Margin SVM](#soft-margin-svm)
     - [Feature Mapping](#feature-mapping)
     - [Kernel Trick](#kernel-trick)
+</details>
 
 # Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
