@@ -273,8 +273,22 @@ We can see that only the inner product of the mappings are needed in training or
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}&K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\&\text{&space;s.t.&space;}\exists\phi:\mathcal{X}\rightarrow\mathcal{F},\forall&space;\bar{x},\bar{x}'\in\mathcal{X}\Rightarrow&space;K(\bar{x},\bar{x}')=\left<\phi(\bar{x}),\phi(\bar{x}')\right>\end{align}" />
 </p>
 
+According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\text{Let&space;}K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\text{&space;be&space;two&space;valid&space;kernel&space;functions,&space;then&space;}K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\text{&space;is&space;a&space;valid&space;kernel&space;if}\\\begin{align*}K(\bar{x},\bar{x}')&=\alpha&space;K_1(\bar{x},\bar{x}'),\alpha>0\\K(\bar{x},\bar{x}')&=f(\bar{x})K_1(\bar{x},\bar{x}')f(\bar{x}'),\forall&space;f:\mathcal{X}\rightarrow\mathbb{R}\\K(\bar{x},\bar{x}')&=K_1(\bar{x},\bar{x}')&plus;K_2(\bar{x},\bar{x}')\\K(\bar{x},\bar{x}')&=K_1(\bar{x},\bar{x}')K_2(\bar{x},\bar{x}')\\\end{align}" />
+</p>
+
+Here are some common kernel functions:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}K(\bar{u},\bar{v})&=\bar{u}\cdot\bar{v}&\text{&space;(Linear&space;Kernel)}\\K(\bar{u},\bar{v})&=(\bar{u}\cdot\bar{v}&plus;1)^p&\text{&space;(Polynomial&space;Kernel)}\\K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}&\text{&space;(RBF&space;Kernel)}\\\end{align}" />
+</p>
+
 Then we can rewrite the objective function as:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}\end{align}" />
 </p>
+
+
