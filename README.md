@@ -297,7 +297,7 @@ While the linear and polynomial kernels may be obvious (use the addition and pro
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}\\&space;&=e^{-\gamma\left\|\bar{u}\right\|^2-\gamma\left\|\bar{v}\right\|^2+2\gamma\bar{u}\cdot\bar{v}}\\&=e^{-\gamma\left\|\bar{u}\right\|^2}e^{2\gamma\bar{u}\cdot\bar{v}}e^{-\gamma\left\|\bar{v}\right\|^2}\end{align}" />
 </p>
 
-Now this looks like the fourth property above, we would like to prove the middle term a kernel. We will use Taylor expansion:
+Now this looks like the second property above, we would like to prove the middle term a kernel. We will use Taylor expansion:
 
 <p align="center">
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\&=\frac{(2\gamma\bar{u}\cdot\bar{v})^0}{0!}&plus;\frac{(2\gamma\bar{u}\cdot\bar{v})^1}{1!}&plus;...&plus;\frac{(2\gamma\bar{u}\cdot\bar{v})^n}{n!}&plus;...\end{align}" />
