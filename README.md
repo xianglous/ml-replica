@@ -303,6 +303,6 @@ Now this looks like the second property above, we would like to prove the middle
 <img src="https://latex.codecogs.com/png.image?\dpi{100}\bg{white}\begin{align*}K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\&=\frac{(2\gamma\bar{u}\cdot\bar{v})^0}{0!}&plus;\frac{(2\gamma\bar{u}\cdot\bar{v})^1}{1!}&plus;...&plus;\frac{(2\gamma\bar{u}\cdot\bar{v})^n}{n!}&plus;...\end{align}" />
 </p>
 
-So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, which shows the problem of computing feature mapping as mentioned previously.
+So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 
