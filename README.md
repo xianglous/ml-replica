@@ -15,6 +15,7 @@ Replication of basic &amp; advanced ML models.<br>
     - [Soft-Margin SVM](#soft-margin-svm)
     - [Feature Mapping](#feature-mapping)
     - [Kernel Trick](#kernel-trick)
+    - [Sequential Minimal Optimization](#sequential-minimal-optimization)
 
 # Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -305,4 +306,4 @@ Now this looks like the second property above, we would like to prove the middle
 
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
-
+### Sequential Minimal Optimization
