@@ -313,3 +313,13 @@ Now the only thing we need is to pick the multipliers to optimize the objective 
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\max_{\bar{\alpha}}{\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}}\\&\text{subject&space;to&space;}\\&0\leq\alpha_i\leq&space;C,&space;\forall&space;i&space;=&space;1...n,\\&\sum_{i=1}^n{\alpha_i&space;y^{(i)}}=0\end{align}" />
 </p>
 
+The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to optimize only a **pair** of multipliers each time. It works as following:
+*Pseudocode*:
+<pre>
+<b>α</b>=0, b=0
+<b>while</b> not all α satisfies <b>KKT</b> conditions:
+    <b>for</b> αi that violates the <b>KKT</b> conditions:
+          pick αj from the rest α's
+          <b>optimize</b> αi <b>and</b> αj
+          update b
+</pre>
