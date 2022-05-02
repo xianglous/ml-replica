@@ -307,3 +307,9 @@ Now this looks like the second property above, we would like to prove the middle
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 ### Sequential Minimal Optimization
+Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}\\&\text{subject&space;to&space;}\\&0\leq\alpha_i\leq&space;C,&space;\forall&space;i&space;=&space;1...n,\\&\sum_{i=1}^n{\alpha_i&space;y^{(i)}}=0\end{align}" />
+</p>
+
