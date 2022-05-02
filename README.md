@@ -310,6 +310,6 @@ So the middle term is in fact a infinite sum of scalar-multiplied polynomial ker
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}\\&\text{subject&space;to&space;}\\&0\leq\alpha_i\leq&space;C,&space;\forall&space;i&space;=&space;1...n,\\&\sum_{i=1}^n{\alpha_i&space;y^{(i)}}=0\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\max_{\bar{\alpha}}{\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}}\\&\text{subject&space;to&space;}\\&0\leq\alpha_i\leq&space;C,&space;\forall&space;i&space;=&space;1...n,\\&\sum_{i=1}^n{\alpha_i&space;y^{(i)}}=0\end{align}" />
 </p>
 
