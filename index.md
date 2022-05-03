@@ -245,7 +245,7 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha_i^\ast(1-\xi_i^\asty^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\) **AND** \\(\beta_i^\ast(-\xi_i^\ast)=0\\), so combining them together:
+We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha_i^\ast(1-\xi_i^\ast y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\) **AND** \\(\beta_i^\ast(-\xi_i^\ast)=0\\), so combining them together:
 
 $$\begin{aligned}
 &\alpha^\ast_i=0\Rightarrow\beta^\ast_i=C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)\geq1-\xi^\ast_i=1&\text{ (non-support vector)}\\
