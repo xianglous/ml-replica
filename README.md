@@ -349,7 +349,10 @@ If we look at the two sum terms Si, Sj:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}S_i&=\sum_{\substack{0\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})\\\end{align}" />
 </p>
 
-We want to derive the optimized αj, assume we are currently at step k:
+We want to derive the optimized αj by making the derivative to 0, assume we are currently at step k:
 
 <p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\Rightarrow&space;y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta&space;y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\&&plus;\alpha_j^{k}(K(\bar{x}^{(i)},\bar{x}^{(i)})&plus;K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\\Rightarrow\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k&plus;1}}=&(\alpha_j^{k}-\alpha_j^{k&plus;1})(K(\bar{x}^{(i)},\bar{x}^{(i)})&plus;K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\&&plus;y^{(j)}((f^{k}(\bar{x}^{(i)})-y^{(i)})-(f^{k}(\bar{x}^{(j)})-y^{(j)}))=0\\\Rightarrow\alpha_j^{k&plus;1}=&\alpha_j^{k}&plus;\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\text{,&space;where&space;}E_i^k,E_j^k\text{&space;are&space;the&space;residuals,}\\\eta=&K(\bar{x}^{(i)},\bar{x}^{(i)})&plus;K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{align}" />
 </p>
+
+Therefore, we are able to use the residual values and the kernel function to calculate the optimized αj, and thus αi.
