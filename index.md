@@ -44,7 +44,7 @@ To make it work for non-separable data, we need to change the way it approaches 
 ### Loss Functions
 In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
 
-$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq ;0]}$$
+$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq ;0\]}$$
 
 A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
