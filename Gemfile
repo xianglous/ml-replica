@@ -12,3 +12,5 @@ gem "github-pages", "= 226"
 # even though it is included in the original GitHub Pages build infrastructure.
 gem "jekyll-include-cache", "= 0.2.1"
 gem "jekyll-octicons", "~> 14.2"
+gem 'wdm', '>= 0.1.0' if Gem.win_platform?
+gem "webrick", "~> 1.7"
