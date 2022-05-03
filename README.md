@@ -307,7 +307,7 @@ Now this looks like the second property above, we would like to prove the middle
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 ### Sequential Minimal Optimization
-Reference: https://cs229.stanford.edu/lectures-spring2022/master.pdf
+*Reference*: https://cs229.stanford.edu/lectures-spring2022/master.pdf
 
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
