@@ -144,7 +144,7 @@ And we want our model to maximize the margin:
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}&\displaystyle\min_{\bar{w}}{\frac{{\left\|\bar{w}\right\|}^2}{2}},\\&\text{&space;subject&space;to&space;}y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\min_{\bar{w}}&\;\;{\frac{{\left\|\bar{w}\right\|}^2}{2}}\\\text{&space;subject&space;to&space;}&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
 ### Lagrange Duality
@@ -211,7 +211,7 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification by adding in the **slack variables**, the final model may be more robust. The setup for a soft-margin SVM is:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\min_{\bar{w},b,\bar{\xi}}&{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\\text{&space;subject&space;to&space;}&\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\displaystyle\min_{\bar{w},b,\bar{\xi}}&\;\;{\frac{{\left\|\bar{w}\right\|}^2}{2}&plus;C\sum_{i=1}^n{\xi_i}},\\\text{&space;subject&space;to&space;}&\xi_i\geq&space;0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall&space;i\in\{1,...n\}\end{align}" />
 </p>
 
 The Lagrangian is:
