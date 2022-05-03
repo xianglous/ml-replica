@@ -71,7 +71,7 @@ This loss will penalize any imperfect prediction.
 ### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
 
-$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=\left\{
+$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=\left{
     \begin{matrix}
     -y^{(i)}\bar{x}^{(i)}&\text{if }y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\
     \mathbf{0} & \text{otherwise}
@@ -145,11 +145,11 @@ We can now formulate our problem as a constrained optimization. For computation 
 
 $$\begin{align*}
 \displaystyle\min_{\bar{w}}\;\;&{\frac{{\left|\bar{w}\right|}^2}{2}}\\
-\text{ subject to }\;&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall i\in\{1,...n\}
+\text{ subject to }\;&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall i\in{1,...n}
 \end{align}$$
 
 ### Lagrange Duality
-For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints \\(h_i(\bar{\theta})\leq0,\forall i\in\{1,...,n\}\\), we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
+For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints \\(h_i(\bar{\theta})\leq0,\forall i\in{1,...,n}\\), we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
 
 $$L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}$$
 
@@ -216,7 +216,7 @@ If we use hard-margin SVM, the fitted model will be highly affected by the singl
 
 $$\begin{align*}
 \displaystyle\min_{\bar{w},b,\bar{\xi}}\;\;&{\frac{{\left|\bar{w}\right|}^2}{2}+C\sum_{i=1}^n{\xi_i}},\\
-\text{ subject to }\;&\xi_i\geq 0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall i\in\{1,...n\}
+\text{ subject to }\;&\xi_i\geq 0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall i\in{1,...n}
 \end{align}$$
 
 The Lagrangian is:
