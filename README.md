@@ -308,6 +308,7 @@ So the middle term is in fact a infinite sum of scalar-multiplied polynomial ker
 
 ### Sequential Minimal Optimization
 Reference: https://cs229.stanford.edu/lectures-spring2022/master.pdf
+
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
 <p align="center">
