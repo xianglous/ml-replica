@@ -340,5 +340,16 @@ Now we can substitute αj for αi:
 To optimize, we take the partial derivative w/ respect αj:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\alpha_j\\&&plus;\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&&plus;y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}&plus;1=0\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\alpha_j\\&&plus;\zeta&space;y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\&&plus;y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}&plus;1=0\end{align}" />
+</p>
+
+If we look at the two sum terms Si, Sj:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}S_i&=\sum_{\substack{0\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}=\sum_{k=0}^n{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})\\\end{align}" />
+</p>
+
+Their difference is:
+
+<p align="center">
 </p>
