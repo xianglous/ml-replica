@@ -1,6 +1,8 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.css" integrity="sha384-yFRtMMDnQtDRO8rLpMIKrtPCD5jdktao2TV19YiZYWMDkUR5GQZR/NOVTdquEx1j" crossorigin="anonymous">
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/katex.min.js" integrity="sha384-9Nhn55MVVN0/4OFx7EE5kpFBPsEMZxKTCnA+4fqDmg12eCTqGi6+BB2LjY8brQxJ" crossorigin="anonymous"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/katex@0.10.2/dist/contrib/auto-render.min.js" integrity="sha384-kWPLUVMOks5AQFrykwIup5lo0m3iMkkHrD0uJ4H5cjeGihAutqP0yW0J6dpFiVkI" crossorigin="anonymous" onload="renderMathInElement(document.body);"></script>
+---
+---
+
+{% include head.html %}
+<link rel="stylesheet" href="/ml-replica/assets/css/index.css">
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
@@ -191,7 +193,7 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-According to the **complementary slackness** condition \\(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0$\\):
+According to the **complementary slackness** condition \\(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\):
 
 $$\begin{aligned}
 &\alpha^\ast_i>0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1&\text{ (support vector)}\\
@@ -336,7 +338,7 @@ K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 ### Sequential Minimal Optimization
-*Reference*: https://cs229.stanford.edu/lectures-spring2022/master.pdf
+*Reference*: [https://cs229.stanford.edu/lectures-spring2022/master.pdf](https://cs229.stanford.edu/lectures-spring2022/master.pdf)
 
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
@@ -366,13 +368,17 @@ $$\begin{aligned}
 &\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{1\leq q\leq n\atop q\neq i,j}\alpha_qy^{(q)}=\zeta
 \end{aligned}$$
 
-Now we can substitute \\(\alpha_j\\) for αi:
+Now we can substitute \\(\alpha_j\\) for \\(\alpha_i\\):
 
-$$\begin{aligned}
-\alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
-\Rightarrow J(\alpha_j)=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
-&-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\
-\text{where }S_i=&\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
+$$
+\begin{aligned}
+           &&\alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\\
+\Rightarrow&&        \alpha_i=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
+\Rightarrow&&     J(\alpha_j)=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j\\
+           &&                 &-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
+           &&                 &-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
+           &&                 &-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\
+           &&\text{where }S_i=&\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
 \end{aligned}$$
 
 To optimize, we take the partial derivative w/ respect \\(\alpha_j\\):
@@ -385,21 +391,21 @@ $$\begin{aligned}
 If we look at the two sum terms \\(S_i\\), \\(S_j\\):
 
 $$\begin{aligned}
-S_i&=\sum_{0\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
+S_i&=\sum_{0\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}\\
+&=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
-S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
-&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})
+S_j&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})
 \end{aligned}$$
 
 We want to derive the optimized \\(\alpha_j\\) by making the derivative to 0, assume we are currently at step \\(k\\):
 
 $$\begin{aligned}
-\Rightarrow y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
+y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+\alpha_j^{k}(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
-\Rightarrow\frac{\partial J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k+1}}=&(\alpha_j^{k}-\alpha_j^{k+1})(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
+\frac{\partial J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k+1}}=&(\alpha_j^{k}-\alpha_j^{k+1})(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+y^{(j)}((f^{k}(\bar{x}^{(i)})-y^{(i)})-(f^{k}(\bar{x}^{(j)})-y^{(j)}))=0\\
-\Rightarrow\alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\text{, where }E_i^k,E_j^k\text{ are the residuals,}\\
-\eta=&K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
+\alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\\
+\text{where }E_i^k,E_j^k&\text{ are the residuals, }\eta=K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
 
 Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\):

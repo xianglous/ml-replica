@@ -23,7 +23,7 @@ email: pirakaxianglongli@gmail.com
 description: >- # this means to ignore newlines until "baseurl:"
   Replication of basic & advanced ML models.
 domain: "xianglous.github.io"
-baseurl: "/ml-replica/" # the subpath of your site, e.g. /blog
+baseurl: "/ml-replica" # the subpath of your site, e.g. /blog
 url: "http://xianglous.github.io" # the base hostname & protocol for your site, e.g. http://example.com
 github_username: xianglous
 

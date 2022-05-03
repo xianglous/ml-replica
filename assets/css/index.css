@@ -1,0 +1,15 @@
+/* table {
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+} */
+
+td:nth-child(1){
+    text-align: left;
+}
+td:nth-child(2) {
+    text-align: left;
+}
+td:nth-child(3) {
+    text-align: left;
+}
