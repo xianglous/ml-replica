@@ -143,10 +143,10 @@ $$\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}$$
 ### Hard-Margin SVM
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
-$$\begin{align*}
+$$\begin{aligned}
 \displaystyle\min_{\bar{w}}\;\;&{\frac{ {\left\|\bar{w}\right\|}^2}{2}}\\
 \text{ subject to }\;&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall i\in\{1,...n\}
-\end{align}$$
+\end{aligned}$$
 
 ### Lagrange Duality
 For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints \\(h_i(\bar{\theta})\leq0,\forall i\in\{1,...,n\}\\), we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
@@ -163,13 +163,13 @@ $$\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\th
 
 The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. The gap is 0 if the [**Karush–Kuhn–Tucker**](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions) (**KKT**) conditions are satisfied:
 
-$$\begin{align*}
+$$\begin{aligned}
 \nabla_{\bar{\theta}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\
 \nabla_{\bar{\lambda}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\
 \lambda_ih_i(\bar{\theta})&=0\\
 h_i(\bar{\theta})&\leq0\\
 \lambda_i&\geq0
-\end{align}$$
+\end{aligned}$$
 
 For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
@@ -177,33 +177,33 @@ $$L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alp
 
 To satisfy the **KKT** conditions, we need the gradient with respect to \\(\bar{w}\\) and \\(b\\) to be 0:
 
-$$\begin{align*}
+$$\begin{aligned}
 \displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
 \nabla_{b}L(\bar{w},b,\bar{\alpha})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0
-\end{align}$$
+\end{aligned}$$
 
 Using the dual formation, our problem become:
 
-$$\begin{align*}
+$$\begin{aligned}
 \max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
-\end{align}$$
+\end{aligned}$$
 
 According to the **complementary slackness** condition \\(\alpha^*_i(1-y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0\\):
 
-$$\begin{align*}
+$$\begin{aligned}
 &\alpha^*_i>0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1&\text{ (support vector)}\\
 &\alpha^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)>1&\text{ (non-support vector)}
-\end{align}$$
+\end{aligned}$$
 
 We can also compute the intercept \\(b\\) using the support vectors:
 
-$$\begin{align*}
+$$\begin{aligned}
 &\forall\alpha_k>0,y^{(k)}(\bar{w}^*\cdot\bar{x}^{(k)}+b^*)=1\Rightarrow\bar{w}^*\cdot\bar{x}^{(k)}+b^*=y^{(k)}\\
 &\Rightarrow b^*=y^{(k)}-\bar{w}^*\cdot\bar{x}^{(k)}
-\end{align}$$
+\end{aligned}$$
 
 ### Soft-Margin SVM
 However the hard-margin SVM above has limitations. If the data is not linearly separable, the SVM algorithm may not work. Consider the following example:
@@ -214,20 +214,20 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification by adding in the **slack variables**, the final model may be more robust. The setup for a soft-margin SVM is:
 
-$$\begin{align*}
+$$\begin{aligned}
 \displaystyle\min_{\bar{w},b,\bar{\xi}}\;\;&{\frac{ {\left\|\bar{w}\right\|}^2}{2}+C\sum_{i=1}^n{\xi_i}},\\
 \text{ subject to }\;&\xi_i\geq 0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall i\in\{1,...n\}
-\end{align}$$
+\end{aligned}$$
 
 The Lagrangian is:
 
-$$\begin{align*}
+$$\begin{aligned}
 \displaystyle L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}
-\end{align}$$
+\end{aligned}$$
 
 We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), and the slack vector:
 
-$$\begin{align*}
+$$\begin{aligned}
 \nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
 \nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\
 \nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=
@@ -236,22 +236,22 @@ C-\alpha_1-\beta_1\\
 \vdots\\
 C-\alpha_n-\beta_n
 \end{bmatrix}=\mathbf{0}&\Rightarrow\alpha_i=C-\beta_i\Rightarrow0\leq\alpha_i\leq C
-\end{align}$$
+\end{aligned}$$
 
 And the dual formulation is:
 
-$$\begin{align*}
+$$\begin{aligned}
 \max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
-\end{align}$$
+\end{aligned}$$
 
 We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha^*_i(1-\xi^*_iy^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0\\) **AND** \\(\beta^*_i(-\xi^*_i)=0\\), so combining them together:
 
-$$\begin{align*}
+$$\begin{aligned}
 &\alpha^*_i=0\Rightarrow\beta^*_i=C\Rightarrow\xi^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)\geq1-\xi^*_i=1&\text{ (non-support vector)}\\
 &\alpha^*_i=C\Rightarrow\beta^*_i=0\Rightarrow\xi^*_i\geq0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1-\xi_i^*\leq1&\text{ (support vector off the margin)}\\
 &0<\alpha_i^*<C\Rightarrow0<\beta^*_i<C\Rightarrow\xi^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1-\xi^*_i=1&\text{ (support vector on the margin)}
-\end{align}$$
+\end{aligned}$$
 
 An observation that can be drawn from this result is that \\(C\\) is a hyperparameter that controls the "softness" of our SVM model. If \\(C\\) is big enough, the soft-margin SVM will become a hard-margin one.
 
@@ -273,33 +273,33 @@ The way we convert the lower-dimensional coordinates into higher ones is called 
 ### Kernel Trick
 Assume we have a feature mapping \\(\phi(\cdot):\mathcal{X}\rightarrow\mathcal{F}\\) and we fit this mapped data using SVM, then the objective function would be:
 
-$$\begin{align*}
+$$\begin{aligned}
 J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>}}
-\end{align}$$
+\end{aligned}$$
 
 One problem with this setup is that the computation can be slow because we need to 1) map the features to higher dimension, 2) compute the inner products between each pair of mapped features. Also, note that predicting the response for a new data point is:
 
-$$\begin{align*}
+$$\begin{aligned}
 \hat{y}&=\text{sgn}((\bar{w}^*)^\top\phi(\hat{\bar{x}})+b^*)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}+b^*)\\
 b^*&=y^{(k)}-(\bar{w}^*)^\top\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0
-\end{align}$$
+\end{aligned}$$
 
 We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly. Therefore, we introduce the **kernel function**:
 
-$$\begin{align*}
+$$\begin{aligned}
 &K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\
 &\text{ s.t. }\exists\phi:\mathcal{X}\rightarrow\mathcal{F},\forall \bar{x},\bar{x}'\in\mathcal{X}\Rightarrow K(\bar{x},\bar{x}')=\left<\phi(\bar{x}),\phi(\bar{x}')\right>
-\end{align}$$
+\end{aligned}$$
 
 Then we can rewrite the objective function as:
 
-$$\begin{align*}
+$$\begin{aligned}
 J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}
-\end{align}$$
+\end{aligned}$$
 
 According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html#Necessary-and-sufficient-conditions), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions, let \\(K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\) be two valid kernels of feature mapping \\(\phi_1:\mathcal{X}\rightarrow\mathbb{R}^{M_1},\phi_2:\mathcal{X}\rightarrow\mathbb{R}^{M_2}\\), then the following kernels and feature maps \\(K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R},\phi:\mathcal{X}\rightarrow\mathcal{F}\\) are valid:
 
-$$\begin{align*}
+$$\begin{aligned}
 K(\bar{u},\bar{v})&=\alpha K_1(\bar{u},\bar{v}),\alpha>0,\\
 \phi(\bar{x})&=\alpha\phi_1(\bar{x})\\
 K(\bar{u},\bar{v})&=f(\bar{u})K_1(\bar{u},\bar{v})f(\bar{v}),\forall f:\mathcal{X}\rightarrow\mathbb{R},\\
@@ -308,30 +308,30 @@ K(\bar{u},\bar{v})&=K_1(\bar{u},\bar{v})+K_2(\bar{u},\bar{v}),\phi(\bar{x})\in\m
 \phi(\bar{x})&=\[\phi_1(\bar{x})^{(1)},...,\phi_1(\bar{x})^{(M_1)},\phi_2(\bar{x})^{(1)},...,\phi_2(\bar{x})^{(M_2)}\]^\top\\
 K(\bar{u},\bar{v})&=K_1(\bar{u},\bar{v})K_2(\bar{u},\bar{v}),\phi(\bar{x})\in\mathbb{R}^{M_1M_2},\\
 \phi(\bar{x})&=\[\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(1)},\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(2)},...,\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2-1)},\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2)}\]^\top
-\end{align}$$
+\end{aligned}$$
 
 Using these properties, we can come up with some useful kernel functions:
 
-$$\begin{align*}
+$$\begin{aligned}
 K(\bar{u},\bar{v})&=\bar{u}\cdot\bar{v}&\text{ (Linear Kernel)}\\
 K(\bar{u},\bar{v})&=(\bar{u}\cdot\bar{v}+1)^p&\text{ (Polynomial Kernel)}\\
 K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}&\text{ (RBF Kernel)}\\
-\end{align}$$
+\end{aligned}$$
 
 While the linear and polynomial kernels may be obvious (use the addition and product rule), the RBF kernel can be hard to interpret:
 
-$$\begin{align*}
+$$\begin{aligned}
 K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}\\
 &=e^{-\gamma\left\|\bar{u}\right\|^2-\gamma\left\|\bar{v}\right\|^2+2\gamma\bar{u}\cdot\bar{v}}\\
 &=e^{-\gamma\left\|\bar{u}\right\|^2}e^{2\gamma\bar{u}\cdot\bar{v}}e^{-\gamma\left\|\bar{v}\right\|^2}
-\end{align}$$
+\end{aligned}$$
 
 Now this looks like the second property above, we would like to prove the middle term a kernel. We will use Taylor expansion:
 
-$$\begin{align*}
+$$\begin{aligned}
 K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\
 &=\frac{(2\gamma\bar{u}\cdot\bar{v})^0}{0!}+\frac{(2\gamma\bar{u}\cdot\bar{v})^1}{1!}+...+\frac{(2\gamma\bar{u}\cdot\bar{v})^n}{n!}+...
-\end{align}$$
+\end{aligned}$$
 
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
@@ -340,11 +340,11 @@ So the middle term is in fact a infinite sum of scalar-multiplied polynomial ker
 
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
-$$\begin{align*}
+$$\begin{aligned}
 \max_{\bar{\alpha}}\;\;&{\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}}\\
 \text{subject to }\;&0\leq\alpha_i\leq C, \forall i = 1...n,\\
 &\sum_{i=1}^n{\alpha_i y^{(i)}}=0
-\end{align}$$
+\end{aligned}$$
 
 The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to optimize only a **pair** of multipliers each time. It works as following:
 
@@ -359,47 +359,47 @@ The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to o
 
 The optimization for each pair can be represented as:
 
-$$\begin{align*}
+$$\begin{aligned}
 \max_{\alpha_i,\alpha_j}\;\;&\alpha_i+\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &-\alpha_iy^{(i)}\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}-\delta\\
 \text{subject to}\;\;&0\leq\alpha_i,\alpha_j\leq C\\
 &\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}\alpha_qy^{(q)}=\zeta
-\end{align}$$
+\end{aligned}$$
 
 Now we can substitute \\(\alpha_j\\) for αi:
 
-$$\begin{align*}
+$$\begin{aligned}
 \alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
 \Rightarrow J(\alpha_j)=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
 &-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\
 \text{where }S_i=&\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
-\end{align}$$
+\end{aligned}$$
 
 To optimize, we take the partial derivative w/ respect \\(\alpha_j\\):
 
-$$\begin{align*}
+$$\begin{aligned}
 \frac{\partial J(\alpha_j)}{\partial\alpha_j}=&\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
 &+\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
-&+y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}+1\end{align}$$
+&+y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}+1\end{aligned}$$
 
 If we look at the two sum terms \\(S_i\\), \\(S_j\\):
 
-$$\begin{align*}
+$$\begin{aligned}
 S_i&=\sum_{\substack{0\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})
-\end{align}$$
+\end{aligned}$$
 
 We want to derive the optimized \\(\alpha_j\\) by making the derivative to 0, assume we are currently at step \\(k\\):
 
-$$\begin{align*}
+$$\begin{aligned}
 \Rightarrow y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+\alpha_j^{k}(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 \Rightarrow\frac{\partial J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k+1}}=&(\alpha_j^{k}-\alpha_j^{k+1})(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+y^{(j)}((f^{k}(\bar{x}^{(i)})-y^{(i)})-(f^{k}(\bar{x}^{(j)})-y^{(j)}))=0\\
 \Rightarrow\alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\text{, where }E_i^k,E_j^k\text{ are the residuals,}\\
-\eta=&K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{align}$$
+\eta=&K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
 
 Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\):
