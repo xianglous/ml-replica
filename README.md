@@ -328,28 +328,28 @@ The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to o
 
 The optimization for each pair can be represented as:
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\alpha_i,\alpha_j}\;\;&\alpha_i&plus;\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&-\alpha_iy^{(i)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(j)})}-\delta\\\text{subject&space;to}\;\;&0\leq\alpha_i,\alpha_j\leq&space;C\\&\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=-\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}\alpha_ky^{(k)}=\zeta\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\alpha_i,\alpha_j}\;\;&\alpha_i&plus;\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&-\alpha_iy^{(i)}\sum_{\substack{1\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}-\delta\\\text{subject&space;to}\;\;&0\leq\alpha_i,\alpha_j\leq&space;C\\&\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=-\sum_{\substack{1\leq&space;q\leq&space;n\\q\neq&space;i,j}}\alpha_qy^{(q)}=\zeta\end{align}" />
 </p>
 
 Now we can substitute αj for αi:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}\\\Rightarrow&space;J(\alpha_j)=&\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}&plus;\alpha_j-\frac{1}{2}(\zeta-\alpha_j&space;y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\&-(\zeta-\alpha_j&space;y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\\text{where&space;}S_i=&\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(j)})}\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}\\\Rightarrow&space;J(\alpha_j)=&\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}&plus;\alpha_j-\frac{1}{2}(\zeta-\alpha_j&space;y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\&-(\zeta-\alpha_j&space;y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\\text{where&space;}S_i=&\sum_{\substack{1\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}\end{align}" />
 </p>
 
 To optimize, we take the partial derivative w/ respect αj:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\&&plus;\zeta&space;y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\&&plus;y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}&plus;1=0\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\&&plus;\zeta&space;y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\&&plus;y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}&plus;1\end{align}" />
 </p>
 
 If we look at the two sum terms Si, Sj:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}S_i&=\sum_{\substack{0\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}=\sum_{k=0}^n{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})\\\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}S_i&=\sum_{\substack{0\leq&space;q\leq&space;n\\q\neq&space;i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})\\\end{align}" />
 </p>
 
-Their difference is:
+We want to derive the optimized αj, assume we are currently at step k:
 
 <p align="center">
 </p>
