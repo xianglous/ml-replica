@@ -1,7 +1,16 @@
+---
+# Feel free to add content and custom Front Matter to this file.
+# To modify the layout, see https://jekyllrb.com/docs/themes/#overriding-theme-defaults
+
+layout: home
+---
+
 # ml-replica
 Replication of basic &amp; advanced ML models.<br>
 
 # Table of Contents
+- [ml-replica](#ml-replica)
+- [Table of Contents](#table-of-contents)
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
