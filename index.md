@@ -153,7 +153,7 @@ For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\
 
 $$L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}$$
 
-From this formation, we observe that if a model satifies all the constraints, $f(\bar{\theta})\geq L(\bar{\theta},\bar{\lambda})$, so minimizing \\(f\\) is the same as minimizing the maximum of \\(L\\), that is:
+From this formation, we observe that if a model satifies all the constraints, \\(f(\bar{\theta})\geq L(\bar{\theta},\bar{\lambda})\\), so minimizing \\(f\\) is the same as minimizing the maximum of \\(L\\), that is:
 
 $$\displaystyle\min_{\bar{\theta}}\max_{\bar{\lambda},\lambda_i\geq0}{L(\bar{\theta},\bar{\lambda}})$$
 
