@@ -71,7 +71,7 @@ This loss will penalize any imperfect prediction.
 ### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
 
-$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=\left{
+$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=\left\{
     \begin{matrix}
     -y^{(i)}\bar{x}^{(i)}&\text{if }y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\
     \mathbf{0} & \text{otherwise}
@@ -134,22 +134,22 @@ So while using the Hinge Loss may produce either of the above models, maximizing
 
 If we look at the two margine lines, they are actually the decision lines \\(\bar{w}\cdot\bar{x}+b=1\\) and \\(\bar{w}\cdot\bar{x}+b=-1\\) beecause they are right on the border of being penalized. So we can calculate the margin as the distance between the positive margin line and the decision boundary:
 
-$$d=\frac{|(1-b)-(-b)|}{||\bar{w}||}=\frac{1}{||\bar{w}||}$$
+$$d=\frac{|(1-b)-(-b)|}{\left\|\bar{w}\right\|}=\frac{1}{\left\|\bar{w}\right\|}$$
 
 And we want our model to maximize the margin:
 
-$$\displaystyle\max_{\bar{w}, b}{\frac{1}{||\bar{w}||}}$$
+$$\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}$$
 
 ### Hard-Margin SVM
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
 
 $$\begin{align*}
-\displaystyle\min_{\bar{w}}\;\;&{\frac{{||\bar{w}||}^2}{2}}\\
-\text{ subject to }\;&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall i\in{1,...n}
+\displaystyle\min_{\bar{w}}\;\;&{\frac{ {\left\|\bar{w}\right\|}^2}{2}}\\
+\text{ subject to }\;&y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1,\forall i\in\{1,...n\}
 \end{align}$$
 
 ### Lagrange Duality
-For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints \\(h_i(\bar{\theta})\leq0,\forall i\in{1,...,n}\\), we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
+For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints \\(h_i(\bar{\theta})\leq0,\forall i\in\{1,...,n\}\\), we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
 
 $$L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}$$
 
@@ -173,7 +173,7 @@ h_i(\bar{\theta})&\leq0\\
 
 For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
-$$L(\bar{w},b,\bar{\alpha})=\frac{||\bar{w}||^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}$$
+$$L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}$$
 
 To satisfy the **KKT** conditions, we need the gradient with respect to \\(\bar{w}\\) and \\(b\\) to be 0:
 
@@ -185,7 +185,7 @@ $$\begin{align*}
 Using the dual formation, our problem become:
 
 $$\begin{align*}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{||\bar{w}||^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
@@ -215,14 +215,14 @@ However the hard-margin SVM above has limitations. If the data is not linearly s
 If we use hard-margin SVM, the fitted model will be highly affected by the single outlier red point. But if we allow some misclassification by adding in the **slack variables**, the final model may be more robust. The setup for a soft-margin SVM is:
 
 $$\begin{align*}
-\displaystyle\min_{\bar{w},b,\bar{\xi}}\;\;&{\frac{{||\bar{w}||}^2}{2}+C\sum_{i=1}^n{\xi_i}},\\
-\text{ subject to }\;&\xi_i\geq 0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall i\in{1,...n}
+\displaystyle\min_{\bar{w},b,\bar{\xi}}\;\;&{\frac{ {\left\|\bar{w}\right\|}^2}{2}+C\sum_{i=1}^n{\xi_i}},\\
+\text{ subject to }\;&\xi_i\geq 0,y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b)\geq1-\xi_i,\forall i\in\{1,...n\}
 \end{align}$$
 
 The Lagrangian is:
 
 $$\begin{align*}
-\displaystyle L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{||\bar{w}||^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}
+\displaystyle L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}
 \end{align}$$
 
 We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), and the slack vector:
@@ -241,7 +241,7 @@ C-\alpha_n-\beta_n
 And the dual formulation is:
 
 $$\begin{align*}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{||\bar{w}||^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{align}$$
 
@@ -315,15 +315,15 @@ Using these properties, we can come up with some useful kernel functions:
 $$\begin{align*}
 K(\bar{u},\bar{v})&=\bar{u}\cdot\bar{v}&\text{ (Linear Kernel)}\\
 K(\bar{u},\bar{v})&=(\bar{u}\cdot\bar{v}+1)^p&\text{ (Polynomial Kernel)}\\
-K(\bar{u},\bar{v})&=e^{-\gamma||\bar{u}-\bar{v}||^2}&\text{ (RBF Kernel)}\\
+K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}&\text{ (RBF Kernel)}\\
 \end{align}$$
 
 While the linear and polynomial kernels may be obvious (use the addition and product rule), the RBF kernel can be hard to interpret:
 
 $$\begin{align*}
-K(\bar{u},\bar{v})&=e^{-\gamma||\bar{u}-\bar{v}||^2}\\
-&=e^{-\gamma||\bar{u}||^2-\gamma||\bar{v}||^2+2\gamma\bar{u}\cdot\bar{v}}\\
-&=e^{-\gamma||\bar{u}||^2}e^{2\gamma\bar{u}\cdot\bar{v}}e^{-\gamma||\bar{v}||^2}
+K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}\\
+&=e^{-\gamma\left\|\bar{u}\right\|^2-\gamma\left\|\bar{v}\right\|^2+2\gamma\bar{u}\cdot\bar{v}}\\
+&=e^{-\gamma\left\|\bar{u}\right\|^2}e^{2\gamma\bar{u}\cdot\bar{v}}e^{-\gamma\left\|\bar{v}\right\|^2}
 \end{align}$$
 
 Now this looks like the second property above, we would like to prove the middle term a kernel. We will use Taylor expansion:
