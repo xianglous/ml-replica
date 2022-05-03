@@ -361,9 +361,9 @@ The optimization for each pair can be represented as:
 
 $$\begin{aligned}
 \max_{\alpha_i,\alpha_j}\;\;&\alpha_i+\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
-&-\alpha_iy^{(i)}\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}-\delta\\
+&-\alpha_iy^{(i)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}-\delta\\
 \text{subject to}\;\;&0\leq\alpha_i,\alpha_j\leq C\\
-&\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}\alpha_qy^{(q)}=\zeta
+&\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{1\leq q\leq n\atop q\neq i,j}\alpha_qy^{(q)}=\zeta
 \end{aligned}$$
 
 Now we can substitute \\(\alpha_j\\) for αi:
@@ -372,7 +372,7 @@ $$\begin{aligned}
 \alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
 \Rightarrow J(\alpha_j)=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
 &-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\
-\text{where }S_i=&\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
+\text{where }S_i=&\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
 \end{aligned}$$
 
 To optimize, we take the partial derivative w/ respect \\(\alpha_j\\):
@@ -385,7 +385,7 @@ $$\begin{aligned}
 If we look at the two sum terms \\(S_i\\), \\(S_j\\):
 
 $$\begin{aligned}
-S_i&=\sum_{\substack{0\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
+S_i&=\sum_{0\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=\bar{w}\cdot\phi(\bar{x}^{(i)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 &=f(\bar{x}^{(i)})-b-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
