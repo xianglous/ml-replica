@@ -316,6 +316,7 @@ Now the only thing we need is to pick the multipliers to optimize the objective 
 </p>
 
 The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to optimize only a **pair** of multipliers each time. It works as following:
+
 *Pseudocode*:
 <pre>
 <b>α</b>=0, b=0 
