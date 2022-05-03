@@ -84,11 +84,11 @@ This loss will penalize any imperfect prediction.
 ### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
 
-$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=\left\{
-    \begin{matrix}
+$$\nabla_{\bar{w}}{h(\bar{x}^{(i)}, y^{(i)},\bar{w})}=
+    \begin{cases}
     -y^{(i)}\bar{x}^{(i)}&\text{if }y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})<1\\
     \mathbf{0} & \text{otherwise}
-    \end{matrix}\right$$
+    \end{cases}$$
 
 And the gradient of the whole training data is:
 
@@ -191,7 +191,7 @@ $$L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alp
 To satisfy the **KKT** conditions, we need the gradient with respect to $\bar{w}$ and $b$ to be 0:
 
 $$\begin{aligned}
-\displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
+\displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
 \nabla_{b}L(\bar{w},b,\bar{\alpha})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0
 \end{aligned}$$
 
@@ -204,18 +204,18 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-According to the **complementary slackness** condition $\alpha^*_i(1-y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0$:
+According to the **complementary slackness** condition $\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0$:
 
 $$\begin{aligned}
-&\alpha^*_i>0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1&\text{ (support vector)}\\
-&\alpha^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)>1&\text{ (non-support vector)}
+&\alpha^\ast_i>0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1&\text{ (support vector)}\\
+&\alpha^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)>1&\text{ (non-support vector)}
 \end{aligned}$$
 
 We can also compute the intercept $b$ using the support vectors:
 
 $$\begin{aligned}
-&\forall\alpha_k>0,y^{(k)}(\bar{w}^*\cdot\bar{x}^{(k)}+b^*)=1\Rightarrow\bar{w}^*\cdot\bar{x}^{(k)}+b^*=y^{(k)}\\
-&\Rightarrow b^*=y^{(k)}-\bar{w}^*\cdot\bar{x}^{(k)}
+&\forall\alpha_k>0,y^{(k)}(\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast)=1\Rightarrow\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast=y^{(k)}\\
+&\Rightarrow b^\ast=y^{(k)}-\bar{w}^\ast\cdot\bar{x}^{(k)}
 \end{aligned}$$
 
 ### Soft-Margin SVM
@@ -241,7 +241,7 @@ $$\begin{aligned}
 We first find the gradient with respect to $\bar{w}$, $b$, and the slack vector:
 
 $$\begin{aligned}
-\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^*=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
+\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
 \nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\
 \nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=
 \begin{bmatrix} 
@@ -258,12 +258,12 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are $\alpha_i^*(1-\xi_i^*y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*))=0$ **AND** $\beta_i^*(-\xi_i^*)=0$, so combining them together:
+We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are $\alpha_i^\ast(1-\xi_i^\asty^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0$ **AND** $\beta_i^\ast(-\xi_i^\ast)=0$, so combining them together:
 
 $$\begin{aligned}
-&\alpha^*_i=0\Rightarrow\beta^*_i=C\Rightarrow\xi^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)\geq1-\xi^*_i=1&\text{ (non-support vector)}\\
-&\alpha^*_i=C\Rightarrow\beta^*_i=0\Rightarrow\xi^*_i\geq0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1-\xi_i^*\leq1&\text{ (support vector off the margin)}\\
-&0<\alpha_i^*<C\Rightarrow0<\beta^*_i<C\Rightarrow\xi^*_i=0\Rightarrow y^{(i)}(\bar{w}^*\cdot\bar{x}^{(i)}+b^*)=1-\xi^*_i=1&\text{ (support vector on the margin)}
+&\alpha^\ast_i=0\Rightarrow\beta^\ast_i=C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)\geq1-\xi^\ast_i=1&\text{ (non-support vector)}\\
+&\alpha^\ast_i=C\Rightarrow\beta^\ast_i=0\Rightarrow\xi^\ast_i\geq0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi_i^\ast\leq1&\text{ (support vector off the margin)}\\
+&0<\alpha_i^\ast<C\Rightarrow0<\beta^\ast_i<C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi^\ast_i=1&\text{ (support vector on the margin)}
 \end{aligned}$$
 
 An observation that can be drawn from this result is that $C$ is a hyperparameter that controls the "softness" of our SVM model. If $C$ is big enough, the soft-margin SVM will become a hard-margin one.
@@ -293,8 +293,8 @@ J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alp
 One problem with this setup is that the computation can be slow because we need to 1) map the features to higher dimension, 2) compute the inner products between each pair of mapped features. Also, note that predicting the response for a new data point is:
 
 $$\begin{aligned}
-\hat{y}&=\text{sgn}((\bar{w}^*)^\top\phi(\hat{\bar{x}})+b^*)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}+b^*)\\
-b^*&=y^{(k)}-(\bar{w}^*)^\top\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0
+\hat{y}&=\text{sgn}((\bar{w}^\ast)^\top\phi(\hat{\bar{x}})+b^\ast)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}+b^\ast)\\
+b^\ast&=y^{(k)}-(\bar{w}^\ast)^\top\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0
 \end{aligned}$$
 
 We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly. Therefore, we introduce the **kernel function**:
