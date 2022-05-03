@@ -33,7 +33,8 @@ plugins:
   - jekyll-feed
 
 markdown: kramdown
-usemathjax: true
+kramdown:
+  math_engine: katex
 
 # Exclude from processing.
 # The following items will not be processed, by default.
