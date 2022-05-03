@@ -9,6 +9,9 @@
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
     - [Loss Functions](#loss-functions)
     - [Gradient Descent](#gradient-descent)
+    - [Stochastic Gradient Descent](#stochastic-gradient-descent-1)
+  - [Support Vector Machine](#support-vector-machine)
+    - [Maximum Margin Separator](#maximum-margin-separator)
 
 # Linear Clasiifiers
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -84,3 +87,45 @@ k=0, w=0
     k++
 </pre>
 η is the step size, or the learning rate.
+
+### Stochastic Gradient Descent
+The problem with gradient descent is that we need to compute the gradient of each data point in every iteration, which can be slow when the training data is huge. Alternatively, we can update based on a single data point in each iteration, and that is **Stochastic Gradient Descent**.<br>
+
+*Pseudocode*
+<pre>
+k=0, w=0
+<b>while</b> criterion not met:
+    <b>for</b> i in 1...n:
+        <b>if</b> yi(w.Xi)<1:
+            w = w + η*yiXi // the Descent
+            k++
+</pre>
+
+*Code*: [sgd.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/sgd.py)
+
+## Support Vector Machine
+As mentioned before, in linear classification problems we want to find a hyperplane that separates training data well. But there can be infinitely many hyperplanes that separate the data, we need to have additional measures to select the best ones. 
+
+### Maximum Margin Separator
+Consider the following example:
+
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/gh-pages/Illustration/non_max_margin.png" width=300/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<img src="https://github.com/xianglous/ml-replica/blob/gh-pages/Illustration/max_margin.png" width=300/>
+</p>
+
+The solid lines on each figure represents a classification boundary that separates the two training classes. They both perfectly classify the training data, but which one is better? We would consider the right one better because it maximizes the "margins" between the separator and the training data.<br>
+So while using the Hinge Loss may produce either of the above models, maximizing the margin will give us the better model. In another word, we want to maximize the distance from the closest point to the separating hyperplane:
+
+<p align="center">
+<img src="https://github.com/xianglous/ml-replica/blob/gh-pages/Illustration/max_margin_distance.png" width=300/>
+</p>
+
+If we look at the two margine lines, they are actually the decision lines \\(\bar{w}\cdot\bar{x}+b=1\\) and \\(\bar{w}\cdot\bar{x}+b=-1\\) beecause they are right on the border of being penalized. So we can calculate the margin as the distance between the positive margin line and the decision boundary:
+
+$$d=\frac{|(1-b)-(-b)|}{\left\|\bar{w}\right\|}=\frac{1}{\left\|\bar{w}\right\|}$$
+
+And we want our model to maximize the margin:
+
+$$\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}"$$
