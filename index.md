@@ -1,8 +1,4 @@
-# ml-replica
-Replication of basic &amp; advanced ML models.<br>
-
 # Table of Contents
-- [ml-replica](#ml-replica)
 - [Table of Contents](#table-of-contents)
 - [Linear Clasiifiers](#linear-clasiifiers)
   - [Perceptron](#perceptron)
@@ -43,3 +39,14 @@ To make it work for non-separable data, we need to change the way it approaches 
 
 ### Loss Functions
 In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
+$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq ;0]}$$
+
+A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
+
+So another loss function we can use instead is the **Hinge Loss**, for each fitted value, the Hingle Loss is:
+$$h(\bar{x}^{(i)}, y^{(i)}, \bar{w})=\max(0, 1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))$$
+
+And for the whole model, the loss function is defined as:
+$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\max(0, 1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})))}$$
+
+This loss will penalize any imperfect prediction.
