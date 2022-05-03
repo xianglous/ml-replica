@@ -70,7 +70,7 @@ $$\nabla_{\bar{w}}{L(X, \bar{y},\bar{w})}=\frac{1}{n}\sum_{i=1}^n{\nabla_{\bar{w
 
 By moving the the weights in the direction of the gradient, we will likely decrease the loss of our model. So the **Gradient Descent** is defined as:
 
-$$\bar{w}^{(k&plus;1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X, \bar{y}, \bar{w})}$$
+$$\bar{w}^{(k+1)}=\bar{w}^{(k)}-\eta\nabla_{\bar{w}}{L(X, \bar{y}, \bar{w})}$$
 
 *Pseudocode*
 <pre>
