@@ -132,7 +132,7 @@ So while using the Hinge Loss may produce either of the above models, maximizing
 <img src=" /ml-replica/assets/images/max_margin_distance.png" width=300/>
 </p>
 
-If we look at the two margine lines, they are actually the decision lines \(\bar{w}\cdot\bar{x}+b=1\) and \(\bar{w}\cdot\bar{x}+b=-1\) beecause they are right on the border of being penalized. So we can calculate the margin as the distance between the positive margin line and the decision boundary:
+If we look at the two margine lines, they are actually the decision lines \\(\bar{w}\cdot\bar{x}+b=1\\) and \\(\bar{w}\cdot\bar{x}+b=-1\\) beecause they are right on the border of being penalized. So we can calculate the margin as the distance between the positive margin line and the decision boundary:
 
 $$d=\frac{|(1-b)-(-b)|}{\left\|\bar{w}\right\|}=\frac{1}{\left\|\bar{w}\right\|}$$
 
@@ -149,11 +149,11 @@ $$\begin{aligned}
 \end{aligned}$$
 
 ### Lagrange Duality
-For a constrained optimization problem \(\min_{\bar{\theta}}{f(\bar{\theta})}\) subject to \(\eta\) constraints $h_i(\bar{\theta})\leq0,\forall i\in\{1,...,n\}$, we can combine the objective function with the contraints using the **Lagrange multipliers** \(\lambda_1,...,\lambda_n\geq0\). 
+For a constrained optimization problem \\(\min_{\bar{\theta}}{f(\bar{\theta})}\\) subject to \\(\eta\\) constraints $h_i(\bar{\theta})\leq0,\forall i\in\{1,...,n\}$, we can combine the objective function with the contraints using the **Lagrange multipliers** \\(\lambda_1,...,\lambda_n\geq0\\). 
 
 $$L(\bar{\theta},\bar{\lambda})=f(\theta)+\sum_{i=1}^n{\lambda_ih_i(\bar{\theta})}$$
 
-From this formation, we observe that if a model satifies all the constraints, $f(\bar{\theta})\geq L(\bar{\theta},\bar{\lambda})$, so minimizing \(f\) is the same as minimizing the maximum of \(L\), that is:
+From this formation, we observe that if a model satifies all the constraints, $f(\bar{\theta})\geq L(\bar{\theta},\bar{\lambda})$, so minimizing \\(f\\) is the same as minimizing the maximum of \\(L\\), that is:
 
 $$\displaystyle\min_{\bar{\theta}}\max_{\bar{\lambda},\lambda_i\geq0}{L(\bar{\theta},\bar{\lambda}})$$
 
@@ -175,7 +175,7 @@ For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
 $$L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}$$
 
-To satisfy the **KKT** conditions, we need the gradient with respect to \(\bar{w}\) and \(b\) to be 0:
+To satisfy the **KKT** conditions, we need the gradient with respect to \\(\bar{w}\\) and \\(b\\) to be 0:
 
 $$\begin{aligned}
 \displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
@@ -191,14 +191,14 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-According to the **complementary slackness** condition \(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0$\):
+According to the **complementary slackness** condition \\(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0$\\):
 
 $$\begin{aligned}
 &\alpha^\ast_i>0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1&\text{ (support vector)}\\
 &\alpha^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)>1&\text{ (non-support vector)}
 \end{aligned}$$
 
-We can also compute the intercept \(b\) using the support vectors:
+We can also compute the intercept \\(b\\) using the support vectors:
 
 $$\begin{aligned}
 &\forall\alpha_k>0,y^{(k)}(\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast)=1\Rightarrow\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast=y^{(k)}\\
@@ -225,7 +225,7 @@ $$\begin{aligned}
 \displaystyle L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}
 \end{aligned}$$
 
-We first find the gradient with respect to \(\bar{w}\), \(b\), and the slack vector:
+We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), and the slack vector:
 
 $$\begin{aligned}
 \nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
@@ -245,7 +245,7 @@ $$\begin{aligned}
 &=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
-We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \(\alpha_i^\ast(1-\xi_i^\asty^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\) **AND** \(\beta_i^\ast(-\xi_i^\ast)=0\), so combining them together:
+We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha_i^\ast(1-\xi_i^\asty^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\) **AND** \\(\beta_i^\ast(-\xi_i^\ast)=0\\), so combining them together:
 
 $$\begin{aligned}
 &\alpha^\ast_i=0\Rightarrow\beta^\ast_i=C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)\geq1-\xi^\ast_i=1&\text{ (non-support vector)}\\
@@ -253,7 +253,7 @@ $$\begin{aligned}
 &0<\alpha_i^\ast<C\Rightarrow0<\beta^\ast_i<C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi^\ast_i=1&\text{ (support vector on the margin)}
 \end{aligned}$$
 
-An observation that can be drawn from this result is that \(C\) is a hyperparameter that controls the "softness" of our SVM model. If \(C\) is big enough, the soft-margin SVM will become a hard-margin one.
+An observation that can be drawn from this result is that \\(C\\) is a hyperparameter that controls the "softness" of our SVM model. If \\(C\\) is big enough, the soft-margin SVM will become a hard-margin one.
 
 ### Feature Mapping
 Soft-margin SVM seems to provide a decent approach to non-linearly separable data, but it only works well when there are a few "noisy" data. When the boundary between categories is inherently non-linear, it is not reasonable to use a soft-margin SVM. For [example](http://www.eric-kim.net/eric-kim-net/posts/1/kernel_trick.html):
@@ -271,7 +271,7 @@ We cannot find a separating hyperplane, so the SVMs we have discussed will not w
 The way we convert the lower-dimensional coordinates into higher ones is called a **feature mapping**.
 
 ### Kernel Trick
-Assume we have a feature mapping \(\phi(\cdot):\mathcal{X}\rightarrow\mathcal{F}\) and we fit this mapped data using SVM, then the objective function would be:
+Assume we have a feature mapping \\(\phi(\cdot):\mathcal{X}\rightarrow\mathcal{F}\\) and we fit this mapped data using SVM, then the objective function would be:
 
 $$\begin{aligned}
 J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(j)})\right>}}
@@ -297,7 +297,7 @@ $$\begin{aligned}
 J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}
 \end{aligned}$$
 
-According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html#Necessary-and-sufficient-conditions), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions, let \(K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\) be two valid kernels of feature mapping \(\phi_1:\mathcal{X}\rightarrow\mathbb{R}^{M_1},\phi_2:\mathcal{X}\rightarrow\mathbb{R}^{M_2}\), then the following kernels and feature maps \(K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R},\phi:\mathcal{X}\rightarrow\mathcal{F}\) are valid:
+According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html#Necessary-and-sufficient-conditions), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions, let \\(K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\) be two valid kernels of feature mapping \\(\phi_1:\mathcal{X}\rightarrow\mathbb{R}^{M_1},\phi_2:\mathcal{X}\rightarrow\mathbb{R}^{M_2}\\), then the following kernels and feature maps \\(K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R},\phi:\mathcal{X}\rightarrow\mathcal{F}\\) are valid:
 
 $$\begin{aligned}
 K(\bar{u},\bar{v})&=\alpha K_1(\bar{u},\bar{v}),\alpha>0,\\
@@ -366,7 +366,7 @@ $$\begin{aligned}
 &\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}\alpha_qy^{(q)}=\zeta
 \end{aligned}$$
 
-Now we can substitute \(\alpha_j\) for αi:
+Now we can substitute \\(\alpha_j\\) for αi:
 
 $$\begin{aligned}
 \alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\Rightarrow\alpha_i=\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
@@ -375,14 +375,14 @@ $$\begin{aligned}
 \text{where }S_i=&\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
 \end{aligned}$$
 
-To optimize, we take the partial derivative w/ respect \(\alpha_j\):
+To optimize, we take the partial derivative w/ respect \\(\alpha_j\\):
 
 $$\begin{aligned}
 \frac{\partial J(\alpha_j)}{\partial\alpha_j}=&\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
 &+\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}+1\end{aligned}$$
 
-If we look at the two sum terms \(S_i\), \(S_j\):
+If we look at the two sum terms \\(S_i\\), \\(S_j\\):
 
 $$\begin{aligned}
 S_i&=\sum_{\substack{0\leq q\leq n\\ q\neq i,j}}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}=\sum_{q=0}^n{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_iy^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
@@ -392,7 +392,7 @@ S_j&=\bar{w}\cdot\phi(\bar{x}^{(j)})-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)
 &=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})K(\bar{x}^{(i)},\bar{x}^{(j)})
 \end{aligned}$$
 
-We want to derive the optimized \(\alpha_j\) by making the derivative to 0, assume we are currently at step \(k\):
+We want to derive the optimized \\(\alpha_j\\) by making the derivative to 0, assume we are currently at step \\(k\\):
 
 $$\begin{aligned}
 \Rightarrow y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
@@ -402,4 +402,4 @@ $$\begin{aligned}
 \Rightarrow\alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\text{, where }E_i^k,E_j^k\text{ are the residuals,}\\
 \eta=&K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
 
-Therefore, we are able to use the residual values and the kernel function to calculate the optimized \(\alpha_j\), and thus \(\alpha_i\):
+Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\):
