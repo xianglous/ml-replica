@@ -329,4 +329,12 @@ The optimization for each pair can be represented as:
 <img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\alpha_i,\alpha_j}\;\;&\alpha_i&plus;\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&-\alpha_iy^{(i)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(j)})}-\delta\\\text{subject&space;to}\;\;&0\leq\alpha_i,\alpha_j\leq&space;C\\&\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=-\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}\alpha_ky^{(k)}=\zeta\end{align}" />
 </p>
 
-To optimize, we take the partial derivative w/ respect to αi, αj:
+Now we can substitute αj for αi:
+
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}&=\zeta\Rightarrow\alpha_i=\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}\\\Rightarrow&space;J(\alpha_j)&=\zeta&space;y^{(i)}-\alpha_j&space;y^{(i)}y^{(j)}&plus;\alpha_j-\frac{1}{2}(\zeta-\alpha_j&space;y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\&-(\zeta-\alpha_j&space;y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\\text{where&space;}S_i&=\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})},S_j=\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(j)})}\end{align}" />
+</p>
+
+To optimize, we take the partial derivative w/ respect αj:
+
+
