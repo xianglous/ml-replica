@@ -307,6 +307,7 @@ Now this looks like the second property above, we would like to prove the middle
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 ### Sequential Minimal Optimization
+Reference: https://cs229.stanford.edu/lectures-spring2022/master.pdf
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
 <p align="center">
@@ -316,10 +317,16 @@ Now the only thing we need is to pick the multipliers to optimize the objective 
 The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to optimize only a **pair** of multipliers each time. It works as following:
 *Pseudocode*:
 <pre>
-<b>α</b>=0, b=0
+<b>α</b>=0, b=0 
 <b>while</b> not all α satisfies <b>KKT</b> conditions:
-    <b>for</b> αi that violates the <b>KKT</b> conditions:
-          pick αj from the rest α's
-          <b>optimize</b> αi <b>and</b> αj
-          update b
+    <b>pick</b> αi, αj using some <b>heuristics</b>
+    <b>optimize</b> αi, αj
+    <b>update</b> b
 </pre>
+
+The optimization for each pair can be represented as:
+<p align="center">
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\max_{\alpha_i,\alpha_j}\;\;&\alpha_i&plus;\alpha_j-\frac{1}{2}\alpha_iK(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_jK(\bar{x}^{(k)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&-\alpha_iy^{(i)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}{\alpha_ky^{(k)}K(\bar{x}^{(k)},\bar{x}^{(j)})}-\delta\\\text{subject&space;to}\;\;&0\leq\alpha_i,\alpha_j\leq&space;C\\&\alpha_iy^{(i)}&plus;\alpha_jy^{(j)}=-\sum_{\substack{1\leq&space;k\leq&space;n\\k\neq&space;i,j}}\alpha_ky^{(k)}=\zeta\end{align}" />
+</p>
+
+To optimize, we take the partial derivative w/ respect to αi, αj:
