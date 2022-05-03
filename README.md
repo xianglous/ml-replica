@@ -339,5 +339,5 @@ Now we can substitute αj for αi:
 To optimize, we take the partial derivative w/ respect αj:
 
 <p align="center">
-<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&-y^{(i)}y^{(j)}&plus;1&plus;\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jK(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_jK(\bar{x}^{(j)},\bar{x}^{(j)})\\&-\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})&plus;2\alpha_jK(\bar{x}^{(i)},\bar{x}^{(j)})&plus;y^{(j)}Si-y^{(j)}S_j\\=&(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\alpha_j\\&&plus;\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&&plus;y^{(j)}Si-y^{(j)}S_j-y^{(i)}y^{(j)}&plus;1=0\end{align}" />
+<img src="https://latex.codecogs.com/png.image?\dpi{110}\bg{white}\begin{align*}\frac{\partial&space;J(\alpha_j)}{\partial\alpha_j}=&(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\alpha_j\\&&plus;\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\zeta&space;y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\&&plus;y^{(j)}Si-y^{(j)}S_j-y^{(i)}y^{(j)}&plus;1=0\end{align}" />
 </p>
