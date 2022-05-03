@@ -138,7 +138,7 @@ $$d=\frac{|(1-b)-(-b)|}{\left\|\bar{w}\right\|}=\frac{1}{\left\|\bar{w}\right\|}
 
 And we want our model to maximize the margin:
 
-$$\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}"$$
+$$\displaystyle\max_{\bar{w}, b}{\frac{1}{\left\|\bar{w}\right\|}}$$
 
 ### Hard-Margin SVM
 We can now formulate our problem as a constrained optimization. For computation purpose, we transform the maximization into a minimization problem:
