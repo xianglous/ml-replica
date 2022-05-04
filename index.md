@@ -187,10 +187,12 @@ $$\begin{aligned}
 Using the dual formation, our problem become:
 
 $$\begin{aligned}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
-&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
-&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
-&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})=&\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
+=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})\\
+&+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
+=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
+&+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
+=&\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
 According to the **complementary slackness** condition \\(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\):
@@ -203,7 +205,8 @@ $$\begin{aligned}
 We can also compute the intercept \\(b\\) using the support vectors:
 
 $$\begin{aligned}
-&\forall\alpha_k>0,y^{(k)}(\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast)=1\Rightarrow\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast=y^{(k)}\\
+&\forall\alpha_k>0,y^{(k)}(\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast)=1\\
+&\Rightarrow\bar{w}^\ast\cdot\bar{x}^{(k)}+b^\ast=y^{(k)}\\
 &\Rightarrow b^\ast=y^{(k)}-\bar{w}^\ast\cdot\bar{x}^{(k)}
 \end{aligned}$$
 
@@ -227,32 +230,38 @@ $$\begin{aligned}
 \displaystyle L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}
 \end{aligned}$$
 
-We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), and the slack vector:
+We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), \\(\bar{\xi}\\), and we need them to be 0:
 
 $$\begin{aligned}
-\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
-\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=-\sum_{i=1}^n{\alpha_iy^{(i)}}=0&\Rightarrow\sum_{i=1}^n{\alpha_iy^{(i)}}=0\\
-\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=
+\nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\;\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}&&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_i^\ast y^{(i)}\bar{x}^{(i)}}\\
+\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&-\sum_{i=1}^n{\alpha_iy^{(i)}}&&\Rightarrow\sum_{i=1}^n{\alpha_i^\ast y^{(i)}}=0\\
+\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&
 \begin{bmatrix} 
 C-\alpha_1-\beta_1\\ 
 \vdots\\
 C-\alpha_n-\beta_n
-\end{bmatrix}=\mathbf{0}&\Rightarrow\alpha_i=C-\beta_i\Rightarrow0\leq\alpha_i\leq C
+\end{bmatrix}&&\Rightarrow\alpha_i^\ast=C-\beta_i^\ast\Rightarrow0\leq\alpha_i^\ast\leq C
 \end{aligned}$$
 
 And the dual formulation is:
 
 $$\begin{aligned}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})&=\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
-&=\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\&=\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}\\
+&+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
+=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}\\
+&+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
+=&\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
 We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha_i^\ast(1-\xi_i^\ast y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\) **AND** \\(\beta_i^\ast(-\xi_i^\ast)=0\\), so combining them together:
 
 $$\begin{aligned}
-&\alpha^\ast_i=0\Rightarrow\beta^\ast_i=C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)\geq1-\xi^\ast_i=1&\text{ (non-support vector)}\\
-&\alpha^\ast_i=C\Rightarrow\beta^\ast_i=0\Rightarrow\xi^\ast_i\geq0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi_i^\ast\leq1&\text{ (support vector off the margin)}\\
-&0<\alpha_i^\ast<C\Rightarrow0<\beta^\ast_i<C\Rightarrow\xi^\ast_i=0\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi^\ast_i=1&\text{ (support vector on the margin)}
+&&\alpha^\ast_i=0&\Rightarrow\beta^\ast_i=C\Rightarrow\xi^\ast_i=0\\
+&&&\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)\geq1-\xi^\ast_i=1&\text{ (non-support vector)}\\
+&&\alpha^\ast_i=C&\Rightarrow\beta^\ast_i=0\Rightarrow\xi^\ast_i\geq0\\
+&&&\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi_i^\ast\leq1&\text{ (support vector off the margin)}\\
+&&0<\alpha_i^\ast<C&\Rightarrow0<\beta^\ast_i<C\Rightarrow\xi^\ast_i=0\\
+&&&\Rightarrow y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast)=1-\xi^\ast_i=1&\text{ (support vector on the margin)}
 \end{aligned}$$
 
 An observation that can be drawn from this result is that \\(C\\) is a hyperparameter that controls the "softness" of our SVM model. If \\(C\\) is big enough, the soft-margin SVM will become a hard-margin one.
@@ -338,7 +347,7 @@ K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\
 So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
 
 ### Sequential Minimal Optimization
-*Reference*: [https://cs229.stanford.edu/lectures-spring2022/master.pdf](https://cs229.stanford.edu/lectures-spring2022/master.pdf)
+*Reference*: [John C. Platt, Sequential Minimal Optimization: A Fast Algorithm for Training Support Vector Machines](https://www.microsoft.com/en-us/research/uploads/prod/1998/04/sequential-minimal-optimization.pdf)
 
 Now the only thing we need is to pick the multipliers to optimize the objective function. In another word, we are solving this **Quadratic Programming** problem:
 
@@ -408,4 +417,54 @@ y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y
 \alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\\
 \text{where }E_i^k,E_j^k&\text{ are the residuals, }\eta=K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
 
-Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\):
+Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\) and \\(b\\). But before that, we need to check the constraints \\(0\leq\alpha_i^{k+1},\alpha_j^{k+1}\leq C\\). Since \\(\alpha_i^{k+1}y^{(i)}+\alpha_j^{k+1}y^{(j)}=\alpha_i^{k}y^{(i)}+\alpha_j^{k}y^{(j)}=\zeta\\):
+
+$$
+\begin{aligned}
+y^{(i)}=y^{(j)}\Rightarrow&\;\alpha_i^{k+1}+\alpha_j^{k+1}=\alpha_i^{k}+\alpha_j^{k}\Rightarrow&\;\alpha_i^{k}+\alpha_j^{k}-C\leq&\;\alpha_j^{k+1}\leq\alpha_i^{k}+\alpha_j^{k}\\
+y^{(i)}\neq y^{(j)}\Rightarrow&\;\alpha_i^{k+1}-\alpha_j^{k+1}=\alpha_i^{k}-\alpha_j^{k}\Rightarrow&\;\alpha_j^{k}-\alpha_i^{k}\leq&\;\alpha_j^{k+1}\leq C-\alpha_i^{k}+\alpha_j^{k}
+\end{aligned}
+$$
+
+Therefore, we can get the lower and upper bounds of \\(\alpha_j^{k+1}\\), \\(L^{k+1}\\) and \\(H^{k+1}\\), based on the value of \\(y^{(i)},y^{(j)}\\), and "clip" the value of \\(\alpha_j^{k+1}\\):
+
+$$
+\begin{aligned}
+L^{k+1}&=\begin{cases}
+\max(0, \alpha_i^{k}+\alpha_j^{k}-C)&\text{if }y^{(i)}=y^{(j)}\\
+\max(0, \alpha_j^{k}-\alpha_i^{k})&\text{otherwise}
+\end{cases}\\
+H^{k+1}&=\begin{cases}
+\min(C, \alpha_i^{k}+\alpha_j^{k})&\text{if }y^{(i)}=y^{(j)}\\
+\min(C, C-\alpha_i^{k}+\alpha_j^{k})&\text{otherwise}
+\end{cases}\\
+\alpha_j^{k+1}&=\min(\max(\alpha_j^{k+1}, L^{k+1}), H^{k+1})
+\end{aligned}
+$$
+
+And we can get \\(\alpha_i^{k+1}\\):
+
+$$\begin{aligned}
+\alpha_i^{k+1}=&\frac{\alpha_i^{k}y^{(i)}+\alpha_j^{k}y^{(j)}-\alpha_j^{k+1}y^{(j)}}{y^{(i)}}=\alpha_i^{k}+y^{(i)}y^{(j)}(\alpha_j^{k}-\alpha_j^{k+1})\\
+\end{aligned}
+$$
+
+Now we want to get the offset value \\(b^{k+1}\\) by using the support vectors:
+
+$$
+\begin{aligned}
+0<\alpha_i^{k+1}<C&\Rightarrow\alpha_i^{k+1}\text{ on the margin }\\
+                  &\Rightarrow y^{(i)}(\bar{w}\cdot\phi(\bar{x}^{(i)})+b^{k+1})=1\\
+                  &\;\begin{aligned}
+                  \Rightarrow b_i^{k+1}=&\;y^{(i)}-(f^k(\bar{x}^{(i)})-b^{k}-\alpha_i^{k}y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_j^{k}y^{(i)}K(\bar{x}^{(j)},\bar{x}^{(j)})\\
+                  &+\alpha_i^{k+1}y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_j^{k+1}y^{(i)}K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
+                                     =&\;b^{k}-E_i^{k}+(\alpha_i^{k}-\alpha_i^{k+1})y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})+(\alpha_j^{k}-\alpha_j^{k+1})y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})
+                  \end{aligned}\\
+0<\alpha_j^{k+1}<C&\Rightarrow\alpha_j^{k+1}\text{ on the margin }\\
+                  &\Rightarrow b_j^{k+1}=b^{k}-E_j^{k}+(\alpha_j^{k}-\alpha_j^{k+1})y^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})+(\alpha_i^{k}-\alpha_i^{k+1})y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
+\end{aligned}
+$$
+
+If \\(\alpha_i^{k+1}\\) is on the margin, we will set \\(b^{k+1}=b_i^{k+1}\\); if \\(\alpha_j^{k+1}\\) is on the margin, \\(b^{k+1}=b_j^{k+1}\\); if they are both on the margin, \\(b^{k+1}=b_i^{k+1}=b_j^{k+1}\\). But if none of them is on the margin, the SMO algorithm chooses the average value \\((b^{k+1}=b_i^{k+1}+b_j^{k+1})/2\\).
+
+Now we are able to optimize any pair of multipliers, \\(\alpha_i^{k+1}\\) and \\(\alpha_j^{k+1}\\), based on \\(\alpha_i^{k},\alpha_j^{k},E_i^{k},E_j^{k},\eta\\). 
