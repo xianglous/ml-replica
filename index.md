@@ -187,12 +187,12 @@ $$\begin{aligned}
 Using the dual formation, our problem become:
 
 $$\begin{aligned}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})=&\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
-=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})\\
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}L(\bar{w},b,\bar{\alpha})=&\;\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b}\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}\\
+=&\;\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)})}\cdot(\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}})\\
 &+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\alpha_iy^{(i)}\sum_{j=1}^n{\alpha_jy^{(j)}\bar{x}^{(j)}}\cdot\bar{x}^{(i)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
-=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
+=&\;\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
 &+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}\\
-=&\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
+=&\;\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
 According to the **complementary slackness** condition \\(\alpha^\ast_i(1-y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\):
@@ -234,8 +234,8 @@ We first find the gradient with respect to \\(\bar{w}\\), \\(b\\), \\(\bar{\xi}\
 
 $$\begin{aligned}
 \nabla_{\bar{w}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\;\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}&&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_i^\ast y^{(i)}\bar{x}^{(i)}}\\
-\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&-\sum_{i=1}^n{\alpha_iy^{(i)}}&&\Rightarrow\sum_{i=1}^n{\alpha_i^\ast y^{(i)}}=0\\
-\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&
+\nabla_{b}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\;-\sum_{i=1}^n{\alpha_iy^{(i)}}&&\Rightarrow\sum_{i=1}^n{\alpha_i^\ast y^{(i)}}=0\\
+\nabla_{\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\;
 \begin{bmatrix} 
 C-\alpha_1-\beta_1\\ 
 \vdots\\
@@ -246,11 +246,11 @@ C-\alpha_n-\beta_n
 And the dual formulation is:
 
 $$\begin{aligned}
-\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}\\
-&+C\sum_{i=1}^n{\xi_i}+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
-=&\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}\\
+\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}L(\bar{w},b,\bar{\xi},\bar{\alpha},\bar{\beta})=&\;\max_{\bar{\alpha},\alpha_i\geq0}\min_{\bar{w},b,\bar{\xi}}\frac{\left\|\bar{w}\right\|^2}{2}+C\sum_{i=1}^n{\xi_i}\\
+&+\sum_{i=1}^n{\alpha_i(1-\xi_i-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}+\sum_{i=1}^n{\beta_i(-\xi_i)}\\
+=&\;\max_{\bar{\alpha},\alpha_i\geq0}\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}+\sum_{i=1}^n{(C-\alpha_i-\beta_i)\xi_i}\\
 &+\sum_{i=1}^n{\alpha_i}-\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}-b\sum_{i=1}^n{\alpha_iy^{(i)}}\\
-=&\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
+=&\;\max_{\bar{\alpha},\alpha_i\geq0}\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}\bar{x}^{(i)}}\cdot\bar{x}^{(j)}}
 \end{aligned}$$
 
 We can see that soft-margin SVM has a same dual formulation as the hard-margin SVM. And now, the condition for optimum are \\(\alpha_i^\ast(1-\xi_i^\ast y^{(i)}(\bar{w}^\ast\cdot\bar{x}^{(i)}+b^\ast))=0\\) **AND** \\(\beta_i^\ast(-\xi_i^\ast)=0\\), so combining them together:
@@ -276,7 +276,7 @@ Soft-margin SVM seems to provide a decent approach to non-linearly separable dat
 We cannot find a separating hyperplane, so the SVMs we have discussed will not work as expected. However, if we jump out of the 2-dimensional space, we can find hyperplanes that can separate the data:
 
 <p align="center">
-<img src="/ml-replica/assets/images/feature-map.png" width=300/>
+<img src="/ml-replica/assets/images/feature-map.png" width=350/>
 </p>
 
 The way we convert the lower-dimensional coordinates into higher ones is called a **feature mapping**.
@@ -308,7 +308,7 @@ $$\begin{aligned}
 J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})}}
 \end{aligned}$$
 
-According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html#Necessary-and-sufficient-conditions), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions, let \\(K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\) be two valid kernels of feature mapping \\(\phi_1:\mathcal{X}\rightarrow\mathbb{R}^{M_1},\phi_2:\mathcal{X}\rightarrow\mathbb{R}^{M_2}\\), then the following kernels and feature maps \\(K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R},\phi:\mathcal{X}\rightarrow\mathcal{F}\\) are valid:
+According to [**Mercer's Theorem**](https://xavierbourretsicotte.github.io/Kernel_feature_map.html#Necessary-and-sufficient-conditions), a kernel function is valid if and only if its **Gram matrix** must be positive semi-definite. Below are some properties of kernel functions, let \\(K_1,K_2:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R}\\) be two valid kernels of feature mapping \\(\phi_1:\mathcal{X}\rightarrow\mathbb{R}^{M_1},\phi_2:\mathcal{X}\rightarrow\mathbb{R}^{M_2}\\), then the following kernels and feature maps \\(K:\mathcal{X}\times\mathcal{X}\rightarrow\mathbb{R},\phi:\mathcal{X}\rightarrow\mathcal{F}\\) are valid (\\(\phi\\) is not unique):
 
 $$\begin{aligned}
 K(\bar{u},\bar{v})&=\alpha K_1(\bar{u},\bar{v}),\alpha>0,\\
@@ -316,9 +316,24 @@ K(\bar{u},\bar{v})&=\alpha K_1(\bar{u},\bar{v}),\alpha>0,\\
 K(\bar{u},\bar{v})&=f(\bar{u})K_1(\bar{u},\bar{v})f(\bar{v}),\forall f:\mathcal{X}\rightarrow\mathbb{R},\\
 \phi(\bar{x})&=f(\bar{x})\phi(\bar{x})\\
 K(\bar{u},\bar{v})&=K_1(\bar{u},\bar{v})+K_2(\bar{u},\bar{v}),\phi(\bar{x})\in\mathbb{R}^{M_1+M_2},\\
-\phi(\bar{x})&=[\phi_1(\bar{x})^{(1)},...,\phi_1(\bar{x})^{(M_1)},\phi_2(\bar{x})^{(1)},...,\phi_2(\bar{x})^{(M_2)}]^\top\\
+\phi(\bar{x})&=
+\begin{bmatrix*}[l]
+\phi_1(\bar{x})^{(1)}\\
+\;\;\;\;\;\;\vdots\\
+\phi_1(\bar{x})^{(M_1)}\\
+\phi_2(\bar{x})^{(1)}\\
+\;\;\;\;\;\;\vdots\\
+\phi_2(\bar{x})^{(M_2)}
+\end{bmatrix*}\\
 K(\bar{u},\bar{v})&=K_1(\bar{u},\bar{v})K_2(\bar{u},\bar{v}),\phi(\bar{x})\in\mathbb{R}^{M_1M_2},\\
-\phi(\bar{x})&=[\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(1)},\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(2)},...,\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2-1)},\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2)}]^\top
+\phi(\bar{x})&=
+\begin{bmatrix*}[c]
+\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(1)}\\
+\phi_1(\bar{x})^{(1)}\phi_2(\bar{x})^{(2)}\\
+\vdots\\
+\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2-1)}\\
+\phi_1(\bar{x})^{(M_1)}\phi_2(\bar{x})^{(M_2)}
+\end{bmatrix*}
 \end{aligned}$$
 
 Using these properties, we can come up with some useful kernel functions:
@@ -337,14 +352,14 @@ K(\bar{u},\bar{v})&=e^{-\gamma\left\|\bar{u}-\bar{v}\right\|^2}\\
 &=e^{-\gamma\left\|\bar{u}\right\|^2}e^{2\gamma\bar{u}\cdot\bar{v}}e^{-\gamma\left\|\bar{v}\right\|^2}
 \end{aligned}$$
 
-Now this looks like the second property above, we would like to prove the middle term a kernel. We will use Taylor expansion:
+Now this looks like the second transformation above, we would like to prove the middle term a kernel. We will use Taylor expansion:
 
 $$\begin{aligned}
 K(\bar{u},\bar{v})&=e^{2\gamma\bar{u}\cdot\bar{v}}\\
 &=\frac{(2\gamma\bar{u}\cdot\bar{v})^0}{0!}+\frac{(2\gamma\bar{u}\cdot\bar{v})^1}{1!}+...+\frac{(2\gamma\bar{u}\cdot\bar{v})^n}{n!}+...
 \end{aligned}$$
 
-So the middle term is in fact a infinite sum of scalar-multiplied polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped feature can be impossible.
+So the middle term is in fact an infinite positive-weighted-sum of polynomial kernels, which is also a valid kernel. And we can tell that the feature mapping of a RBF kernel will have infinite dimensions, so it proves the importance of a kernel function as calculating the mapped features can be impossible.
 
 ### Sequential Minimal Optimization
 *Reference*: [John C. Platt, Sequential Minimal Optimization: A Fast Algorithm for Training Support Vector Machines](https://www.microsoft.com/en-us/research/uploads/prod/1998/04/sequential-minimal-optimization.pdf)
@@ -368,11 +383,13 @@ The main idea of the **Sequential Minimal Optimization (SMO)** algorithm is to o
     <b>update</b> b
 </pre>
 
-The optimization for each pair can be represented as:
+The optimization for each pair can be represented as (\\(\delta\\) is the sum of the rest terms):
 
 $$\begin{aligned}
-\max_{\alpha_i,\alpha_j}\;\;&\alpha_i+\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
-&-\alpha_iy^{(i)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}-\alpha_jy^{(j)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}-\delta\\
+\max_{\alpha_i,\alpha_j}\;\;&\alpha_i+\alpha_j-\frac{1}{2}\alpha_i^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
+&-\alpha_iy^{(i)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}\\
+&-\alpha_jy^{(j)}\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}\\
+&-\alpha_i\alpha_jy^{(i)}y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})+\delta\\
 \text{subject to}\;\;&0\leq\alpha_i,\alpha_j\leq C\\
 &\alpha_iy^{(i)}+\alpha_jy^{(j)}=-\sum_{1\leq q\leq n\atop q\neq i,j}\alpha_qy^{(q)}=\zeta
 \end{aligned}$$
@@ -381,19 +398,23 @@ Now we can substitute \\(\alpha_j\\) for \\(\alpha_i\\):
 
 $$
 \begin{aligned}
-           &&\alpha_iy^{(i)}+\alpha_jy^{(j)}=&\zeta\\
-\Rightarrow&&        \alpha_i=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
-\Rightarrow&&     J(\alpha_j)=&\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j\\
-           &&                 &-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
-           &&                 &-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
-           &&                 &-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j-\delta\\
-           &&\text{where }S_i=&\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})},S_j=\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
-\end{aligned}$$
+&\alpha_iy^{(i)}+\alpha_jy^{(j)}=\zeta\\
+&\begin{aligned}
+\Rightarrow\;\;\;\;&&\alpha_i=   &\;\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}\\
+\Rightarrow\;\;\;\;&&J(\alpha_j)=&\;\zeta y^{(i)}-\alpha_j y^{(i)}y^{(j)}+\alpha_j\\
+                   &&            &-\frac{1}{2}(\zeta-\alpha_j y^{(j)})^2K(\bar{x}^{(i)},\bar{x}^{(i)})-\frac{1}{2}\alpha_j^2K(\bar{x}^{(j)},\bar{x}^{(j)})\\
+                   &&            &-(\zeta-\alpha_jy^{(j)})S_i-\alpha_jy^{(j)}S_j\\
+                   &&            &-(\zeta-\alpha_j y^{(j)})\alpha_jy^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})+\delta\\
+       \text{where}&&S_i=        &\;\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(i)})}\\
+                   &&S_j=        &\;\sum_{1\leq q\leq n\atop q\neq i,j}{\alpha_qy^{(q)}K(\bar{x}^{(q)},\bar{x}^{(j)})}
+\end{aligned}
+\end{aligned}
+$$
 
-To optimize, we take the partial derivative w/ respect \\(\alpha_j\\):
+To optimize, we take the partial derivative w/ respect to \\(\alpha_j\\):
 
 $$\begin{aligned}
-\frac{\partial J(\alpha_j)}{\partial\alpha_j}=&\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
+\frac{\partial J(\alpha_j)}{\partial\alpha_j}=&\;\alpha_j(2K(\bar{x}^{(i)},\bar{x}^{(j)})-K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
 &+\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+y^{(j)}(S_i-S_j)-y^{(i)}y^{(j)}+1\end{aligned}$$
 
@@ -410,11 +431,11 @@ S_j&=f(\bar{x}^{(j)})-b-\alpha_jy^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})-(\zeta-\al
 We want to derive the optimized \\(\alpha_j\\) by making the derivative to 0, assume we are currently at step \\(k\\):
 
 $$\begin{aligned}
-y^{(j)}(S_i^k-S_j^k)=&y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
+y^{(j)}(S_i^k-S_j^k)=&\;y^{(j)}(f^{k}(\bar{x}^{(i)})-f^{k}(\bar{x}^{(j)}))-\zeta y^{(j)}(K(\bar{x}^{(i)},\bar{x}^{(i)})-K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+\alpha_j^{k}(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
-\frac{\partial J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k+1}}=&(\alpha_j^{k}-\alpha_j^{k+1})(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
+\frac{\partial J(\alpha_j)}{\partial\alpha_j}\big\rvert_{\alpha_j=\alpha_j^{k+1}}=&\;(\alpha_j^{k}-\alpha_j^{k+1})(K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)}))\\
 &+y^{(j)}((f^{k}(\bar{x}^{(i)})-y^{(i)})-(f^{k}(\bar{x}^{(j)})-y^{(j)}))=0\\
-\alpha_j^{k+1}=&\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\\
+\alpha_j^{k+1}=&\;\alpha_j^{k}+\frac{y^{(j)}(E_i^k-E_j^k)}{\eta}\\
 \text{where }E_i^k,E_j^k&\text{ are the residuals, }\eta=K(\bar{x}^{(i)},\bar{x}^{(i)})+K(\bar{x}^{(j)},\bar{x}^{(j)})-2K(\bar{x}^{(i)},\bar{x}^{(j)})\end{aligned}$$
 
 Therefore, we are able to use the residual values and the kernel function to calculate the optimized \\(\alpha_j\\), and thus \\(\alpha_i\\) and \\(b\\). But before that, we need to check the constraints \\(0\leq\alpha_i^{k+1},\alpha_j^{k+1}\leq C\\). Since \\(\alpha_i^{k+1}y^{(i)}+\alpha_j^{k+1}y^{(j)}=\alpha_i^{k}y^{(i)}+\alpha_j^{k}y^{(j)}=\zeta\\):
@@ -445,7 +466,7 @@ $$
 And we can get \\(\alpha_i^{k+1}\\):
 
 $$\begin{aligned}
-\alpha_i^{k+1}=&\frac{\alpha_i^{k}y^{(i)}+\alpha_j^{k}y^{(j)}-\alpha_j^{k+1}y^{(j)}}{y^{(i)}}=\alpha_i^{k}+y^{(i)}y^{(j)}(\alpha_j^{k}-\alpha_j^{k+1})\\
+\alpha_i^{k+1}=&\;\frac{\alpha_i^{k}y^{(i)}+\alpha_j^{k}y^{(j)}-\alpha_j^{k+1}y^{(j)}}{y^{(i)}}=\alpha_i^{k}+y^{(i)}y^{(j)}(\alpha_j^{k}-\alpha_j^{k+1})\\
 \end{aligned}
 $$
 
@@ -453,14 +474,16 @@ Now we want to get the offset value \\(b^{k+1}\\) by using the support vectors:
 
 $$
 \begin{aligned}
-0<\alpha_i^{k+1}<C&\Rightarrow\alpha_i^{k+1}\text{ on the margin }\\
+&0<\alpha_i^{k+1}<C\\
+&\Rightarrow\alpha_i^{k+1}\text{ on the margin }\\
                   &\Rightarrow y^{(i)}(\bar{w}\cdot\phi(\bar{x}^{(i)})+b^{k+1})=1\\
                   &\;\begin{aligned}
                   \Rightarrow b_i^{k+1}=&\;y^{(i)}-(f^k(\bar{x}^{(i)})-b^{k}-\alpha_i^{k}y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_j^{k}y^{(i)}K(\bar{x}^{(j)},\bar{x}^{(j)})\\
                   &+\alpha_i^{k+1}y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})-\alpha_j^{k+1}y^{(i)}K(\bar{x}^{(j)},\bar{x}^{(j)}))\\
                                      =&\;b^{k}-E_i^{k}+(\alpha_i^{k}-\alpha_i^{k+1})y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(i)})+(\alpha_j^{k}-\alpha_j^{k+1})y^{(j)}K(\bar{x}^{(i)},\bar{x}^{(j)})
                   \end{aligned}\\
-0<\alpha_j^{k+1}<C&\Rightarrow\alpha_j^{k+1}\text{ on the margin }\\
+&0<\alpha_j^{k+1}<C\\
+&\Rightarrow\alpha_j^{k+1}\text{ on the margin }\\
                   &\Rightarrow b_j^{k+1}=b^{k}-E_j^{k}+(\alpha_j^{k}-\alpha_j^{k+1})y^{(j)}K(\bar{x}^{(j)},\bar{x}^{(j)})+(\alpha_i^{k}-\alpha_i^{k+1})y^{(i)}K(\bar{x}^{(i)},\bar{x}^{(j)})\\
 \end{aligned}
 $$
