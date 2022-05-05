@@ -41,7 +41,6 @@ class SVM:
         self.heuristic = heuristic
         self.b = 0
         self.E_cache = {}
-        self.nonbound = set()
         self.E_max = -1
         self.E_min = -1
 
@@ -85,7 +84,7 @@ class SVM:
         return j
 
     def __error(self, i, cached=False):
-        if not cached or i not in self.nonbound:
+        if not cached or i not in self.E_cache:
             return self.__eval(i) - self.y_train[i]
         return self.E_cache[i]
 
@@ -141,18 +140,17 @@ class SVM:
             if alpha_i_old == 0 or alpha_i_old == self.C:
                 if 0 < self.alphas[i] < self.C:
                     self.E_cache[i] = 0
-                    self.nonbound.add(i)
             elif self.alphas[i] == 0 or self.alphas[i] == self.C:
-                self.nonbound.remove(i)
+                self.E_cache.pop(i)
             if alpha_j_old == 0 or alpha_j_old == self.C:
                 if 0 < self.alphas[j] < self.C:
                     self.E_cache[j] = 0
-                    self.nonbound.add(j)
             elif self.alphas[j] == 0 or self.alphas[j] == self.C:
-                self.nonbound.remove(j)
-            for k in self.nonbound:
-                self.E_cache[k] = self.E_cache[k] + y_i*(self.alphas[i]-alpha_i_old)*self.__kernel(i, k)\
-                     + y_j*(self.alphas[j]-alpha_j_old)*self.__kernel(j, k) + b_old - self.b
+                self.E_cache.pop(j)
+            for k in self.E_cache:
+                self.E_cache[k] = self.E_cache[k] \
+                    + y_i*(self.alphas[i]-alpha_i_old)*self.__kernel(i, k)\
+                    + y_j*(self.alphas[j]-alpha_j_old)*self.__kernel(j, k) + b_old - self.b
                 if self.E_max is None:
                     self.E_max = self.E_cache[k]
                 elif self.E_cache[k] > self.E_max:
@@ -187,10 +185,10 @@ class SVM:
         n = self.X_train.shape[0]
         cond, y_i, E_i = self.__KKT_condition(i, True)
         if cond:
-            if len(self.nonbound) > 1:
+            if len(self.E_cache) > 1:
                 if self.__optimize(i, y_i, E_i, self.__heuristic_j, True):
                     return 1
-            for j in list(self.nonbound):
+            for j in list(self.E_cache.keys()):
                 if self.__optimize(i, y_i, E_i, lambda x: j, True):
                     return 1
             for j in range(n):
@@ -209,7 +207,7 @@ class SVM:
                 for i in range(n):
                     alpha_changed += self.__heuristic_optimize(i)
             else:
-                for i in list(self.nonbound):
+                for i in list(self.E_cache.keys()):
                     alpha_changed += self.__heuristic_optimize(i)
             if check_all:
                 check_all = False
@@ -271,6 +269,6 @@ if __name__ == "__main__":
     y_col = "success"
     # for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
     #      evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 10)
-    for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
-         evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 10)
+    for kernel in ['precomputed']:
+         evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, True, 5)
     
