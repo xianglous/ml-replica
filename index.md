@@ -6,7 +6,7 @@
 
 # Table of Contents
 - [Table of Contents](#table-of-contents)
-- [Linear Clasiifiers](#linear-clasiifiers)
+- [Linear Clasification](#linear-clasification)
   - [Perceptron](#perceptron)
   - [Stochastic Gradient Descent](#stochastic-gradient-descent)
     - [Loss Functions](#loss-functions)
@@ -20,8 +20,9 @@
     - [Feature Mapping](#feature-mapping)
     - [Kernel Trick](#kernel-trick)
     - [Sequential Minimal Optimization](#sequential-minimal-optimization)
+- [Regression](#regression)
 
-# Linear Clasiifiers
+# Linear Clasification
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
 
 ## Perceptron
@@ -545,3 +546,7 @@ iter=0
 </pre>
 
 Code: [svm.py](/ml-replica/Linear%20Classifiers/svm.py)
+
+# Regression
+
+In classification problems, we try to classify input features into categories. But we may want to predict more diverse and continuous data. So instead of finding a function \\(f:\mathbb{R}^d\rightarrow\\{-1,1\\}\\), we want to model the function \\(f:\mathbb{R}^d\rightarrow\mathbb{R}\\).
