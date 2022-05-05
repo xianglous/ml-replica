@@ -508,8 +508,7 @@ Alternatively, we can give up the heuristics and instead randomly select \\(\alp
 *Pseudocode*:
 <pre>
 <b>α</b>=<b>0</b>, b=0
-tol=1e-3
-ε=1e-5
+tol=1e-3, ε=1e-5
 iter=0
 <b>while</b> iter<max_iter: // stop when max_iter pass of no updates
     k = 0 // number of α changed
