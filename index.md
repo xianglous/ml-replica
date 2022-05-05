@@ -166,18 +166,18 @@ $$\displaystyle\max_{\bar{\lambda},\lambda_i\geq0}\min_{\bar{\theta}}{L(\bar{\th
 The dual provides a lower bound for the primal solution, so there is a **duality gap** between the two formulations. The gap is 0 if the [**Karush–Kuhn–Tucker**](https://en.wikipedia.org/wiki/Karush%E2%80%93Kuhn%E2%80%93Tucker_conditions) (**KKT**) conditions are satisfied:
 
 $$\begin{aligned}
-\nabla_{\bar{\theta}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\
-\nabla_{\bar{\lambda}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}\\
-\lambda_ih_i(\bar{\theta})&=0\\
-h_i(\bar{\theta})&\leq0\\
-\lambda_i&\geq0
+\nabla_{\bar{\theta}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}&\text{(Stationarity)}\\
+\nabla_{\bar{\lambda}}L(\bar{\theta},\bar{\lambda})&=\mathbf{0}&\text{(Stationarity)}\\
+\lambda_ih_i(\bar{\theta})&=0&\text{(Complementary Slackness)}\\
+h_i(\bar{\theta})&\leq0&\text{(Primal Feasibility)}\\
+\lambda_i&\geq0&\text{(Dual Feasibility)}
 \end{aligned}$$
 
 For our hard-margin SVM, the gap is 0. The Lagrangian function is:
 
 $$L(\bar{w},b,\bar{\alpha})=\frac{\left\|\bar{w}\right\|^2}{2}+\sum_{i=1}^n{\alpha_i(1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}+b))}$$
 
-To satisfy the **KKT** conditions, we need the gradient with respect to \\(\bar{w}\\) and \\(b\\) to be 0:
+To satisfy the **stationarity** conditions, we need the gradient with respect to \\(\bar{w}\\) and \\(b\\) to be 0:
 
 $$\begin{aligned}
 \displaystyle\nabla_{\bar{w}}L(\bar{w},b,\bar{\alpha})=\bar{w}-\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}=\mathbf{0}&\Rightarrow\bar{w}^\ast=\sum_{i=1}^n{\alpha_iy^{(i)}\bar{x}^{(i)}}\\
@@ -490,4 +490,59 @@ $$
 
 If \\(\alpha_i^{k+1}\\) is on the margin, we will set \\(b^{k+1}=b_i^{k+1}\\); if \\(\alpha_j^{k+1}\\) is on the margin, \\(b^{k+1}=b_j^{k+1}\\); if they are both on the margin, \\(b^{k+1}=b_i^{k+1}=b_j^{k+1}\\). But if none of them is on the margin, the SMO algorithm chooses the average value \\((b^{k+1}=b_i^{k+1}+b_j^{k+1})/2\\).
 
-Now we are able to optimize any pair of multipliers, \\(\alpha_i^{k+1}\\) and \\(\alpha_j^{k+1}\\), based on \\(\alpha_i^{k},\alpha_j^{k},E_i^{k},E_j^{k},\eta\\). 
+Now we are able to optimize any pair of multipliers, \\(\alpha_i^{k+1}\\) and \\(\alpha_j^{k+1}\\), and get the updated offset value, \\(b^{k+1}\\). But we have not talked about the mechanism of choosing the pair, \\(\alpha_i^{k}, \alpha_j^{k}\\). In Platt's original paper, two heuristics are used for \\(\alpha_i\\) and \\(\alpha_j\\) respectively:
+
+- For \\(\alpha_i\\):
+    
+    If all \\(\alpha=0\\) or \\(C\\), choose \\(\alpha_i\\) that violates the KKT conditions<br>
+    Otherwise choose \\(0<\alpha_i< C\\) that violates the KKT conditions<br>
+
+- For \\(\alpha_j\\):
+
+    Choose \\(\alpha_j\\) that maximize \\(\|E_i-E_j\|\\). The algorithm will keep track of \\(E_k\\) for all \\(0<\alpha_k< C\\)
+
+Note we only need to check the **complementary slackness** conditions here because the other conditions are enforced by the SMO algorithm. A full pseudocode can be found in Platt's paper.
+
+Alternatively, we can give up the heuristics and instead randomly select \\(\alpha_j\\) for each \\(\alpha_i\\). This [Simplified SMO](http://cs229.stanford.edu/materials/smo.pdf) is much easier to implement:
+
+*Pseudocode*:
+<pre>
+<b>α</b>=<b>0</b>, b=0
+tol=1e-3
+ε=1e-5
+iter=0
+<b>while</b> iter<max_iter: // stop when max_iter pass of no updates
+    k = 0 // number of α changed
+    <b>for</b> i in 1...n:
+        Ei=f(xi)-yi
+        <b>if</b> (yiEi<-tol <b>and</b> αi<C) <b>or</b> 
+                (yiEi>tol <b>and</b> αi>0): // KKT condition
+            <b>random</b> j!=i
+            Ej=f(xj)-yj
+            <b>compute</b> L, H
+            <b>if</b> L==H:
+                <b>continue</b>
+            η=K(xi,xi)+K(xj,xj)-2K(xi,xj)
+            <b>if</b> η>=0:
+                <b>continue</b>
+            αj'=αj+yj(Ei-Ej)/η
+            <b>clip</b> αj' with L, H
+            <b>if</b> |αj-αj'|<ε:
+                <b>continue</b>
+            αi'=αi+yiyj(αj-αj')
+            <b>compute</b> bi, bj
+            <b>if</b> 0<αi'<C:
+                b'=bi
+            <b>elif</b> 0<αj'<C:
+                b'=bj
+            <b>else</b>:
+                b'=(bi+bj)/2
+            αi=αi', αj=αj', b=b'
+            k++
+    <b>if</b> k==0:
+        iter+=1 // can't optimize w/ αi
+    <b>else</b>:
+        iter=0
+</pre>
+
+Code: [svm.py](/ml-replica/Linear%20Classifiers/svm.py)
