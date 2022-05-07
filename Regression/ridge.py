@@ -31,10 +31,10 @@ def ridge_regression(X, y, reg=1.0, method='SGD', lr=1e-3, tol=1e-3, max_iter=10
         raise ValueError("method must be 'SGD', 'GD', or 'closed_form'")
 
 
-def evaluate(filename, x_cols, y_col, reg, method, normalization=None, lr=1e-2, tol=1e-3, max_iter=1000):
+def evaluate(filename, x_cols, y_col, reg, method, transform=None, lr=1e-2, tol=1e-3, max_iter=1000):
     print("==========================")
     start = time.time()
-    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col)
+    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col, X_transform=transform, y_transform=transform)
     X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
     X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
     
@@ -49,7 +49,7 @@ def evaluate(filename, x_cols, y_col, reg, method, normalization=None, lr=1e-2, 
     weights = ridge_regression(X_train, y_train, reg, method, lr, tol, max_iter)
     train_loss = MSE_loss(X_train, y_train, weights)
     test_loss = MSE_loss(X_test, y_test, weights)
-    print(model_str(x_cols, y_col, True)+f" using {method} ridge regression with reg={reg} and {normalization} normalization")
+    print(model_str(x_cols, y_col, True)+f" using {method} ridge regression with reg={reg} and {transform} normalization")
     print(f"Train loss: {train_loss}")
     print(f"Test loss: {test_loss}")
     print(f"Training used {time.time()-start} seconds")

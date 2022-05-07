@@ -3,6 +3,9 @@ import numpy as np
 
 class min_max_scaler:
     def __init__(self, X, y=None):
+        if X is None:
+            X = np.array([y]).T
+            y = None
         if y is not None:
             X = np.column_stack((X, y))
         self.max = X.max(axis=0)
@@ -21,6 +24,9 @@ class min_max_scaler:
 
 class standardizer:
     def __init__(self, X, y=None):
+        if X is None:
+            X = np.array([y]).T
+            y = None
         if y is not None:
             X = np.column_stack((X, y))
         self.mean = X.mean(axis=0)
@@ -36,3 +42,14 @@ class standardizer:
         if y is not None:
             return standardized[:, :-1], standardized[:, -1]
         return standardized
+
+
+def perceptronizer(y, pos_class=1):
+    """
+    y: (n, )
+    """
+    y = y.copy()
+    y[y != pos_class] = -1
+    y[y == pos_class] = 1
+    return y
+
