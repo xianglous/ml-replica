@@ -6,6 +6,7 @@ import random
 from collections.abc import Callable
 from typing import Union
 from utils.data import prepare_data
+from utils.function import polynomial_kernel, rbf_kernel, sigmoid_kernel
 from utils.metrics import accuracy, precision, recall, f1_score
 
 
@@ -67,11 +68,11 @@ class SVM:
         elif self.kernel == 'linear':
             val = self.X_train[i].T@X_test[j]
         elif self.kernel == 'poly':
-            val = (self.gamma*self.X_train[i].T@X_test[j]+self.coef0)**self.degree
+            val = polynomial_kernel(self.X_train[i], X_test[j], self.gamma, self.degree, self.coef0)
         elif self.kernel == 'rbf':
-            val = np.exp(-self.gamma*(np.sum((self.X_train[i]-X_test[j])**2)))
+            val = rbf_kernel(self.X_train[i], X_test[j], self.gamma)
         elif self.kernel == 'sigmoid':
-            val = np.tanh(self.gamma*self.X_train[i].T@X_test[j]+self.coef0)
+            val = sigmoid_kernel(self.X_train[i], X_test[j], self.gamma, self.coef0)
         else:
             val = X_test[j, i] # precomputed kernel
         if cached: # cache kernel value
