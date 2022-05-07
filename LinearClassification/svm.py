@@ -6,7 +6,8 @@ import random
 from collections.abc import Callable
 from typing import Union
 from utils.data import prepare_data
-from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
+from utils.metrics import accuracy, precision, recall, f1_score
+
 
 class SVM:
     def __init__(self, C:Union[int, float]=1.0, 
@@ -250,7 +251,7 @@ class SVM:
     
 
 def evaluate(filename, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
-    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col)
+    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col, X_transform="standard", y_transform="perceptron")
     print("=========RANDOM==========" if not heuristic else "=========HEURISTIC==========")
     print("Kernel:", kernel)
     clf = SVM(C=C, kernel=kernel, tol=tol, heuristic=heuristic, max_iter=max_iter)
@@ -259,9 +260,9 @@ def evaluate(filename, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
         X_train = X_train@X_train.T
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
-    print("Accuracy:", accuracy_score(y_test, y_pred))
-    print("Precision:", precision_score(y_test, y_pred))
-    print("Recall:", recall_score(y_test, y_pred))
+    print("Accuracy:", accuracy(y_test, y_pred))
+    print("Precision:", precision(y_test, y_pred))
+    print("Recall:", recall(y_test, y_pred))
     print("F1:", f1_score(y_test, y_pred))
     print("=========================")
 

@@ -22,9 +22,9 @@ def MSE_GD_grad(X, y, weights):
 
 def ols(X, y, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000):
     if method == 'SGD':
-        return SGD(X, y, MSE_SGD_grad, MSE_loss, lr, tol, max_iter)
+        return SGD(X, y, MSE_SGD_grad, MSE_loss, lr=lr, tol=tol, max_iter=max_iter)
     elif method == 'GD':
-        return GD(X, y, MSE_GD_grad, MSE_loss, lr, tol, max_iter)
+        return GD(X, y, MSE_GD_grad, MSE_loss, lr=lr, tol=tol, max_iter=max_iter)
     elif method == 'closed-form':
         return ols_closed_form(X, y)
     else:

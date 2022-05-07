@@ -8,19 +8,19 @@ from utils.algorithm import SGD, GD
 from utils.loss import MSE_loss
 
 
-def lasso_SGD_grad(X, y, weights, reg):
-    return -X * (y - X @ weights) + reg * np.sign(weights)
+def lasso_SGD_grad(X, y, weights):
+    return -X * (y - X @ weights)
 
 
-def lasso_GD_grad(X, y, weights, reg):
-    return -X.T @ (y - X @ weights) / X.shape[0] + reg * np.sign(weights)
+def lasso_GD_grad(X, y, weights):
+    return -X.T @ (y - X @ weights) / X.shape[0]
 
 
 def lasso_regression(X, y, reg=1.0, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000):
     if method == 'SGD':
-        return SGD(X, y, lambda X, y, weights: lasso_SGD_grad(X, y, weights, reg), MSE_loss, lr, tol, max_iter)
+        return SGD(X, y, lasso_SGD_grad, MSE_loss, 'l1', reg, lr, tol, max_iter)
     elif method == 'GD':
-        return GD(X, y, lambda X, y, weights: lasso_GD_grad(X, y, weights, reg), MSE_loss, lr, tol, max_iter)
+        return GD(X, y, lasso_GD_grad, MSE_loss, 'l1', reg, lr, tol, max_iter)
     else:
         raise ValueError("method must be 'SGD' or 'GD'")
 

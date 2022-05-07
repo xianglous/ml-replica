@@ -12,19 +12,19 @@ def ridge_closed_form(X, y, reg):
     return np.linalg.pinv(X.T @ X + reg * np.eye(X.shape[1])) @ X.T @ y
 
 
-def ridge_SGD_grad(X, y, weights, reg):
-    return -X * (y - X @ weights) + reg * weights
+def ridge_SGD_grad(X, y, weights):
+    return -X * (y - X @ weights)
 
 
-def ridge_GD_grad(X, y, weights, reg):
-    return -X.T @ (y - X @ weights) / X.shape[0] + reg * weights
+def ridge_GD_grad(X, y, weights):
+    return -X.T @ (y - X @ weights) / X.shape[0]
 
 
 def ridge_regression(X, y, reg=1.0, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000):
     if method == 'SGD':
-        return SGD(X, y, lambda X, y, weights: ridge_SGD_grad(X, y, weights, reg), MSE_loss, lr, tol, max_iter)
+        return SGD(X, y, ridge_SGD_grad, MSE_loss, 'l2', reg, lr, tol, max_iter)
     elif method == 'GD':
-        return GD(X, y, lambda X, y, weights: ridge_GD_grad(X, y, weights, reg), MSE_loss, lr, tol, max_iter)
+        return GD(X, y, ridge_GD_grad, MSE_loss, 'l2', reg, lr, tol, max_iter)
     elif method == 'closed_form':
         return ridge_closed_form(X, y, reg)
     else:

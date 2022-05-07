@@ -4,12 +4,6 @@ import numpy as np
 from utils.data import prepare_data, model_str
 from utils.metrics import accuracy
 
-def perceptron_accuracy(X, y, weights):
-    """
-    acc = 1/n * sum(y_i != sign(w^T x_i))
-    """
-    return accuracy(y, np.sign(weights @ X.T))
-
 
 def perceptron(X, y, max_iter=1000):
     """
@@ -25,7 +19,7 @@ def perceptron(X, y, max_iter=1000):
             if y[i] * (weights @ X[i].T) <= 0:
                 weights = weights + y[i] * X[i]
                 num_iter += 1
-        acc = perceptron_accuracy(X, y, weights)
+        acc = accuracy(y, np.sign(weights @ X.T))
     return weights
 
 
@@ -36,8 +30,10 @@ def evaluate(filename, x_cols, y_col, offset_enabled=False, max_iter=1000):
         X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
         X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
     weights = perceptron(X_train, y_train, max_iter)
-    train_acc = perceptron_accuracy(X_train, y_train, weights)
-    test_acc = perceptron_accuracy(X_test, y_test, weights)
+    y_train_pred = np.sign(weights @ X_train.T)
+    y_test_pred = np.sign(weights @ X_test.T)
+    train_acc = accuracy(y_train, y_train_pred)
+    test_acc = accuracy(y_test, y_test_pred)
     print(model_str(x_cols, y_col, offset_enabled))
     print(f"Train accuracy: {train_acc}")
     print(f"Test accuracy: {test_acc}")
