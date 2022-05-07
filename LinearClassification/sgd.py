@@ -1,6 +1,15 @@
+import sys
+sys.path.append('..')
 import numpy as np
-from utils import prepare_data, model_str
+from utils.data import prepare_data, model_str
+from utils.algorithm import GD, SGD
+from utils.loss import hinge_loss
 from perceptron import perceptron_accuracy
+
+
+def hinge_gradient(X, y, weights):
+    conds = (y * (weights @ X.T) < 1)
+    return -y[conds] @ X[conds] / (1 if len(X.shape)==1 else X.shape[0])
 
 
 def gradient_descent(X, y, lr=1e-3, tol=1e-3, max_iter=1000):
@@ -8,19 +17,7 @@ def gradient_descent(X, y, lr=1e-3, tol=1e-3, max_iter=1000):
     X: (n, m)
     y: (n, )
     """
-    n, m = X.shape
-    weights = np.zeros(m)
-    num_iter = 0
-    loss, prev_loss = None, None
-    while num_iter < max_iter:
-        conds = (y * (weights @ X.T) < 1) # condition check
-        weights = weights + lr * (conds * X.T) @ (conds * y) / n
-        prev_loss = loss
-        loss = np.sum(np.maximum(y * (weights @ X.T), 0))
-        if prev_loss and abs(loss-prev_loss) < tol:
-            return weights
-        num_iter += 1
-    return weights
+    return GD(X, y, hinge_gradient, hinge_loss, lr, tol, max_iter)
 
 
 def stochastic_gradient_descent(X, y, lr=1e-3, tol=1e-3, max_iter=1000):
@@ -28,20 +25,7 @@ def stochastic_gradient_descent(X, y, lr=1e-3, tol=1e-3, max_iter=1000):
     X: (n, m)
     y: (n, )
     """
-    n, m = X.shape
-    weights = np.zeros(m)
-    num_iter = 0
-    loss, prev_loss = None, None
-    while num_iter < max_iter:
-        for i in range(n):
-            if y[i] * (weights @ X[i].T) < 1:
-                weights = weights + lr * y[i] * X[i]
-                prev_loss = loss
-                loss = np.sum(np.maximum(y * (weights @ X.T), 0))
-                if prev_loss and abs(loss-prev_loss) < tol:
-                    return weights
-                num_iter += 1
-    return weights
+    return SGD(X, y, hinge_gradient, hinge_loss, lr, tol, max_iter)
 
 
 def evaluate(filename, x_cols, y_col, stochastic=True, lr=1e-3, tol=1e-3, max_iter=1000):
@@ -65,7 +49,7 @@ if __name__ == "__main__":
     y_col = "success"
     print("Gradient Descent")
     for x_cols in features:
-        evaluate("Data/binary_classification.csv", x_cols, y_col, False)
+        evaluate("../Data/binary_classification.csv", x_cols, y_col, False)
     print("Stochastic Gradient Descent")
     for x_cols in features:
-        evaluate("Data/binary_classification.csv", x_cols, y_col, True)
+        evaluate("../Data/binary_classification.csv", x_cols, y_col, True)

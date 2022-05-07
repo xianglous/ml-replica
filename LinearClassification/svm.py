@@ -1,9 +1,11 @@
+import sys
+sys.path.append('..')
 from subprocess import call
 import numpy as np
 import random
 from collections.abc import Callable
 from typing import Union
-from utils import prepare_data
+from utils.data import prepare_data
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 
 class SVM:
@@ -269,6 +271,6 @@ if __name__ == "__main__":
     y_col = "success"
     # for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
     #      evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 10)
-    for kernel in ['precomputed']:
-         evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, True, 5)
+    for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
+         evaluate("../Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 5)
     
