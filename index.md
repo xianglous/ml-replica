@@ -21,6 +21,9 @@
     - [Kernel Trick](#kernel-trick)
     - [Sequential Minimal Optimization](#sequential-minimal-optimization)
 - [Regression](#regression)
+  - [Ordinary Least Squares](#ordinary-least-squares)
+  - [Ridge Regression](#ridge-regression)
+  - [Lasso Regression](#lasso-regression)
 
 # Linear Clasification
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -550,3 +553,9 @@ Code: [svm.py](/ml-replica/Linear%20Classifiers/svm.py)
 # Regression
 
 In classification problems, we try to classify input features into categories. But we may want to predict more diverse and continuous data. So instead of finding a function \\(f:\mathbb{R}^d\rightarrow\\{-1,1\\}\\), we want to model the function \\(f:\mathbb{R}^d\rightarrow\mathbb{R}\\).
+
+## Ordinary Least Squares
+
+## Ridge Regression
+
+## Lasso Regression
