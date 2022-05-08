@@ -19,15 +19,6 @@ def MSE_loss(X, y, weights):
     return 0.5 * np.mean((y - X @ weights) ** 2)
 
 
-def cross_entropy_loss(X, y, weights):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    """
-    return -np.mean(y * np.log(X @ weights) + (1 - y) * np.log(1 - X @ weights))
-
-
 def logistic_loss(X, y, weights):
     """
     X: (n, m)
@@ -35,3 +26,13 @@ def logistic_loss(X, y, weights):
     weights: (m, )
     """
     return np.mean(np.log(1 + np.exp(-y * (X @ weights))))
+
+
+def cross_entropy_loss(y, num_classes):
+    """
+    y: (n, )
+    """
+    loss = 0
+    for i in range(num_classes):
+        loss += np.mean(y == i) * np.log(np.mean(y == i))
+    return -loss
