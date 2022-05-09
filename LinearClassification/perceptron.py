@@ -1,8 +1,9 @@
 import sys
 sys.path.append('..')
 import numpy as np
-from utils.data import prepare_data, model_str
+from utils.data import dataset, model_str
 from utils.metrics import accuracy
+from utils.preprocessing import perceptronizer
 
 
 def perceptron(X, y, max_iter=1000):
@@ -23,9 +24,9 @@ def perceptron(X, y, max_iter=1000):
     return weights
 
 
-def evaluate(filename, x_cols, y_col, offset_enabled=False, max_iter=1000):
+def evaluate(data, x_cols, y_col, offset_enabled=False, max_iter=1000):
     print("==========================")
-    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col)
+    X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     if offset_enabled:
         X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
         X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
@@ -45,9 +46,12 @@ if __name__ == "__main__":
     features = [["age"], ["interest"], ["age", "interest"]]
     y_col = "success"
     print("Perceptron w/ Offset")
+    data = dataset("../data/binary_classification.csv")
+    # data.transform(["age", "interest"], "standardize")
+    data.transform("success", perceptronizer)
     for x_cols in features:
-        evaluate("../Data/binary_classification.csv", x_cols, y_col, True, 1000)
+        evaluate(data, x_cols, y_col, True, 1000)
     print("Perceptron w/o Offset")
     for x_cols in features:
-        evaluate("../Data/binary_classification.csv", x_cols, y_col, False, 1000)
+        evaluate(data, x_cols, y_col, False, 1000)
 

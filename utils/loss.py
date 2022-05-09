@@ -28,11 +28,16 @@ def logistic_loss(X, y, weights):
     return np.mean(np.log(1 + np.exp(-y * (X @ weights))))
 
 
-def cross_entropy_loss(y, num_classes):
+def cross_entropy_loss(y, num_classes=2):
     """
     y: (n, )
     """
     loss = 0
+    if len(y) == 0:
+        return loss
     for i in range(num_classes):
-        loss += np.mean(y == i) * np.log(np.mean(y == i))
+        rate = np.mean(y == i)
+        if rate == 0 or rate == 1:
+            continue
+        loss += rate * np.log(rate)
     return -loss

@@ -1,13 +1,13 @@
 import sys
 sys.path.append('..')
-from subprocess import call
 import numpy as np
 import random
 from collections.abc import Callable
 from typing import Union
-from utils.data import prepare_data
+from utils.data import dataset
 from utils.function import polynomial_kernel, rbf_kernel, sigmoid_kernel
 from utils.metrics import accuracy, precision, recall, f1_score
+from utils.preprocessing import perceptronizer
 
 
 class SVM:
@@ -251,8 +251,8 @@ class SVM:
         return np.sign(pred)
     
 
-def evaluate(filename, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
-    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col, X_transform="standard", y_transform="perceptron")
+def evaluate(data, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
+    X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     print("=========RANDOM==========" if not heuristic else "=========HEURISTIC==========")
     print("Kernel:", kernel)
     clf = SVM(C=C, kernel=kernel, tol=tol, heuristic=heuristic, max_iter=max_iter)
@@ -271,8 +271,10 @@ def evaluate(filename, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
 if __name__ == "__main__":
     x_cols = ["age", "interest"]
     y_col = "success"
+    data = dataset("../data/binary_classification.csv")
+    data.transform(["age", "interest"], "standardize")
+    data.transform("success", perceptronizer)
     # for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
-    #      evaluate("Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 10)
+    #      evaluate(data, x_cols, y_col, 1, kernel, 0.1, False, 10)
     for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
-         evaluate("../Data/binary_classification.csv", x_cols, y_col, 1, kernel, 0.1, False, 5)
-    
+         evaluate(data, x_cols, y_col, 1, kernel, 0.1, True, 3)

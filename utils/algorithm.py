@@ -30,6 +30,8 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
         reg_grad = l1_grad
     elif regularization == 'l2':
         reg_grad = l2_grad
+    elif regularization is not None:
+        raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
         grad = grad_func(X, y, weights) + (alpha * reg_grad(weights) if regularization is not None else 0)
         weights = weights - lr * grad
@@ -62,6 +64,8 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
         reg_grad = l1_grad
     elif regularization == 'l2':
         reg_grad = l2_grad
+    elif regularization is not None:
+        raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
         for i in range(n):
             grad = grad_func(X[i], y[i], weights) + (alpha * reg_grad(weights) if regularization is not None else 0)

@@ -2,8 +2,7 @@ import sys
 sys.path.append('..')
 import numpy as np
 import time
-from utils.data import prepare_data, model_str
-from utils.preprocessing import standardizer, min_max_scaler
+from utils.data import dataset, model_str
 from utils.algorithm import SGD, GD
 from utils.loss import logistic_loss
 from utils.function import sigmoid
@@ -37,10 +36,10 @@ def logistic_regression(X, y, regularization=None, reg=1.0, method='SGD', lr=1e-
         raise ValueError("method must be 'SGD', 'GD', or 'closed_form'")
 
 
-def evaluate(filename, x_cols, y_col, regularization, reg, method, transform="standard", lr=1e-3, tol=1e-3, max_iter=1000):
+def evaluate(data, x_cols, y_col, regularization, reg, method, lr=1e-3, tol=1e-3, max_iter=1000):
     print("==========================")
     start = time.time()
-    X_train, y_train, X_test, y_test = prepare_data(filename, x_cols, y_col, X_transform=transform)
+    X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     X_train = np.hstack((np.ones((X_train.shape[0], 1)), X_train))
     X_test = np.hstack((np.ones((X_test.shape[0], 1)), X_test))
     weights = logistic_regression(X_train, y_train, regularization, reg, method, lr, tol, max_iter)
@@ -62,7 +61,9 @@ def evaluate(filename, x_cols, y_col, regularization, reg, method, transform="st
 if __name__ == "__main__":
     features = [["age"], ["interest"], ["age", "interest"]]
     y_col = "success"
+    data = dataset("../data/binary_classification.csv")
+    data.transform(["age", "interest"], "standardize")
     for method in ["SGD", "GD"]:
         for x_cols in features:
             for regularization in [None, "l1", "l2"]:
-                evaluate("../Data/binary_classification.csv", x_cols, y_col, regularization, 10, method)
+                evaluate(data, x_cols, y_col, regularization, 1.0, method)
