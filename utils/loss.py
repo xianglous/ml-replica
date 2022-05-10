@@ -28,10 +28,12 @@ def logistic_loss(X, y, weights):
     return np.mean(np.log(1 + np.exp(-y * (X @ weights))))
 
 
-def cross_entropy_loss(y, num_classes=2):
+def cross_entropy_loss(y, num_classes=None):
     """
     y: (n, )
     """
+    if num_classes is None:
+        num_classes = np.max(y) + 1
     loss = 0
     if len(y) == 0:
         return loss
@@ -43,10 +45,12 @@ def cross_entropy_loss(y, num_classes=2):
     return -loss
 
 
-def gini_index_loss(y, num_classes=2):
+def gini_index_loss(y, num_classes=None):
     """
     y: (n, )
     """
+    if num_classes is None:
+        num_classes = np.max(y) + 1
     loss = 1
     if len(y) == 0:
         return loss

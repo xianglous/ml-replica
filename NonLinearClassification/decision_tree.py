@@ -1,3 +1,4 @@
+from locale import normalize
 import sys
 sys.path.append('..')
 import numpy as np
@@ -5,7 +6,7 @@ import time
 from collections.abc import Callable
 from typing import Union, Type, Optional
 from utils.data import dataset, model_str
-from utils.metrics import accuracy, precision, recall, f1_score
+from utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
 from utils.loss import cross_entropy_loss, gini_index_loss
 
 
@@ -14,7 +15,7 @@ class decision_tree:
     class tree_node: # tree node
         def __init__(self, y, feature, threshold, left=None, right=None):
             values, counts = np.unique(y, return_counts=True)
-            self.pred = values[np.argmax(counts)]
+            self.pred = values[np.argmax(counts)] # mode of y
             self.feature = feature
             self.threshold = threshold
             self.left = left
@@ -68,8 +69,9 @@ class decision_tree:
             return self.tree_node(y, None, None)
         if len(set(y)) == 1:
             return self.tree_node(y, None, None)
+        cur_loss = self.loss_func(y, self.num_classes)
         best_feature, threshold, loss = self.__best_feature(X, y)
-        if loss == 0: # perfect split
+        if loss == 0 or loss == cur_loss: # perfect split or no improve
             self.features.remove(best_feature)
         left_idx = X[:, best_feature] <= threshold
         right_idx = X[:, best_feature] > threshold
@@ -101,7 +103,60 @@ class decision_tree:
         for x in X_test:
             y_pred.append(self.__predict(self.root, x))
         return np.array(y_pred)
-        
+
+    def __tree_to_str(self, node, dataset, x_cols, y_col, middle_padding=3):
+        if node is None: # end
+            return [""], 0, 0
+        if node.feature is None: # leaf
+            pred = node.pred if dataset is None else dataset.translate(y_col, node.pred)
+            root_str = "pred: {}".format(pred)
+        else: # split
+            feat = node.feature if dataset is None else x_cols[node.feature]
+            root_str = f"{feat} <= {node.threshold}"
+        idx = (len(root_str) - 1) // 2 # index of the root center
+        if node.left is None and node.right is None: # leaf
+            return [root_str], len(root_str), idx
+        left_strs, left_width, left_idx = \
+            self.__tree_to_str(node.left, dataset, x_cols, y_col, middle_padding) # left subtree
+        right_strs, right_width, right_idx = \
+            self.__tree_to_str(node.right, dataset, x_cols, y_col, middle_padding) # right subtree
+        root_left_padding = max(0, left_idx - idx) # root left padding
+        left_left_padding = max(0, idx - left_idx) # left subtree padding
+        root_right_padding = 0 # root right padding
+        sub_width = left_left_padding + left_width + right_width
+        idx += root_left_padding
+        if len(root_str) < sub_width + middle_padding:
+            root_right_padding = \
+                sub_width + middle_padding - len(root_str) - root_left_padding
+        else:
+            middle_padding = len(root_str) - sub_width
+        width = sub_width + middle_padding
+        # root
+        lines = [f"{' ' * root_left_padding}{root_str}{' ' * root_right_padding}"]
+        # connector
+        left = ' ' * (idx - 1)
+        left += ' ' if left_width == 0 else '|'
+        right = ' ' if right_width == 0 else '\\' +\
+            '_' * max(0, (right_idx + left_left_padding + 
+                          left_width + middle_padding - len(left) - 2))            
+        right += ' ' * (width - len(right) - len(left))
+        lines.append(f"{left}{right}")
+        # subtrees
+        for i in range(max(len(left_strs), len(right_strs))):
+            line = " " * left_left_padding
+            line += left_strs[i] if i < len(left_strs) \
+                else " " * left_width # left subtree
+            line += " " * middle_padding # middle padding
+            line += right_strs[i] if i < len(right_strs) \
+                else " " * right_width # right subtree
+            lines.append(line)
+        return lines, width, idx
+
+    def print_tree(self, dataset:dataset=None, x_cols:list[str]=None, y_col:str=None):
+        tree_lines, _, _ = self.__tree_to_str(self.root, dataset, x_cols, y_col)
+        for line in tree_lines:
+            print(line)
+
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
     print("==========================")
@@ -116,14 +171,40 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
     print(f"{model_str(x_cols, y_col)} using {criterion}")
     print("Training accuracy:", train_acc)
     print("Testing accuracy:", test_acc)
+    print("Training precision:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {precision(y_train, y_train_pred, cls)}")
+    print("Testing precision:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {precision(y_test, y_test_pred, cls)}")
+    print("Training recall:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {recall(y_train, y_train_pred, cls)}")
+    print("Testing recall:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {recall(y_test, y_test_pred, cls)}")
+    print("Training F1:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {f1_score(y_train, y_train_pred, cls)}")
+    print("Testing F1:")
+    for cls in sorted(set(y_train)):
+        print(f"{data.translate(y_col, cls)}: {f1_score(y_test, y_test_pred, cls)}")
+    print("Training Confusion Matrix:")
+    print(confusion_matrix(y_train, y_train_pred, len(set(y_train))))
+    print("Testing Confusion Matrix:")
+    print(confusion_matrix(y_test, y_test_pred, len(set(y_train))))
     print(f"Training used {time.time()-start} seconds")
+    # clf.print_tree(data, x_cols, y_col) # print tree
     print("==========================")
+
+        
+
 
 
 if __name__ == "__main__":
     features = [["Age", "Sex"], ["Age", "Sex", "BP"], ["Age", "Sex", "BP", "Cholesterol"], ["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]]
     y_col = "Drug"
-    data = dataset("../Data/drug200.csv")
+    data = dataset("../Data/drug200.csv", random_state=42)
     for x_cols in features:
         evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy")
         evaluate(data, x_cols, y_col, max_depth=10, criterion="gini")
