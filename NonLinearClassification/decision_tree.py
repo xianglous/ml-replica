@@ -2,46 +2,52 @@ import sys
 sys.path.append('..')
 import numpy as np
 import time
-from scipy import stats
-from utils.data import dataset
+from collections.abc import Callable
+from typing import Union, Type, Optional
+from utils.data import dataset, model_str
 from utils.metrics import accuracy, precision, recall, f1_score
-from utils.loss import cross_entropy_loss
+from utils.loss import cross_entropy_loss, gini_index_loss
 
 
 class decision_tree:
 
-    class tree_node:
+    class tree_node: # tree node
         def __init__(self, y, feature, threshold, left=None, right=None):
-            self.probs = {}
-            for y_ in y:
-                if y_ not in self.probs:
-                    self.probs[y_] = 0
-                self.probs[y_] += 1
-            for y_ in self.probs:
-                self.probs[y_] /= len(y)
+            values, counts = np.unique(y, return_counts=True)
+            self.pred = values[np.argmax(counts)]
             self.feature = feature
             self.threshold = threshold
             self.left = left
             self.right = right
             
-
-    def __init__(self, max_depth=None, criterion="entropy"):
+    def __init__(self, max_depth:int=None,
+            criterion:str|Callable[[np.ndarray, Optional[int]], float]="entropy"):
         self.max_depth = max_depth
-        if criterion == "entropy":
+        if callable(criterion):
+            self.loss_func = criterion
+        elif criterion == "entropy":
             self.loss_func = cross_entropy_loss
+        elif criterion == "gini":
+            self.loss_func = gini_index_loss
+        else:
+            raise ValueError("criterion must be a callable or 'entropy' or 'gini'")
     
     def __best_split(self, X, y, feature):
-        threshold = None
+        vals = sorted(set(X[:, feature]))
+        prev = vals[0] - 1
+        best_threshold = vals[0] - 0.5
         min_loss = np.inf
-        for val in set(X[:, feature]):
-            left_idx = X[:, feature] <= val
-            right_idx = X[:, feature] > val
+        for i in range(len(vals)):
+            threshold = (vals[i] + prev) / 2
+            prev = vals[i]
+            left_idx = X[:, feature] <= threshold
+            right_idx = X[:, feature] > threshold
             loss = np.mean(left_idx) * self.loss_func(y[left_idx], self.num_classes) + \
                      np.mean(right_idx) * self.loss_func(y[right_idx], self.num_classes)
             if loss < min_loss:
                 min_loss = loss
-                threshold = val
-        return threshold, min_loss
+                best_threshold = threshold
+        return best_threshold, min_loss
 
     def __best_feature(self, X, y):
         min_loss = np.inf
@@ -53,7 +59,7 @@ class decision_tree:
                 min_loss = loss
                 best_feature = feature
                 best_threshold = threshold
-        return best_feature, best_threshold
+        return best_feature, best_threshold, min_loss
 
     def __train(self, X, y, depth=0):
         if len(y) == 0:
@@ -62,15 +68,16 @@ class decision_tree:
             return self.tree_node(y, None, None)
         if len(set(y)) == 1:
             return self.tree_node(y, None, None)
-        best_feature, threshold = self.__best_feature(X, y)
-        self.features.remove(best_feature)
+        best_feature, threshold, loss = self.__best_feature(X, y)
+        if loss == 0: # perfect split
+            self.features.remove(best_feature)
         left_idx = X[:, best_feature] <= threshold
         right_idx = X[:, best_feature] > threshold
         left = self.__train(X[left_idx], y[left_idx], depth+1)
         right = self.__train(X[right_idx], y[right_idx], depth+1)
         return self.tree_node(y, best_feature, threshold, left, right)
 
-    def fit(self, X_train, y_train):
+    def fit(self, X_train:np.ndarray, y_train:np.ndarray):
         self.X_train = X_train
         self.y_train = y_train
         self.features = set(range(X_train.shape[1]))
@@ -79,17 +86,17 @@ class decision_tree:
     
     def __predict(self, node, x):
         if node.threshold is None:
-            return max(node.probs.keys(), key=lambda k: node.probs[k])
+            return node.pred
         if x[node.feature] <= node.threshold:
             if node.left is None:
-                return max(node.probs.keys(), key=lambda k: node.probs[k])
+                return node.pred
             return self.__predict(node.left, x)
         else:
             if node.right is None:
-                return max(node.probs.keys(), key=lambda k: node.probs[k])
+                return node.pred
             return self.__predict(node.right, x)
 
-    def predict(self, X_test):
+    def predict(self, X_test:np.ndarray):
         y_pred = []
         for x in X_test:
             y_pred.append(self.__predict(self.root, x))
@@ -106,6 +113,7 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
     y_test_pred = clf.predict(X_test)
     train_acc = accuracy(y_train, y_train_pred)
     test_acc = accuracy(y_test, y_test_pred)
+    print(f"{model_str(x_cols, y_col)} using {criterion}")
     print("Training accuracy:", train_acc)
     print("Testing accuracy:", test_acc)
     print(f"Training used {time.time()-start} seconds")
@@ -113,8 +121,9 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
 
 
 if __name__ == "__main__":
-    features = [["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]]
+    features = [["Age", "Sex"], ["Age", "Sex", "BP"], ["Age", "Sex", "BP", "Cholesterol"], ["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]]
     y_col = "Drug"
     data = dataset("../Data/drug200.csv")
     for x_cols in features:
-        evaluate(data, x_cols, y_col, max_depth=len(x_cols), criterion="entropy")
+        evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy")
+        evaluate(data, x_cols, y_col, max_depth=10, criterion="gini")

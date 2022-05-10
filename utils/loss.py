@@ -41,3 +41,18 @@ def cross_entropy_loss(y, num_classes=2):
             continue
         loss += rate * np.log(rate)
     return -loss
+
+
+def gini_index_loss(y, num_classes=2):
+    """
+    y: (n, )
+    """
+    loss = 1
+    if len(y) == 0:
+        return loss
+    for i in range(num_classes):
+        rate = np.mean(y == i)
+        if rate == 0:
+            continue
+        loss -= rate ** 2
+    return loss

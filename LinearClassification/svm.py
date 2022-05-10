@@ -11,14 +11,14 @@ from utils.preprocessing import perceptronizer
 
 
 class SVM:
-    def __init__(self, C:Union[int, float]=1.0, 
-                kernel:Union[str, Callable]='linear', 
-                degree:int=3, 
-                gamma:Union[str, float]='scale', 
-                coef0:Union[int, float]=0.0, 
-                tol:Union[int, float]=1e-3,
-                heuristic:bool=False,
-                max_iter:int=1000):
+    def __init__(self, C:int|float=1.0, 
+            kernel:str|Callable[[np.ndarray, np.ndarray], float]='linear', 
+            degree:int=3, 
+            gamma:str|float='scale', 
+            coef0:int|float=0.0, 
+            tol:int|float=1e-3,
+            heuristic:bool=False,
+            max_iter:int=1000):
 
         if (not callable(kernel)) and \
                 (kernel not in {"linear", "poly", "rbf", "sigmoid", "precomputed"}):
@@ -222,7 +222,7 @@ class SVM:
             else:
                 iter = 0
             
-    def fit(self, X, y):
+    def fit(self, X:np.ndarray, y:np.ndarray):
         n, m = X.shape
         if self.kernel == 'precomputed' and n != m:
             raise ValueError("Gram matrix must be a square matrix")
@@ -243,7 +243,7 @@ class SVM:
         else:
             self.__SMO()
     
-    def predict(self, X):
+    def predict(self, X:np.ndarray):
         n, m = X.shape
         pred = np.zeros(n)
         for i in range(n):
