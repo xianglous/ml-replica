@@ -40,7 +40,7 @@ class BaggingClassifier(BaseModel):
                  n_jobs:int=1,
                  random_state:Optional[int]=None):
         if base_estimator is None:
-            base_estimator = DecisionTree()
+            base_estimator = DecisionTree(random_state=random_state)
         self.base_estimator = base_estimator
         self.estimators = [self.base_estimator.clone() for _ in range(n_estimators)]
         self.n_estimators = n_estimators
@@ -69,7 +69,6 @@ class BaggingClassifier(BaseModel):
         return features[indices]
 
     def fit(self, X, y):
-        self.num_classes = len(np.unique(y))
         self.features = np.arange(X.shape[1]) # feature indices
         self.estimator_features = [] # bootstraped feature indices
         works = []  # works for multiprocessing
@@ -97,13 +96,12 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_stat
     print("==========================")
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    base = DecisionTree(max_depth=max_depth, criterion=criterion)
+    base = DecisionTree(criterion=criterion, max_depth=max_depth)
     clf = BaggingClassifier(
         base_estimator=base, 
         n_estimators=5, 
         max_samples=0.8, 
-        max_features=0.3, 
-        bootstrap_features=True, 
+        max_features=0.4, 
         n_jobs=3,
         random_state=random_state)
     clf.fit(X_train, y_train)
