@@ -2,7 +2,7 @@ import sys
 sys.path.append('..')
 import numpy as np
 import time
-from utils.data import dataset, model_str
+from utils.data import Dataset, model_str
 from utils.algorithm import SGD, GD
 from utils.loss import logistic_loss
 from utils.function import sigmoid
@@ -61,7 +61,7 @@ def evaluate(data, x_cols, y_col, regularization, reg, method, lr=1e-3, tol=1e-3
 if __name__ == "__main__":
     features = [["age"], ["interest"], ["age", "interest"]]
     y_col = "success"
-    data = dataset("../data/binary_classification.csv")
+    data = Dataset("../data/binary_classification.csv")
     data.transform(["age", "interest"], "standardize")
     for method in ["SGD", "GD"]:
         for x_cols in features:

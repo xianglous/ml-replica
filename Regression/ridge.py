@@ -2,7 +2,7 @@ import sys
 sys.path.append('..')
 import numpy as np
 import time
-from utils.data import dataset, model_str
+from utils.data import Dataset, model_str
 from utils.algorithm import SGD, GD
 from utils.loss import MSE_loss
 
@@ -49,7 +49,7 @@ def evaluate(data, x_cols, y_col, reg, method, lr=1e-2, tol=1e-3, max_iter=1000)
 if __name__ == "__main__":
     features = [["bedrooms", "bathrooms", "sqft_living", "floors"]]
     y_col = "price"
-    data = dataset("../Data/regression_data.csv", random_state=42)
+    data = Dataset("../Data/regression_data.csv", random_state=42)
     data.transform(["bedrooms", "bathrooms", "sqft_living", "floors", "price"], "standardize")
     for method in ["SGD", "GD", "closed_form"]:
         for x_cols in features:

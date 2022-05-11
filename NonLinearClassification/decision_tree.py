@@ -5,14 +5,15 @@ import numpy as np
 import time
 from collections.abc import Callable
 from typing import Union, Type, Optional
-from utils.data import dataset, model_str
+from utils.data import Dataset, model_str
+from utils.model import BaseModel
 from utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
 from utils.loss import cross_entropy_loss, gini_index_loss
 
 
-class decision_tree:
+class DecisionTree(BaseModel):
 
-    class tree_node: # tree node
+    class treeNode: # tree node
         def __init__(self, y, feature, threshold, left=None, right=None):
             values, counts = np.unique(y, return_counts=True)
             self.pred = values[np.argmax(counts)] # mode of y
@@ -23,6 +24,7 @@ class decision_tree:
             
     def __init__(self, max_depth:int=None,
             criterion:str|Callable[[np.ndarray, Optional[int]], float]="entropy"):
+        super().__init__()
         self.max_depth = max_depth
         if callable(criterion):
             self.loss_func = criterion
@@ -66,9 +68,9 @@ class decision_tree:
         if len(y) == 0:
             return None
         if len(self.features) == 0 or depth == self.max_depth:
-            return self.tree_node(y, None, None)
+            return self.treeNode(y, None, None)
         if len(set(y)) == 1:
-            return self.tree_node(y, None, None)
+            return self.treeNode(y, None, None)
         cur_loss = self.loss_func(y, self.num_classes)
         best_feature, threshold, loss = self.__best_feature(X, y)
         if loss == 0 or loss == cur_loss: # perfect split or no improve
@@ -77,7 +79,7 @@ class decision_tree:
         right_idx = X[:, best_feature] > threshold
         left = self.__train(X[left_idx], y[left_idx], depth+1)
         right = self.__train(X[right_idx], y[right_idx], depth+1)
-        return self.tree_node(y, best_feature, threshold, left, right)
+        return self.treeNode(y, best_feature, threshold, left, right)
 
     def fit(self, X_train:np.ndarray, y_train:np.ndarray):
         self.X_train = X_train
@@ -85,6 +87,7 @@ class decision_tree:
         self.features = set(range(X_train.shape[1]))
         self.num_classes = len(set(y_train))
         self.root = self.__train(X_train, y_train)
+        return self
     
     def __predict(self, node, x):
         if node.threshold is None:
@@ -152,7 +155,7 @@ class decision_tree:
             lines.append(line)
         return lines, width, idx
 
-    def print_tree(self, dataset:dataset=None, x_cols:list[str]=None, y_col:str=None):
+    def print_tree(self, dataset:Dataset=None, x_cols:list[str]=None, y_col:str=None):
         tree_lines, _, _ = self.__tree_to_str(self.root, dataset, x_cols, y_col)
         for line in tree_lines:
             print(line)
@@ -162,7 +165,7 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
     print("==========================")
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    clf = decision_tree(max_depth, criterion)
+    clf = DecisionTree(max_depth, criterion)
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
@@ -204,7 +207,7 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy"):
 if __name__ == "__main__":
     features = [["Age", "Sex"], ["Age", "Sex", "BP"], ["Age", "Sex", "BP", "Cholesterol"], ["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]]
     y_col = "Drug"
-    data = dataset("../Data/drug200.csv", random_state=42)
+    data = Dataset("../Data/drug200.csv", random_state=42)
     for x_cols in features:
         evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy")
         evaluate(data, x_cols, y_col, max_depth=10, criterion="gini")

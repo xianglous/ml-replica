@@ -1,7 +1,7 @@
 import numpy as np
 
 
-class min_max_scaler:
+class MinMaxScaler:
     def __init__(self, X, y=None):
         if X is None:
             X = np.array([y]).T
@@ -22,7 +22,7 @@ class min_max_scaler:
         return normalized
 
 
-class standardizer:
+class Standardizer:
     def __init__(self, X, y=None):
         if X is None:
             X = np.array([y]).T

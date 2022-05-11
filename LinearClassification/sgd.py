@@ -1,7 +1,7 @@
 import sys
 sys.path.append('..')
 import numpy as np
-from utils.data import dataset, model_str
+from utils.data import Dataset, model_str
 from utils.algorithm import GD, SGD
 from utils.loss import hinge_loss
 from utils.metrics import accuracy
@@ -51,7 +51,7 @@ if __name__ == "__main__":
     features = [["age"], ["interest"], ["age", "interest"]]
     y_col = "success"
     print("Gradient Descent")
-    data = dataset("../data/binary_classification.csv")
+    data = Dataset("../data/binary_classification.csv")
     # data.transform(["age", "interest"], "standardize")
     data.transform("success", perceptronizer)
     for x_cols in features:

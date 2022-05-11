@@ -1,9 +1,9 @@
 import pandas as pd
 import numpy as np
-from utils.preprocessing import standardizer, min_max_scaler, perceptronizer
+from utils.preprocessing import Standardizer, MinMaxScaler
 
 
-class dataset:
+class Dataset:
     def __init__(self, filename, ratio=0.8, random_state=None):
         self.data = pd.read_csv(filename)
         self.num_cols = self.data._get_numeric_data().columns
@@ -44,9 +44,9 @@ class dataset:
             self.transformer = method
         else:
             if method == "standardize":
-                self.transformer = standardizer(self.train_data[cols].to_numpy())
+                self.transformer = Standardizer(self.train_data[cols].to_numpy())
             elif method == "min_max_scale":
-                self.transformer = min_max_scaler(self.train_data[cols].to_numpy())
+                self.transformer = MinMaxScaler(self.train_data[cols].to_numpy())
             else:
                 raise ValueError("method should be one of 'standardize', 'min_max_scale' or a callable")
         self.train_data[cols] = self.transformer(self.train_data[cols].to_numpy())

@@ -4,13 +4,14 @@ import numpy as np
 import random
 from collections.abc import Callable
 from typing import Union
-from utils.data import dataset
+from utils.data import Dataset
+from utils.model import BaseModel
 from utils.function import polynomial_kernel, rbf_kernel, sigmoid_kernel
 from utils.metrics import accuracy, precision, recall, f1_score
 from utils.preprocessing import perceptronizer
 
 
-class SVM:
+class SVM(BaseModel):
     def __init__(self, C:int|float=1.0, 
             kernel:str|Callable[[np.ndarray, np.ndarray], float]='linear', 
             degree:int=3, 
@@ -19,7 +20,7 @@ class SVM:
             tol:int|float=1e-3,
             heuristic:bool=False,
             max_iter:int=1000):
-
+        super().__init__()
         if (not callable(kernel)) and \
                 (kernel not in {"linear", "poly", "rbf", "sigmoid", "precomputed"}):
             raise ValueError("Invalid kernel")
@@ -242,6 +243,7 @@ class SVM:
             self.__SMO_heuristic()
         else:
             self.__SMO()
+        return self
     
     def predict(self, X:np.ndarray):
         n, m = X.shape
@@ -271,7 +273,7 @@ def evaluate(data, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
 if __name__ == "__main__":
     x_cols = ["age", "interest"]
     y_col = "success"
-    data = dataset("../data/binary_classification.csv")
+    data = Dataset("../data/binary_classification.csv")
     data.transform(["age", "interest"], "standardize")
     data.transform("success", perceptronizer)
     # for kernel in ['linear', 'poly', 'rbf', 'precomputed']:
