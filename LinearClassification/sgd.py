@@ -9,6 +9,12 @@ from utils.preprocessing import perceptronizer
 
 
 def hinge_gradient(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    weights: (m, )
+    grad = -y * X if y * (weights @ X.T) <= 0 else 0
+    """
     conds = (y * (weights @ X.T) < 1)
     return -y[conds] @ X[conds] / (1 if len(X.shape)==1 else X.shape[0])
 

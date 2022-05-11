@@ -14,8 +14,9 @@ def logistic_GD_grad(X, y, weights):
     X: (n, m)
     y: (n, )
     weights: (m, )
+    grad = 1 / n * sum_i(xi * (sigmoid(xi @ weights) - yi))
     """
-    return X.T @ (sigmoid(X, weights) - y)
+    return X.T @ (sigmoid(X @ weights) - y) / X.shape[0]
 
 
 def logistic_SGD_grad(X, y, weights):
@@ -23,8 +24,9 @@ def logistic_SGD_grad(X, y, weights):
     X: (m, )
     y: scalar
     weights: (m, )
+    grad = x * (sigmoid(x @ weights) - y)
     """
-    return X * (sigmoid(X, weights) - y)
+    return X * (sigmoid(X @ weights) - y)
 
 
 def logistic_regression(X, y, regularization=None, reg=1.0, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000):

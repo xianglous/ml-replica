@@ -4,13 +4,15 @@ from utils.preprocessing import Standardizer, MinMaxScaler
 
 
 class Dataset:
+    """Class for loading and preprocessing data"""
     def __init__(self, filename, ratio=0.8, random_state=None):
         self.data = pd.read_csv(filename)
-        self.num_cols = self.data._get_numeric_data().columns
-        self.cate_cols = self.data.columns.difference(self.num_cols)
-        self.cate_map = {}
+        self.num_cols = self.data._get_numeric_data().columns # numeric columns
+        self.cate_cols = self.data.columns.difference(self.num_cols) # categorical columns
+        self.cate_map = {} # factor to category mapping
         for col in self.cate_cols:
             self.data[col], self.cate_map[col] = pd.factorize(self.data[col])
+        # split data into train, val, test
         if isinstance(ratio, float):
             if ratio > 1 or ratio < 0:
                 raise ValueError("ratio should be between 0 and 1")
@@ -37,6 +39,7 @@ class Dataset:
         self.test_data = test_data
 
     def transform(self, cols, method="standardize"):
+        """Transform columns of the dataframe"""
         if isinstance(cols, str):
             cols = [cols]
         cols = [col for col in cols if col in self.num_cols]
@@ -54,6 +57,7 @@ class Dataset:
         self.test_data[cols] = self.transformer(self.test_data[cols].to_numpy())
     
     def get_split(self, x_cols, y_col, val=False):
+        """Get split of the dataframe"""
         X_train, y_train = self.get_train(x_cols, y_col)
         X_test, y_test = self.get_test(x_cols, y_col)
         if val:
@@ -62,20 +66,25 @@ class Dataset:
         return X_train, y_train, X_test, y_test
 
     def get_train(self, x_cols, y_col):
+        """Get train split of the dataframe"""
         return self.train_data[x_cols].to_numpy(), self.train_data[y_col].to_numpy()
     
     def get_val(self, x_cols, y_col):
+        """Get val split of the dataframe"""
         return self.val_data[x_cols].to_numpy(), self.val_data[y_col].to_numpy()
     
     def get_test(self, x_cols, y_col):
+        """Get test split of the dataframe"""
         return self.test_data[x_cols].to_numpy(), self.test_data[y_col].to_numpy()
 
     def translate(self, col, vals):
+        """Translate factorized values to categorical values"""
         if col not in self.cate_cols:
             raise ValueError("column should be one of the categorical columns")
         return self.cate_map[col][vals]
 
     def predict(self, model, df, x_cols):
+        """Predict using a model"""
         if isinstance(x_cols, str):
             x_cols = [x_cols]
         n_cols = [col for col in x_cols if col in self.num_cols]

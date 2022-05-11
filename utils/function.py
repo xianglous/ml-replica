@@ -1,12 +1,12 @@
 import numpy as np
 
 
-def sigmoid(X, weights):
+def sigmoid(u):
     """
     X: (n, m)
     weights: (m, )
     """
-    return 1 / (1 + np.exp(-X @ weights))
+    return 1 / (1 + np.exp(-u))
 
 
 def polynomial_kernel(u, v, gamma, degree, coef0):

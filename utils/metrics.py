@@ -12,6 +12,7 @@ def precision(y_true, y_pred, pos_class=1):
     """
     y_true: (n, )
     y_pred: (n, )
+    prec = TP / (TP + FP)
     """
     true_pred = (y_pred == pos_class)
     true_positives = np.sum((y_true == y_pred)*true_pred)
@@ -25,6 +26,7 @@ def recall(y_true, y_pred, pos_class=1):
     """
     y_true: (n, )
     y_pred: (n, )
+    recall = TP / (TP + FN)
     """
     true_true = (y_true == pos_class)
     true_positives = np.sum((y_true == y_pred)*true_true)
@@ -38,6 +40,7 @@ def f1_score(y_true, y_pred, pos_class=1):
     """
     y_true: (n, )
     y_pred: (n, )
+    f1 = 2 * precision * recall / (precision + recall)
     """
     precision_ = precision(y_true, y_pred, pos_class)
     recall_ = recall(y_true, y_pred, pos_class)
@@ -50,6 +53,7 @@ def confusion_matrix(y_true, y_pred, num_classes=None, normalize=None):
     """
     y_true: (n, )
     y_pred: (n, )
+    conf_mat[i, j] = number of times y_true == i and y_pred == j
     """
     if num_classes is None:
         num_classes = np.max(y_true) + 1

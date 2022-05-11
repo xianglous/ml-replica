@@ -8,14 +8,32 @@ from utils.loss import MSE_loss
 
 
 def ridge_closed_form(X, y, reg):
+    """
+    X: (n, m)
+    y: (n, )
+    reg: float
+    w = (X.T @ X + reg * I)^-1 @ X.T @ y
+    """
     return np.linalg.pinv(X.T @ X + reg * np.eye(X.shape[1])) @ X.T @ y
 
 
 def ridge_SGD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    weights: (m, )
+    grad = -x * (y - x @ weights)
+    """
     return -X * (y - X @ weights)
 
 
 def ridge_GD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    weights: (m, )
+    grad = -1/n * sum_i(xi * (yi - xi @ weights))
+    """
     return -X.T @ (y - X @ weights) / X.shape[0]
 
 

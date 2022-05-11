@@ -41,7 +41,7 @@ class DecisionTree(BaseModel):
         best_threshold = vals[0] - 0.5
         min_loss = np.inf
         for i in range(len(vals)):
-            threshold = (vals[i] + prev) / 2
+            threshold = (vals[i] + prev) / 2 # midpoint between adjacent values
             prev = vals[i]
             left_idx = X[:, feature] <= threshold
             right_idx = X[:, feature] > threshold
@@ -56,7 +56,7 @@ class DecisionTree(BaseModel):
         min_loss = np.inf
         best_feature = None
         best_threshold = None
-        for feature in self.features:
+        for feature in self.remained_features:
             threshold, loss = self.__best_split(X, y, feature)
             if loss < min_loss:
                 min_loss = loss
@@ -65,33 +65,35 @@ class DecisionTree(BaseModel):
         return best_feature, best_threshold, min_loss
 
     def __train(self, X, y, depth=0):
-        if len(y) == 0:
+        if len(y) == 0: # no data left
             return None
-        if len(self.features) == 0 or depth == self.max_depth:
+        if len(self.remained_features) == 0 or\
+                depth == self.max_depth: # no more features or max depth reached
             return self.treeNode(y, None, None)
-        if len(set(y)) == 1:
+        if len(set(y)) == 1: # all same class
             return self.treeNode(y, None, None)
-        cur_loss = self.loss_func(y, self.num_classes)
+        cur_loss = self.loss_func(y, self.num_classes) # current loss
         best_feature, threshold, loss = self.__best_feature(X, y)
         if loss == 0 or loss == cur_loss: # perfect split or no improve
-            self.features.remove(best_feature)
+            self.remained_features.remove(best_feature)
         left_idx = X[:, best_feature] <= threshold
         right_idx = X[:, best_feature] > threshold
         left = self.__train(X[left_idx], y[left_idx], depth+1)
         right = self.__train(X[right_idx], y[right_idx], depth+1)
         return self.treeNode(y, best_feature, threshold, left, right)
 
-    def fit(self, X_train:np.ndarray, y_train:np.ndarray):
+    def fit(self, X_train, y_train):
+        super().fit(X_train, y_train) # check args
         self.X_train = X_train
         self.y_train = y_train
-        self.features = set(range(X_train.shape[1]))
+        self.remained_features = set(range(X_train.shape[1]))
         self.num_classes = len(set(y_train))
         self.root = self.__train(X_train, y_train)
         return self
     
     def __predict(self, node, x):
         if node.threshold is None:
-            return node.pred
+            return node.pred # leaf node
         if x[node.feature] <= node.threshold:
             if node.left is None:
                 return node.pred
@@ -101,7 +103,8 @@ class DecisionTree(BaseModel):
                 return node.pred
             return self.__predict(node.right, x)
 
-    def predict(self, X_test:np.ndarray):
+    def predict(self, X_test):
+        super().predict(X_test)
         y_pred = []
         for x in X_test:
             y_pred.append(self.__predict(self.root, x))

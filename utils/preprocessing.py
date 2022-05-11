@@ -2,6 +2,7 @@ import numpy as np
 
 
 class MinMaxScaler:
+    """Scales the data to the range [0, 1]"""
     def __init__(self, X, y=None):
         if X is None:
             X = np.array([y]).T
@@ -23,6 +24,7 @@ class MinMaxScaler:
 
 
 class Standardizer:
+    """Standardize the data using the mean and standard deviation"""
     def __init__(self, X, y=None):
         if X is None:
             X = np.array([y]).T

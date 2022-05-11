@@ -1,20 +1,24 @@
+import numpy as np
 from utils.algorithm import SGD, GD
 
 class BaseModel:
-    """
-    Base class for all models
-    """
+    """Base class for all models"""
     def __init__(self, **kwargs):
         self.params = kwargs
     
+    def fit(self, X:np.ndarray, y:np.ndarray):
+        pass
+
+    def predict(self, X:np.ndarray):
+        pass
+
     def clone(self):
+        """Return a clone of the model"""
         return self.__class__(**self.params)
 
     
 class LinearModel(BaseModel):
-    """
-    Linear model
-    """
+    """Linear model"""
     def __init__(self):
         super().__init__()
         self.weights = None
@@ -25,6 +29,7 @@ class LinearModel(BaseModel):
         y: (n, )
         method: 'SGD' or 'GD'
         """
+        super().fit(X, y)
         if callable(method):
             self.weights = method(X, y, **kwargs)
         elif method == 'SGD':
@@ -39,6 +44,7 @@ class LinearModel(BaseModel):
         """
         X: (n, m)
         """
+        super().predict(X)
         if self.weights is None:
             raise ValueError("model is not fitted yet")
         return X @ self.weights

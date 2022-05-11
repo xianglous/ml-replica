@@ -31,6 +31,7 @@ def logistic_loss(X, y, weights):
 def cross_entropy_loss(y, num_classes=None):
     """
     y: (n, )
+    loss = -sum_i(yi * log(pi))
     """
     if num_classes is None:
         num_classes = np.max(y) + 1
@@ -48,6 +49,7 @@ def cross_entropy_loss(y, num_classes=None):
 def gini_index_loss(y, num_classes=None):
     """
     y: (n, )
+    loss = 1 - sum_i(pi * (1 - pi))
     """
     if num_classes is None:
         num_classes = np.max(y) + 1

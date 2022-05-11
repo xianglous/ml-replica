@@ -8,10 +8,22 @@ from utils.loss import MSE_loss
 
 
 def lasso_SGD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    weights: (m, )
+    grad = -x * (y - x @ weights)
+    """
     return -X * (y - X @ weights)
 
 
 def lasso_GD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    weights: (m, )
+    grad = 1 / n * sum_i(xi * (yi - xi @ weights))
+    """
     return -X.T @ (y - X @ weights) / X.shape[0]
 
 

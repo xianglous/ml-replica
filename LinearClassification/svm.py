@@ -223,7 +223,8 @@ class SVM(BaseModel):
             else:
                 iter = 0
             
-    def fit(self, X:np.ndarray, y:np.ndarray):
+    def fit(self, X, y):
+        super().fit(X, y)
         n, m = X.shape
         if self.kernel == 'precomputed' and n != m:
             raise ValueError("Gram matrix must be a square matrix")
@@ -245,7 +246,8 @@ class SVM(BaseModel):
             self.__SMO()
         return self
     
-    def predict(self, X:np.ndarray):
+    def predict(self, X):
+        super().predict(X)
         n, m = X.shape
         pred = np.zeros(n)
         for i in range(n):

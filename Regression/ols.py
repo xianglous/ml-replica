@@ -8,14 +8,29 @@ from utils.loss import MSE_loss
 
 
 def ols_closed_form(X, y):
+    """
+    X: (n, m)
+    y: (n, )
+    w = (X.T @ X)^-1 @ X.T @ y
+    """
     return np.linalg.pinv(X.T @ X) @ X.T @ y
 
 
 def MSE_SGD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    grad = -x * (y - x @ weights)
+    """
     return -X * (y - X @ weights)
 
 
 def MSE_GD_grad(X, y, weights):
+    """
+    X: (n, m)
+    y: (n, )
+    grad = -1 / n * sum_i(xi * (yi - xi @ weights))
+    """
     return -X.T @ (y - X @ weights) / X.shape[0]
 
 

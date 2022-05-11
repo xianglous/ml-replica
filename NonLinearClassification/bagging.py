@@ -12,10 +12,19 @@ from scipy.stats import mode
 
 
 def fit_single(estimator, X, y):
+    """
+    X: (n, m)
+    y: (n, )
+    fit a single estimator
+    """
     return estimator.fit(X, y)
 
 
 def predict_single(estimator, X):
+    """
+    X: (n, m)
+    predict using single estimator
+    """
     return estimator.predict(X)
 
 
@@ -61,9 +70,9 @@ class BaggingClassifier(BaseModel):
 
     def fit(self, X, y):
         self.num_classes = len(np.unique(y))
-        self.features = np.arange(X.shape[1])
-        self.estimator_features = []
-        works = []
+        self.features = np.arange(X.shape[1]) # feature indices
+        self.estimator_features = [] # bootstraped feature indices
+        works = []  # works for multiprocessing
         for estimator in self.estimators:
             X_, y_ = self.__bootstrap_sample(X, y)
             features = self.__bootstrap_features(self.features)
@@ -72,15 +81,16 @@ class BaggingClassifier(BaseModel):
             self.estimator_features.append(features)
         with ProcessPoolExecutor(max_workers=self.n_jobs) as exe:
             self.estimators = list(exe.map(fit_single, *zip(*works)))
+        return self
 
     def predict(self, X):
-        works = []
+        works = [] # works for multiprocessing
         for estimator, features in zip(self.estimators, self.estimator_features):
             X_ = X[:, features]
             works.append((estimator, X_))
         with ProcessPoolExecutor(max_workers=self.n_jobs) as exe:
             predictions = np.array(list(exe.map(predict_single, *zip(*works)))).T
-        return mode(predictions, axis=1)[0].T
+        return mode(predictions, axis=1)[0].T # majority vote
 
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_state=None):
@@ -107,7 +117,6 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_stat
     print(confusion_matrix(y_test, y_test_pred))
     print(f"Training used {time.time()-start} seconds")
     print("==========================")
-
 
 
 if __name__ == '__main__':

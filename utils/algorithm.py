@@ -2,10 +2,18 @@ import numpy as np
 
 
 def l1_grad(weights):
+    """
+    weights: (m, )
+    grad = sgn(weights)
+    """
     return np.sign(weights)
 
 
 def l2_grad(weights):
+    """
+    weights: (m, )
+    grad = weights
+    """
     return weights
 
 
@@ -33,8 +41,10 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
     elif regularization is not None:
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
-        grad = grad_func(X, y, weights) + (alpha * reg_grad(weights) if regularization is not None else 0)
-        weights = weights - lr * grad
+        grad = grad_func(X, y, weights) +\
+            (alpha * reg_grad(weights)
+             if regularization is not None else 0) # gradient of all samples
+        weights = weights - lr * grad # gradient descent
         prev_loss = loss
         loss = loss_func(X, y, weights)
         if prev_loss and abs(loss-prev_loss) < tol:
@@ -68,8 +78,10 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
         for i in range(n):
-            grad = grad_func(X[i], y[i], weights) + (alpha * reg_grad(weights) if regularization is not None else 0)
-            weights = weights - lr * grad
+            grad = grad_func(X[i], y[i], weights) +\
+                (alpha * reg_grad(weights)
+                 if regularization is not None else 0) # gradient of one sample
+            weights = weights - lr * grad # gradient descent
             prev_loss = loss
             loss = loss_func(X[i], y[i], weights)
             if prev_loss and abs(loss-prev_loss) < tol:
