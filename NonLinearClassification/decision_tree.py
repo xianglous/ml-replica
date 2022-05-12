@@ -146,59 +146,70 @@ class DecisionTree(BaseModel):
             y_pred.append(self.__predict(self.root, x))
         return np.array(y_pred)
 
-    def __tree_to_str(self, node, dataset, x_cols, y_col, middle_padding=3):
+    def __tree_to_str(self, node, dataset, x_cols, y_col):
         if node is None: # end
-            return [""], 0, 0
+            return []
         if node.feature is None: # leaf
             pred = node.pred if dataset is None else dataset.translate(y_col, node.pred)
-            root_str = "pred: {}".format(pred)
+            root_str = f"pred: {pred}"
         else: # split
             feat = node.feature if dataset is None else x_cols[node.feature]
             thresh = round(node.threshold, 2)
             root_str = f"{feat} <= {thresh}"
         idx = (len(root_str) - 1) // 2 # index of the root center
         if node.left is None and node.right is None: # leaf
-            return [root_str], len(root_str), idx
-        left_strs, left_width, left_idx = \
-            self.__tree_to_str(node.left, dataset, x_cols, y_col, middle_padding) # left subtree
-        right_strs, right_width, right_idx = \
-            self.__tree_to_str(node.right, dataset, x_cols, y_col, middle_padding) # right subtree
+            return [(root_str, 0, len(root_str))]
+        left_strs = \
+            self.__tree_to_str(node.left, dataset, x_cols, y_col) # left subtree
+        right_strs = \
+            self.__tree_to_str(node.right, dataset, x_cols, y_col) # right subtree
+        left_idx = left_strs[0][1] + (left_strs[0][2] - 1) // 2 if left_strs else 0
+        right_idx = right_strs[0][1] + (right_strs[0][2] - 1) // 2 if right_strs else 0
         root_left_padding = max(0, left_idx - idx) # root left padding
         left_left_padding = max(0, idx - left_idx) # left subtree padding
-        root_right_padding = 0 # root right padding
-        sub_width = left_left_padding + left_width + right_width
+        min_dis = 0
+        for i in range((min(len(left_strs), len(right_strs)) + 1) // 2):
+            index = 2 * i
+            if index >= len(right_strs):
+                break
+            right_start = right_strs[index][1]
+            dis = right_start - len(left_strs[index][0]) - left_left_padding
+            min_dis = min(min_dis, dis)
+        mid_padding = -min_dis
+        mid_padding += 2
         idx += root_left_padding
-        if len(root_str) < sub_width + middle_padding:
-            root_right_padding = \
-                sub_width + middle_padding - len(root_str) - root_left_padding
-        else:
-            middle_padding = len(root_str) - sub_width
-        width = sub_width + middle_padding
         # root
-        lines = [f"{' ' * root_left_padding}{root_str}{' ' * root_right_padding}"]
+        first_line = f"{' ' * root_left_padding}{root_str}"
+        lines = [(first_line, root_left_padding, len(root_str))]
         # connector
         left = ' ' * (idx - 1)
-        left += ' ' if left_width == 0 else '|'
-        right = ' ' if right_width == 0 else '\\' +\
-            '_' * max(0, (right_idx + left_left_padding + 
-                          left_width + middle_padding - len(left) - 2))            
-        right += ' ' * (width - len(right) - len(left))
-        lines.append(f"{left}{right}")
+        left += ' ' if len(left_strs) == 0 else '|'
+        right_indent = right_strs[0][1]
+        right = ' ' if len(right_strs) == 0 else '\\' +\
+            '_' * max(0, (right_idx + mid_padding + right_indent - len(left) - 2))            
+        second_line = f"{left}{right}"
+        lines.append((second_line, 0, len(second_line)))
         # subtrees
         for i in range(max(len(left_strs), len(right_strs))):
             line = " " * left_left_padding
-            line += left_strs[i] if i < len(left_strs) \
-                else " " * left_width # left subtree
-            line += " " * middle_padding # middle padding
-            line += right_strs[i] if i < len(right_strs) \
-                else " " * right_width # right subtree
-            lines.append(line)
-        return lines, width, idx
+            left_len = 0
+            if i < len(left_strs):
+                line += left_strs[i][0]
+                start = left_left_padding + left_strs[i][1]
+                left_len = len(left_strs[i][0])
+            else:
+                start = mid_padding + right_strs[i][1]
+            if i < len(right_strs):
+                line += " " * (mid_padding + right_strs[i][1] - left_len - left_left_padding) # middle padding
+                line += right_strs[i][0][right_strs[i][1]:] # right subtree
+            length = len(line) - start
+            lines.append((line, start, length))
+        return lines
 
     def print_tree(self, dataset:Dataset=None, x_cols:list[str]=None, y_col:str=None):
-        tree_lines, _, _ = self.__tree_to_str(self.root, dataset, x_cols, y_col)
+        tree_lines = self.__tree_to_str(self.root, dataset, x_cols, y_col)
         for line in tree_lines:
-            print(line)
+            print(line[0])
 
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", verbose=False):
