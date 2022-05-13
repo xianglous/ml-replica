@@ -22,8 +22,9 @@
     - [Sequential Minimal Optimization](#sequential-minimal-optimization)
 - [Regression](#regression)
   - [Ordinary Least Squares](#ordinary-least-squares)
-  - [Ridge Regression](#ridge-regression)
-  - [Lasso Regression](#lasso-regression)
+  - [Regularization](#regularization)
+    - [Ridge Regression](#ridge-regression)
+    - [Lasso Regression](#lasso-regression)
 
 # Linear Clasification
 Linear classifiers classifies the input features based on the decision hyperplane in the feature space.
@@ -35,8 +36,8 @@ The perceptron algorithm is the building block of deep learning. It updates on o
 k=0, w=0
 <b>while</b> not all correctly classified <b>and</b> k < max step:
     <b>for</b> i in 1...n:
-        <b>if</b> yi(w.Xi) <= 0: // misclassified
-            w = w + yiXi // the Update
+        <b>if</b> yi(w•xi) <= 0: // misclassified
+            w = w + yixi // the Update
             k++
 </pre>
 *Pseudocode* (w/ offset)
@@ -58,21 +59,21 @@ Perceptron is nice and simple, but it has an important restriction: it only conv
 To make it work for non-separable data, we need to change the way it approaches the best model. 
 
 ### Loss Functions
-In machine learning, we often use a loss function to measure the fit of the current model to the training data. For example, the perceptron algorithm uses the following loss function:
+In machine learning, we often use a loss function to measure the fit of the current model to the training data. For the perceptron algorithm, we want our fitted value to have the same sign as the actual class, so we multiply them together and penalize those with negative products. In another word, the perceptron algorithm uses the following loss function:
 
-$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq ;0]}$$
+$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{[y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})\leq 0]}$$
 
-A problem with this loss function is that it does not measures the distance between the predicted and actual value, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
+A problem with this loss function is that it does not measures the distance between the predicted value and actual class, so 0.1 and 1 will all be seen as a good classification while -0.1 and -1 will all be equally bad. <br>
 
-So another loss function we can use instead is the **Hinge Loss**, for each fitted value, the Hingle Loss is:
+So another loss function we can use instead is the **Hinge Loss**, for a fitted value \\(\hat{y}\\), the Hingle Loss is:
 
-$$h(\bar{x}^{(i)}, y^{(i)}, \bar{w})=\max(0, 1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)}))$$
+$$h(y,\hat{y})=\max(0, 1-y\hat{y})$$
 
-And for the whole model, the loss function is defined as:
+For our linear model, the loss function is defined as:
 
 $$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\max(0, 1-y^{(i)}(\bar{w}\cdot\bar{x}^{(i)})))}$$
 
-This loss will penalize any imperfect prediction.
+This loss will penalize any **imperfect** prediction.
 
 ### Gradient Descent
 The loss function tells us about how **bad** the current model fits the data. Therefore, we need to know the direction in which moving the parameters will decrease the loss. In mathematics, we use the gradient to measure the "direction." For Hinge Loss, the gradient of a single data point is: 
@@ -97,8 +98,8 @@ k=0, w=0
 <b>while</b> criterion not met:
     g = 0
     <b>for</b> i in 1...n:
-        <b>if</b> yi(w.Xi)<1:
-            g = g - yiXi/n
+        <b>if</b> yi(w•xi)<1:
+            g = g - yixi/n
     w = w - η*g // the Descent
     k++
 </pre>
@@ -112,8 +113,8 @@ The problem with gradient descent is that we need to compute the gradient of eac
 k=0, w=0
 <b>while</b> criterion not met:
     <b>for</b> i in 1...n:
-        <b>if</b> yi(w.Xi)<1:
-            w = w + η*yiXi // the Descent
+        <b>if</b> yi(w•xi)<1:
+            w = w + η*yixi // the Descent
             k++
 </pre>
 
@@ -295,8 +296,8 @@ J(\bar{\alpha})=\sum_{i=1}^n{\alpha_i}-\frac{1}{2}\sum_{i=1}^n{\sum_{j=1}^n{\alp
 One problem with this setup is that the computation can be slow because we need to 1) map the features to higher dimension, 2) compute the inner products between each pair of mapped features. Also, note that predicting the response for a new data point is:
 
 $$\begin{aligned}
-\hat{y}&=\text{sgn}((\bar{w}^\ast)^\top\phi(\hat{\bar{x}})+b^\ast)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}+b^\ast)\\
-b^\ast&=y^{(k)}-(\bar{w}^\ast)^\top\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0
+\hat{y}&=\text{sgn}((\bar{w}^\ast)^\mathsf{T}\phi(\hat{\bar{x}})+b^\ast)=\text{sgn}(\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\hat{\bar{x}})\right>}+b^\ast)\\
+b^\ast&=y^{(k)}-(\bar{w}^\ast)^\mathsf{T}\phi(\bar{x}^{(k)})=y^{(k)}-\sum_{i=1}^n{\alpha_iy^{(i)}\left<\phi(\bar{x}^{(i)}),\phi(\bar{x}^{(k)})\right>},\forall\alpha_k>0
 \end{aligned}$$
 
 We can see that only the inner product of the mappings are needed in training or evaluation. So instead of computing the mapping, we would like to compute the inner products of the mapped features directly. Therefore, we introduce the **kernel function**:
@@ -556,6 +557,44 @@ In classification problems, we try to classify input features into categories. B
 
 ## Ordinary Least Squares
 
-## Ridge Regression
+Previously, we have been using the **Hinge Loss** as the objective for optimization because it takes the **product**, \\(y\hat{y}\\), as a measure of the similarity between the fitted value and the actual class and penalize it by substract it from 1 (100% similarity). However, the goal of regression is to predict a value rather than a class, so our loss function should somehow measure the **distance** between the predicted and actual value. For example, we can use the **Squared Loss**:
 
-## Lasso Regression
+$$h(y,\hat{y}) = \frac{(y-\hat{y})^2}{2}$$
+
+And for the entire training data, we measure the **Mean Squared Error** (MSE):
+
+$$L(\bar{y}, \hat{\bar{y}})=\frac{1}{n}\sum_{i=1}^n{\frac{(y^{(i)}-\hat{y}^{(i)})^2}{2}}=\frac{1}{2n}(\bar{y}-\hat{\bar{y}})^\mathsf{T}(\bar{y}-\hat{\bar{y}})$$
+
+So a common method for solving the linear regression problem is **Ordinary Least Squares** (OLS). We want to minimize the loss:
+
+$$L(X, \bar{y}, \bar{w})=\frac{1}{n}\sum_{i=1}^n{\frac{(y^{(i)}-\bar{w}\cdot\bar{x}^{(i)})^2}{2}}=\frac{1}{2n}(\bar{y}-X\bar{w})^\mathsf{T}(\bar{y}-X\bar{w})$$
+
+We would like the gradient to shrink to 0:
+
+$$
+\begin{aligned}
+\nabla_{\bar{w}}L(X, \bar{y}, \bar{w})=&\frac{1}{2n}(2X^\mathsf{T} X\bar{w}-2X^\mathsf{T}\bar{y})=\frac{1}{n}(X^\mathsf{T} X\bar{w}-X^\mathsf{T}\bar{y})\\
+\nabla_{\bar{w}^*}L(X, \bar{y}, \bar{w})=&\frac{1}{n}(X^\mathsf{T} X\bar{w}^*-X^\mathsf{T}\bar{y})=\mathbb{0}\Rightarrow X^\mathsf{T} X\bar{w}^*=X^\mathsf{T}\bar{y}
+\end{aligned}
+$$
+
+So, if \\(X^\mathsf{T} X\\) is a **Nonsingular** matrix, we can find a **closed-form solution** to the OLS regression problem:
+
+$$\bar{w}^*=(X^\mathsf{T} X)^{-1}X^\mathsf{T}\bar{y}$$
+
+But computing such matrix operations can be expensive when the dimensions of \\(X\\) is big. So as usual, we can use **gradient descent**.
+
+*Pseudocode (SGD)*:
+<pre>
+k=0, w=0
+<b>while</b> criterion not met:
+    <b>for</b> i in 1...n:
+        w = w - ηxi(w•xi-yi) // the Descent
+        k++
+</pre>
+
+## Regularization
+
+### Ridge Regression
+
+### Lasso Regression
