@@ -52,7 +52,7 @@ k=0, w=0, b=0
 </pre>
 *Note*: we can convert the w/ offset version to w/o by transforming `X` to `[1, X]`, then the first resulting weight parameter would be the offset.
 
-*Code*: [perceptron.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/perceptron.py)
+*Code*: [algorithm.py - perceptron()](/ml-replica/mlreplica/utils/algorithm.py#L5)
 
 ## Stochastic Gradient Descent
 Perceptron is nice and simple, but it has an important restriction: it only converges on linearly-separable data. <br>
@@ -118,7 +118,7 @@ k=0, w=0
             k++
 </pre>
 
-*Code*: [sgd.py](https://github.com/xianglous/ml-replica/blob/main/Linear%20Classifiers/sgd.py)
+*Code*: [algorithm.py - SGD() / GD()](/ml-replica/mlreplica/utils/algorithm.py#L39)
 
 ## Support Vector Machine
 As mentioned before, in linear classification problems we want to find a hyperplane that separates training data well. But there can be infinitely many hyperplanes that separate the data, we need to have additional measures to select the best ones. 
@@ -549,7 +549,7 @@ iter=0
         iter=0
 </pre>
 
-Code: [svm.py](/ml-replica/Linear%20Classifiers/svm.py)
+Code: [_svm.py](/ml-replica/mlreplica/linear_model/_svm.py)
 
 # Regression
 
