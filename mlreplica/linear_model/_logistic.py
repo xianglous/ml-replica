@@ -1,0 +1,31 @@
+from ._regression import LinearRegression
+from ..utils.function import sigmoid
+from ..utils.loss import logistic_loss, logistic_loss_grad
+
+
+class LogisticRegression(LinearRegression):
+    def __init__(self, 
+            bias=True, 
+            regularization='l2', 
+            alpha=1.0, 
+            solver='SGD', 
+            lr=1e-3, 
+            tol=1e-3, 
+            max_iter=1000):
+        super().__init__(
+            bias=bias, 
+            loss_func=logistic_loss,
+            grad_func=logistic_loss_grad,
+            regularization=regularization, 
+            alpha=alpha, 
+            solver=solver, 
+            transform=sigmoid, 
+            lr=lr, 
+            tol=tol, 
+            max_iter=max_iter)
+    
+    def predict(self, X):
+        return self.predict_proba(X) > 0.5
+
+    def predict_proba(self, X):
+        return super().predict(X)

@@ -1,4 +1,23 @@
 import numpy as np
+from .metrics import accuracy
+
+
+def perceptron(X, y, max_iter=1000):
+    """
+    X: (n, m)
+    y: (n, )
+    """
+    n, m = X.shape
+    num_iter = 0
+    weights = np.zeros(m)
+    acc = 0
+    while acc < 1 and num_iter < max_iter:
+        for i in range(n):
+            if y[i] * (weights @ X[i].T) <= 0:
+                weights = weights + y[i] * X[i]
+                num_iter += 1
+        acc = accuracy(y, np.sign(weights @ X.T))
+    return weights
 
 
 def l1_grad(weights):
@@ -22,7 +41,7 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
     X: (n, m)
     y: (n, )
     grad_func: (X, y, weights) -> grad
-    loss_func: (X, y, weights) -> loss
+    loss_func: (y_true, y_pred) -> loss
     regularization: None, 'l1', 'l2'
     alpha: regularization strength
     lr: learning rate
@@ -46,7 +65,7 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
              if regularization is not None else 0) # gradient of all samples
         weights = weights - lr * grad # gradient descent
         prev_loss = loss
-        loss = loss_func(X, y, weights)
+        loss = loss_func(y, X @ weights)
         if prev_loss and abs(loss-prev_loss) < tol:
             return weights
         num_iter += 1
@@ -58,7 +77,7 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
     X: (n, m)
     y: (n, )
     grad_func: (X, y, weights) -> grad
-    loss_func: (X, y, weights) -> loss
+    loss_func: (y_true, y_pred) -> loss
     regularization: None, 'l1', 'l2'
     alpha: regularization strength
     lr: learning rate
@@ -83,7 +102,7 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
                  if regularization is not None else 0) # gradient of one sample
             weights = weights - lr * grad # gradient descent
             prev_loss = loss
-            loss = loss_func(X[i], y[i], weights)
+            loss = loss_func(y[i], X[i] @ weights)
             if prev_loss and abs(loss-prev_loss) < tol:
                 return weights
             num_iter += 1

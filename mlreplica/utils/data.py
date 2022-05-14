@@ -1,6 +1,5 @@
 import pandas as pd
-import numpy as np
-from utils.preprocessing import Standardizer, MinMaxScaler
+from .preprocessing import Standardizer, MinMaxScaler
 
 
 class Dataset:
@@ -125,12 +124,3 @@ class Dataset:
 #         y_test = y_trans(y_test)
 
 #     return X_train, y_train, X_test, y_test
-
-
-def model_str(x_cols, y_col, offset_enabled=False, method="linear"):
-    if method == "linear":
-        return f"Model: {y_col} = {'w_0 + ' if offset_enabled else ''}" +\
-            f"{' + '.join([f'w_{i+1} * {x_cols[i]}' for i in range(len(x_cols))])}"
-    elif method == "logistic":
-        return f"Model: {y_col} = 1 / (1 + exp(-{'w_0 + ' if offset_enabled else ''}" +\
-            f"{' + '.join([f'w_{i+1} * {x_cols[i]}' for i in range(len(x_cols))])}))"

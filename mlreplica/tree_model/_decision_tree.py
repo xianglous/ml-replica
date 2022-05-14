@@ -1,19 +1,16 @@
-from locale import normalize
-import sys
-sys.path.append('..')
 import numpy as np
-import time
 from collections.abc import Callable
 from typing import Union, Type, Optional
-from utils.data import Dataset, model_str
-from utils.model import BaseModel
-from utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
-from utils.loss import cross_entropy_loss, gini_index_loss
+from ..utils.data import Dataset
+from ..utils.model import BaseModel
+from ..utils.loss import cross_entropy_loss, gini_index_loss
 
 
 class DecisionTree(BaseModel):
+    """Decision Tree Classifier"""
 
-    class treeNode: # tree node
+    class treeNode:
+        """Tree node"""
         def __init__(self, y, feature, threshold, left=None, right=None):
             values, counts = np.unique(y, return_counts=True)
             self.pred = values[np.argmax(counts)] # mode of y
@@ -206,61 +203,9 @@ class DecisionTree(BaseModel):
             lines.append((line, start, length))
         return lines
 
-    def print_tree(self, dataset:Dataset=None, x_cols:list[str]=None, y_col:str=None):
+    def str(self, dataset:Dataset=None, x_cols:list[str]=None, y_col:str=None):
         tree_lines = self.__tree_to_str(self.root, dataset, x_cols, y_col)
+        tree_str = "\n"
         for line in tree_lines:
-            print(line[0])
-
-
-def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", verbose=False):
-    if verbose:
-        print("==========================")
-    start = time.time()
-    X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    clf = DecisionTree(criterion=criterion, max_depth=max_depth)
-    clf.fit(X_train, y_train)
-    y_train_pred = clf.predict(X_train)
-    y_test_pred = clf.predict(X_test)
-    train_acc = accuracy(y_train, y_train_pred)
-    test_acc = accuracy(y_test, y_test_pred)
-    if verbose:
-        print(f"{model_str(x_cols, y_col)} using {criterion}")
-        print("Training accuracy:", train_acc)
-        print("Testing accuracy:", test_acc)
-        print("Training precision:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {precision(y_train, y_train_pred, cls)}")
-        print("Testing precision:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {precision(y_test, y_test_pred, cls)}")
-        print("Training recall:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {recall(y_train, y_train_pred, cls)}")
-        print("Testing recall:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {recall(y_test, y_test_pred, cls)}")
-        print("Training F1:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {f1_score(y_train, y_train_pred, cls)}")
-        print("Testing F1:")
-        for cls in sorted(set(y_train)):
-            print(f"{data.translate(y_col, cls)}: {f1_score(y_test, y_test_pred, cls)}")
-        print("Training Confusion Matrix:")
-        print(confusion_matrix(y_train, y_train_pred, len(set(y_train))))
-        print("Testing Confusion Matrix:")
-        print(confusion_matrix(y_test, y_test_pred, len(set(y_train))))
-        print(f"Training used {time.time()-start} seconds")
-        # clf.print_tree(data, x_cols, y_col) # print tree
-        print("==========================")
-    return clf
-
-
-if __name__ == "__main__":
-    features = [["Age", "Sex"], ["Age", "Sex", "BP"], ["Age", "Sex", "BP", "Cholesterol"], ["Age", "Sex", "BP", "Cholesterol", "Na_to_K"]]
-    y_col = "Drug"
-    data = Dataset("../Data/drug200.csv", random_state=42)
-    for x_cols in features:
-        ent_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy")
-        gini_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="gini")
-        ent_clf.print_tree(data, x_cols, y_col)
-        gini_clf.print_tree(data, x_cols, y_col)
+            tree_str += line[0] + "\n"
+        return tree_str + "\n"
