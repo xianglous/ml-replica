@@ -50,7 +50,7 @@ class DecisionTree(BaseModel):
         if random_state is not None:
             np.random.seed(random_state) 
     
-    def __split(self, X, y, feature, cur_loss):
+    def __split(self, X, y, sample_weight, feature, cur_loss):
         vals = sorted(set(X[:, feature]))
         vals.append(vals[-1] + 1) # split at last value
         vals.insert(0, vals[0] - 1) # split at first value
@@ -60,8 +60,10 @@ class DecisionTree(BaseModel):
             threshold = (vals[i] + vals[i - 1]) / 2 # split at midpoint
             left_idx = X[:, feature] <= threshold
             right_idx = X[:, feature] > threshold
-            loss = np.mean(left_idx) * self.loss_func(y[left_idx], self.num_classes) + \
-                np.mean(right_idx) * self.loss_func(y[right_idx], self.num_classes)
+            loss = np.mean(left_idx) * \
+                self.loss_func(y[left_idx], self.num_classes, sample_weight[left_idx]) + \
+                    np.mean(right_idx) * \
+                        self.loss_func(y[right_idx], self.num_classes, sample_weight[right_idx])
             split_importance[i - 1] = cur_loss - loss # gain
             split_threshold[i - 1] = threshold
         total_importance = np.sum(split_importance)
@@ -75,38 +77,38 @@ class DecisionTree(BaseModel):
                 p=split_importance/np.sum(split_importance))
         return split_threshold[best_index], split_importance[best_index]
     
-    def __best_feature(self, X, y, cur_loss):
+    def __best_feature(self, X, y, sample_weight, cur_loss):
         max_importance = 0
         best_feature = None
         best_threshold = None
         # bootstrap features
         feature_indices = np.random.choice(X.shape[1], self.n_features, replace=False)
         for feature in feature_indices:
-            threshold, importance = self.__split(X, y, feature, cur_loss)
+            threshold, importance = self.__split(X, y, sample_weight, feature, cur_loss)
             if importance > max_importance:
                 max_importance = importance
                 best_feature = feature
                 best_threshold = threshold
         return best_feature, best_threshold, max_importance
 
-    def __train(self, X, y, depth=0):
+    def __train(self, X, y, sample_weight, depth=0):
         if len(y) == 0: # no data left
             return None
         if len(set(y)) == 1: # all same class or max depth reached
             return self.treeNode(y, None, None)
         if self.max_depth is not None and depth == self.max_depth: # max depth reached
             return self.treeNode(y, None, None)
-        cur_loss = self.loss_func(y, self.num_classes) # current loss
-        best_feature, threshold, importance = self.__best_feature(X, y, cur_loss)
+        cur_loss = self.loss_func(y, self.num_classes, sample_weight) # current loss
+        best_feature, threshold, importance = self.__best_feature(X, y, sample_weight, cur_loss)
         if importance == 0: # no better split
             return self.treeNode(y, None, None)
         left_idx = X[:, best_feature] <= threshold
         right_idx = X[:, best_feature] > threshold
-        left = self.__train(X[left_idx], y[left_idx], depth+1)
-        right = self.__train(X[right_idx], y[right_idx], depth+1)
+        left = self.__train(X[left_idx], y[left_idx], sample_weight[left_idx], depth+1)
+        right = self.__train(X[right_idx], y[right_idx], sample_weight[right_idx], depth+1)
         return self.treeNode(y, best_feature, threshold, left, right)
 
-    def fit(self, X_train, y_train):
+    def fit(self, X_train, y_train, sample_weight=None):
         super().fit(X_train, y_train) # check args
         self.X_train = X_train
         self.y_train = y_train
@@ -121,7 +123,7 @@ class DecisionTree(BaseModel):
         else:
             self.n_features = int(np.log2(X_train.shape[1]))
         self.num_classes = len(set(y_train))
-        self.root = self.__train(X_train, y_train)
+        self.root = self.__train(X_train, y_train, sample_weight=sample_weight)
         return self
     
     def __predict(self, node, x):

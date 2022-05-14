@@ -59,7 +59,7 @@ class LogLoss(Loss):
         return X.T @ (sigmoid(X @ weights) - y) / X.shape[0]
 
 
-def cross_entropy_loss(y, num_classes=None):
+def cross_entropy_loss(y, num_classes=None, sample_weight=None):
     """
     y: (n, )
     loss = -sum_i(yi * log(pi))
@@ -70,14 +70,14 @@ def cross_entropy_loss(y, num_classes=None):
     if len(y) == 0:
         return loss
     for i in range(num_classes):
-        rate = np.mean(y == i)
+        rate = np.average(y == i, axis=0, weights=sample_weight)
         if rate == 0 or rate == 1:
             continue
         loss += rate * np.log(rate)
     return -loss
 
 
-def gini_index_loss(y, num_classes=None):
+def gini_index_loss(y, num_classes=None, sample_weight=None):
     """
     y: (n, )
     loss = 1 - sum_i(pi * (1 - pi))
@@ -88,7 +88,7 @@ def gini_index_loss(y, num_classes=None):
     if len(y) == 0:
         return loss
     for i in range(num_classes):
-        rate = np.mean(y == i)
+        rate = np.average(y == i, axis=0, weights=sample_weight)
         if rate == 0:
             continue
         loss -= rate ** 2

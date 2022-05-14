@@ -1,5 +1,6 @@
 import numpy as np
 from typing import Union, Type, Optional
+from ._base import EnsembleModel
 from ..utils.model import BaseModel
 from ..tree_model import DecisionTree
 from concurrent.futures import ProcessPoolExecutor
@@ -23,29 +24,24 @@ def predict_single(estimator, X):
     return estimator.predict(X)
 
 
-class BaggingClassifier(BaseModel):
+class BaggingClassifier(EnsembleModel):
 
     def __init__(self, 
-                 base_estimator:Optional[Type[BaseModel]]=None,
-                 n_estimators:int=10, 
-                 max_samples:int|float=1.0, 
-                 max_features:int|float=1.0, 
-                 bootstrap:bool=True, 
-                 bootstrap_features:bool=False, 
-                 n_jobs:int=1,
-                 random_state:Optional[int]=None):
+            base_estimator=None,
+            n_estimators:int=10, 
+            max_samples:int|float=1.0, 
+            max_features:int|float=1.0, 
+            bootstrap:bool=True, 
+            bootstrap_features:bool=False, 
+            n_jobs:int=1,
+            random_state:Optional[int]=None):
         if base_estimator is None:
             base_estimator = DecisionTree(random_state=random_state)
-        self.base_estimator = base_estimator
-        self.estimators = [self.base_estimator.clone() for _ in range(n_estimators)]
-        self.n_estimators = n_estimators
+        super().__init__(base_estimator, n_estimators, n_jobs, random_state)
         self.max_samples = max_samples
         self.max_features = max_features
         self.bootstrap = bootstrap
         self.bootstrap_features = bootstrap_features
-        self.n_jobs = n_jobs
-        if random_state is not None:
-            np.random.seed(random_state)
     
     def __bootstrap_sample(self, X, y):
         if isinstance(self.max_samples, float):

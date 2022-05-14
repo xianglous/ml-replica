@@ -1,10 +1,11 @@
+from typing import Callable
 import numpy as np
 from ..utils.model import BaseModel
 
 
 class LinearModel(BaseModel):
     """Linear model: y = X @ w + b (b can be omitted by adding a column of 1s to X)"""
-    def __init__(self, bias=True, solver=None, transform=None, **kwargs):
+    def __init__(self, bias:bool, solver:Callable, transform:Callable, **kwargs):
         super().__init__()
         self.weights = None
         self.bias = bias

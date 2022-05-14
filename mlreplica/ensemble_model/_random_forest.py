@@ -1,8 +1,8 @@
 import numpy as np
 from typing import Union, Type, Optional
 from scipy.stats import mode
+from ._base import EnsembleModel
 from ..tree_model import DecisionTree
-from ..utils.model import BaseModel
 from concurrent.futures import ProcessPoolExecutor
 
 
@@ -23,7 +23,7 @@ def predict_single(estimator, X):
     return estimator.predict(X)
 
 
-class RandomForest(BaseModel):
+class RandomForest(EnsembleModel):
     """Random Forest Classifier"""
     def __init__(self,
                  n_estimators:int=10,
@@ -42,20 +42,17 @@ class RandomForest(BaseModel):
         elif isinstance(max_features, float):
             if max_features < 0 or max_features > 1:
                 raise ValueError('max_features must be between 0 and 1')
-        self.estimators = []
-        for _ in range(n_estimators):
-            self.estimators.append(DecisionTree(
+        super().__init__(
+            DecisionTree(
                 criterion=criterion,
                 splitter='random',
                 max_depth=max_depth,
                 max_features=max_features,
-                random_state=random_state))
+                random_state=random_state), 
+            n_estimators, n_jobs, random_state)
         self.max_samples = max_samples
         self.max_features = max_features
         self.bootstrap = bootstrap
-        self.n_jobs = n_jobs
-        if random_state is not None:
-            np.random.seed(random_state)
     
     def __bootstrap_sample(self, X, y):
         indices = np.random.choice(X.shape[0], self.n_samples, replace=self.bootstrap)
