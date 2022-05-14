@@ -1,6 +1,6 @@
 from ._regression import LinearRegression
 from ..utils.function import sigmoid
-from ..utils.loss import logistic_loss, logistic_loss_grad
+from ..utils.loss import LogLoss
 
 
 class LogisticRegression(LinearRegression):
@@ -14,8 +14,7 @@ class LogisticRegression(LinearRegression):
             max_iter=1000):
         super().__init__(
             bias=bias, 
-            loss_func=logistic_loss,
-            grad_func=logistic_loss_grad,
+            loss=LogLoss(),
             regularization=regularization, 
             alpha=alpha, 
             solver=solver, 

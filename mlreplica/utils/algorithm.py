@@ -1,5 +1,6 @@
 import numpy as np
 from .metrics import accuracy
+from .loss import Loss
 
 
 def perceptron(X, y, max_iter=1000):
@@ -36,12 +37,19 @@ def l2_grad(weights):
     return weights
 
 
-def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=1e-3, max_iter=1000):
+def GD(
+    X:np.ndarray, 
+    y:np.ndarray, 
+    loss:Loss, 
+    regularization:str=None, 
+    alpha:int|float=1.0, 
+    lr:int|float=1e-3, 
+    tol:int|float=1e-3, 
+    max_iter:int=1000):
     """
     X: (n, m)
     y: (n, )
-    grad_func: (X, y, weights) -> grad
-    loss_func: (y_true, y_pred) -> loss
+    loss: Loss
     regularization: None, 'l1', 'l2'
     alpha: regularization strength
     lr: learning rate
@@ -51,7 +59,7 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
     n, m = X.shape
     weights = np.zeros(m)
     num_iter = 0
-    loss, prev_loss = None, None
+    los, prev_los = None, None
     reg_grad = None
     if regularization == 'l1':
         reg_grad = l1_grad
@@ -60,24 +68,31 @@ def GD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=
     elif regularization is not None:
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
-        grad = grad_func(X, y, weights) +\
+        grad = loss.grad(X, y, weights) +\
             (alpha * reg_grad(weights)
              if regularization is not None else 0) # gradient of all samples
         weights = weights - lr * grad # gradient descent
-        prev_loss = loss
-        loss = loss_func(y, X @ weights)
-        if prev_loss and abs(loss-prev_loss) < tol:
+        prev_los = los
+        los = loss(y, X @ weights)
+        if prev_los and abs(los-prev_los) < tol:
             return weights
         num_iter += 1
     return weights
 
 
-def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol=1e-3, max_iter=1000):
+def SGD(
+    X:np.ndarray, 
+    y:np.ndarray, 
+    loss:Loss, 
+    regularization:str=None, 
+    alpha:int|float=1.0, 
+    lr:int|float=1e-3, 
+    tol:int|float=1e-3, 
+    max_iter:int=1000):
     """
     X: (n, m)
     y: (n, )
-    grad_func: (X, y, weights) -> grad
-    loss_func: (y_true, y_pred) -> loss
+    loss: Loss
     regularization: None, 'l1', 'l2'
     alpha: regularization strength
     lr: learning rate
@@ -87,7 +102,7 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
     n, m = X.shape
     weights = np.zeros(m)
     num_iter = 0
-    loss, prev_loss = None, None
+    los, prev_los = None, None
     reg_grad = None
     if regularization == 'l1':
         reg_grad = l1_grad
@@ -97,13 +112,13 @@ def SGD(X, y, grad_func, loss_func, regularization=None, alpha=1.0, lr=1e-3, tol
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
         for i in range(n):
-            grad = grad_func(X[i], y[i], weights) +\
+            grad = loss.stochastic_grad(X[i], y[i], weights) +\
                 (alpha * reg_grad(weights)
                  if regularization is not None else 0) # gradient of one sample
             weights = weights - lr * grad # gradient descent
-            prev_loss = loss
-            loss = loss_func(y[i], X[i] @ weights)
-            if prev_loss and abs(loss-prev_loss) < tol:
+            prev_los = los
+            los = loss(y[i], X[i] @ weights)
+            if prev_los and abs(los-prev_los) < tol:
                 return weights
             num_iter += 1
     return weights

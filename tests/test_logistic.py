@@ -3,7 +3,7 @@ sys.path.append('..')
 import time
 from mlreplica.linear_model import LogisticRegression
 from mlreplica.utils.data import Dataset
-from mlreplica.utils.loss import logistic_loss
+from mlreplica.utils.loss import LogLoss
 from mlreplica.utils.metrics import accuracy
 
 
@@ -15,8 +15,9 @@ def evaluate(data, x_cols, y_col, regularization, reg, lr=1e-3, tol=1e-3, max_it
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
-    train_loss = logistic_loss(y_train, y_train_pred)
-    test_loss = logistic_loss(y_test, y_test_pred)
+    log_loss = LogLoss()
+    train_loss = log_loss(y_train, y_train_pred)
+    test_loss = log_loss(y_test, y_test_pred)
     train_acc = accuracy(y_train, y_train_pred)
     test_acc = accuracy(y_test, y_test_pred)
     print(clf.str(x_cols, y_col)+f" logistic regression with {regularization} regulatization")

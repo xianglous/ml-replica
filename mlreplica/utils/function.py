@@ -6,7 +6,7 @@ def sigmoid(u):
     X: (n, m)
     weights: (m, )
     """
-    return 1 / (1 + np.exp(-u))
+    return 1.0 / (1 + np.exp(-u))
 
 
 def polynomial_kernel(u, v, gamma, degree, coef0):

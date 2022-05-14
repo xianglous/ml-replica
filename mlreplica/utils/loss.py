@@ -2,66 +2,61 @@ import numpy as np
 from .function import sigmoid
 
 
-def hinge_loss(y_true, y_pred):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    """
-    return np.mean(np.maximum(0, 1 - y_true * y_pred))
+class Loss:
+    def __init__(self):
+        pass
+
+    def __call__(
+        self, 
+        y_true:np.ndarray, 
+        y_pred:np.ndarray):
+        return np.average(self.loss(y_true, y_pred))
+    
+    def loss(self, y_true, y_pred):
+        pass
+
+    def stochastic_grad(
+        self, 
+        X_i:np.ndarray, 
+        y_i:int|float|np.ndarray, 
+        weights:np.ndarray):
+        pass
+
+    def grad(self, X, y, weights):
+        return np.average([self.stochastic_grad(X[i], y[i], weights) for i in range(X.shape[0])], axis=0)
 
 
-def hinge_loss_grad(X, y, weights):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    grad = -y * X
-    """
-    conds = (y * (weights @ X.T) < 1)
-    return -y[conds] @ X[conds] / (1 if len(X.shape)==1 else X.shape[0])
+class HingeLoss(Loss):
+    def loss(self, y_true, y_pred):
+        return np.maximum(0, 1 - y_true * y_pred)
+
+    def stochastic_grad(self, X_i, y_i, weights):
+        if y_i * (weights @ X_i.T) < 1:
+            return -y_i * X_i
+        return np.zeros(len(weights))
 
 
-def MSE_loss(y_true, y_pred):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    """
-    return 0.5 * np.mean((y_true - y_pred) ** 2)
+class MSELoss(Loss):
+
+    def loss(self, y_true, y_pred):
+        return 0.5 * (y_true - y_pred) ** 2
+    
+    def stochastic_grad(self, X_i, y_i, weights):
+        return X_i * (X_i @ weights - y_i)
+    
+    def grad(self, X, y, weights):
+        return X.T @ (X @ weights - y) / X.shape[0]
 
 
-def MSE_loss_grad(X, y, weights):
-    """
-    X: (n, m) or (n, )
-    y: (n, ) or scalar
-    weights: (m, )
-    grad = -X (y - y_pred)
-    """
-    if len(X.shape) == 1:
-        return -X * (y - X @ weights)
-    return -X.T @ (y - X @ weights) / X.shape[0]
+class LogLoss(Loss):
+    def loss(self, y_true, y_pred):
+        return np.log(1 + np.exp(-y_true * y_pred))
+    
+    def stochastic_grad(self, X_i, y_i, weights):
+        return X_i * (sigmoid(X_i @ weights) - y_i)
 
-
-def logistic_loss(y_true, y_pred):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    """
-    return np.mean(np.log(1 + np.exp(-y_true * y_pred)))
-
-
-def logistic_loss_grad(X, y, weights):
-    """
-    X: (n, m)
-    y: (n, )
-    weights: (m, )
-    grad = -y * X / (1 + exp(y * (weights @ X.T)))
-    """
-    if len(X.shape) == 1:
-        return X * (sigmoid(X @ weights) - y)
-    return X.T @ (sigmoid(X @ weights) - y) / X.shape[0]
+    def grad(self, X, y, weights):
+        return X.T @ (sigmoid(X @ weights) - y) / X.shape[0]
 
 
 def cross_entropy_loss(y, num_classes=None):

@@ -4,7 +4,7 @@ import numpy as np
 import time
 from mlreplica.linear_model import LinearRegression
 from mlreplica.utils.data import Dataset
-from mlreplica.utils.loss import MSE_loss
+from mlreplica.utils.loss import MSELoss
 
 
 def evaluate(data, x_cols, y_col, method, lr=1e-2, tol=1e-3, max_iter=1000):
@@ -15,8 +15,9 @@ def evaluate(data, x_cols, y_col, method, lr=1e-2, tol=1e-3, max_iter=1000):
     model.fit(X_train, y_train)
     y_train_pred = model.predict(X_train)
     y_test_pred = model.predict(X_test)
-    train_loss = MSE_loss(y_train, y_train_pred)
-    test_loss = MSE_loss(y_test, y_test_pred)
+    mse_loss = MSELoss()
+    train_loss = mse_loss(y_train, y_train_pred)
+    test_loss = mse_loss(y_test, y_test_pred)
     print(model.str(x_cols, y_col)+f" using {method} OLS")
     print(f"Train loss: {train_loss}")
     print(f"Test loss: {test_loss}")

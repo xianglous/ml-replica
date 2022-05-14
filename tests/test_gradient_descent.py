@@ -4,7 +4,7 @@ import numpy as np
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.algorithm import GD, SGD
 from mlreplica.linear_model import LinearModel
-from mlreplica.utils.loss import hinge_loss, hinge_loss_grad
+from mlreplica.utils.loss import HingeLoss
 from mlreplica.utils.metrics import accuracy
 from mlreplica.utils.preprocessing import perceptronizer
 
@@ -15,8 +15,7 @@ def evaluate(data, x_cols, y_col, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000
     clf = LinearModel(
         solver=SGD if method == 'SGD' else GD, 
         transform=np.sign, 
-        loss_func=hinge_loss, 
-        grad_func=hinge_loss_grad, 
+        loss=HingeLoss(), 
         lr=lr, 
         tol=tol, 
         max_iter=max_iter)

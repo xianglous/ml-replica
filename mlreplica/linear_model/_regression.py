@@ -1,7 +1,8 @@
 import numpy as np
+from typing import Type
 from ._base import LinearModel
 from ..utils.algorithm import SGD, GD
-from ..utils.loss import MSE_loss, MSE_loss_grad
+from ..utils.loss import Loss, MSELoss
 
 
 def closed_form(X, y, reg):
@@ -18,8 +19,7 @@ class LinearRegression(LinearModel):
 
     def __init__(self,
             bias=True,
-            loss_func=MSE_loss,
-            grad_func=MSE_loss_grad,
+            loss:str|Type[Loss]='mse',
             regularization="l2",
             alpha=1.0,
             solver=SGD,            
@@ -27,6 +27,11 @@ class LinearRegression(LinearModel):
             lr=1e-3,
             tol=1e-3,
             max_iter=1000):
+        if isinstance(loss, str):
+            if loss == 'mse':
+                loss = MSELoss()
+            else:
+                raise ValueError(f"loss {loss} not supported")
         if regularization is None:
             alpha = 0.0
         if isinstance(solver, str):
@@ -42,8 +47,7 @@ class LinearRegression(LinearModel):
             bias=bias, 
             solver=solver, 
             transform=transform, 
-            loss_func=loss_func,
-            grad_func=grad_func,
+            loss=loss,
             regularization=regularization, 
             alpha=alpha, 
             lr=lr, 
