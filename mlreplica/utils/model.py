@@ -9,7 +9,7 @@ class BaseModel:
     def __call__(self, X:np.ndarray):
         return self.predict(X)
     
-    def fit(self, X:np.ndarray, y:np.ndarray):
+    def fit(self, X:np.ndarray, y:np.ndarray, sample_weight:np.ndarray=None):
         pass
 
     def predict(self, X:np.ndarray):

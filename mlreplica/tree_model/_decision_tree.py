@@ -25,7 +25,6 @@ class DecisionTree(BaseModel):
                  max_depth:int=None, # max depth of tree, None for no limit
                  max_features:int|str|float=None, # max features to consider, None for all
                  random_state:int=None):
-        super().__init__()
         if callable(criterion):
             self.loss_func = criterion
         elif criterion == "entropy":
@@ -46,6 +45,12 @@ class DecisionTree(BaseModel):
         elif isinstance(max_features, float):
             if max_features < 0 or max_features > 1:
                 raise ValueError('max_features must be between 0 and 1')
+        super().__init__(
+            criterion=criterion,
+            splitter=splitter,
+            max_depth=max_depth,
+            max_features=max_features,
+            random_state=random_state)
         self.max_features = max_features
         if random_state is not None:
             np.random.seed(random_state) 
@@ -109,7 +114,9 @@ class DecisionTree(BaseModel):
         return self.treeNode(y, best_feature, threshold, left, right)
 
     def fit(self, X_train, y_train, sample_weight=None):
-        super().fit(X_train, y_train) # check args
+        super().fit(X_train, y_train, sample_weight) # check args
+        if sample_weight is None:
+            sample_weight = np.ones(len(y_train))
         self.X_train = X_train
         self.y_train = y_train
         if self.max_features is None:

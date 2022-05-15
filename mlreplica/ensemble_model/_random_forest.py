@@ -6,13 +6,13 @@ from ..tree_model import DecisionTree
 from concurrent.futures import ProcessPoolExecutor
 
 
-def fit_single(estimator, X, y):
+def fit_single(estimator, X, y, sample_weight):
     """
     X: (n, m)
     y: (n, )
     fit a single estimator
     """
-    return estimator.fit(X, y)
+    return estimator.fit(X, y, sample_weight)
 
 
 def predict_single(estimator, X):
@@ -54,19 +54,21 @@ class RandomForest(EnsembleModel):
         self.max_features = max_features
         self.bootstrap = bootstrap
     
-    def __bootstrap_sample(self, X, y):
+    def __bootstrap_sample(self, X, y, sample_weight=None):
         indices = np.random.choice(X.shape[0], self.n_samples, replace=self.bootstrap)
-        return X[indices], y[indices]
+        if sample_weight is None:
+            return X[indices], y[indices], None
+        return X[indices], y[indices], sample_weight[indices]
 
-    def fit(self, X, y):
+    def fit(self, X, y, sample_weight=None):
         if isinstance(self.max_samples, float):
             self.n_samples = int(len(X) * self.max_samples)
         else:
             self.n_samples = self.max_samples
         works = []
         for estimator in self.estimators:
-            X_, y_ = self.__bootstrap_sample(X, y) # sample data
-            works.append((estimator, X_, y_))
+            X_, y_, sample_weight_ = self.__bootstrap_sample(X, y, sample_weight) # sample data
+            works.append((estimator, X_, y_, sample_weight_))
         with ProcessPoolExecutor(max_workers=self.n_jobs) as exe:
             self.estimators = list(exe.map(fit_single, *zip(*works)))
         return self
@@ -77,4 +79,4 @@ class RandomForest(EnsembleModel):
             works.append((estimator, X))
         with ProcessPoolExecutor(max_workers=self.n_jobs) as exe:
             predictions = np.array(list(exe.map(predict_single, *zip(*works)))).T
-        return mode(predictions, axis=1)[0].T # majority vote
+        return mode(predictions, axis=1)[0].flatten() # majority vote

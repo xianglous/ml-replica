@@ -5,20 +5,22 @@ from ..utils.model import BaseModel
 
 class LinearModel(BaseModel):
     """Linear model: y = X @ w + b (b can be omitted by adding a column of 1s to X)"""
-    def __init__(self, bias:bool, solver:Callable, transform:Callable, **kwargs):
-        super().__init__()
+    def __init__(self, 
+            bias:bool, 
+            solver:Callable, 
+            transform:Callable):
+        super().__init__(bias=bias, solver=solver, transform=transform)
         self.weights = None
         self.bias = bias
         self.solver = solver # algorithm to solve the linear system
         self.transform = transform # transform applied to the prediction
-        self.params = kwargs
     
-    def fit(self, X, y):
+    def fit(self, X, y, sample_weight=None):
         """
         X: (n, m)
         y: (n, )
         """
-        super().fit(X, y)
+        super().fit(X, y, sample_weight)
         if self.bias:
             X = np.hstack((np.ones((X.shape[0], 1)), X))
         if self.solver is None:

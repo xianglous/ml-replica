@@ -3,7 +3,7 @@ sys.path.append('..')
 import time
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
-from mlreplica.ensemble_model import AdaBoostClassifier
+from mlreplica.ensemble_model import AdaBoostClassifier, RandomForest
 
 
 def evaluate(data, x_cols, y_col, random_state=None):
@@ -11,7 +11,7 @@ def evaluate(data, x_cols, y_col, random_state=None):
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     clf = AdaBoostClassifier(
-        n_estimators=20,
+        n_estimators=50,
         random_state=random_state)
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
