@@ -65,7 +65,7 @@ def cross_entropy_loss(y, num_classes=None, sample_weight=None):
     loss = -sum_i(yi * log(pi))
     """
     if num_classes is None:
-        num_classes = np.max(y) + 1
+        num_classes = len(np.unique(y))
     loss = 0
     if len(y) == 0:
         return loss
@@ -83,7 +83,7 @@ def gini_index_loss(y, num_classes=None, sample_weight=None):
     loss = 1 - sum_i(pi * (1 - pi))
     """
     if num_classes is None:
-        num_classes = np.max(y) + 1
+        num_classes = len(np.unique(y))
     loss = 1
     if len(y) == 0:
         return loss

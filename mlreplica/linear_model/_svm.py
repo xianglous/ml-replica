@@ -4,11 +4,11 @@ import numpy as np
 import random
 from collections.abc import Callable
 from typing import Union
-from ..utils.model import BaseModel
+from ..utils.model import BaseModel, BaseClassifier
 from ..utils.function import polynomial_kernel, rbf_kernel, sigmoid_kernel
 
 
-class SVM(BaseModel):
+class SVM(BaseModel, BaseClassifier):
     def __init__(self, C:int|float=1.0, 
             kernel:str|Callable[[np.ndarray, np.ndarray], float]='linear', 
             degree:int=3, 

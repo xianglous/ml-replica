@@ -2,11 +2,11 @@ import numpy as np
 from collections.abc import Callable
 from typing import Union, Type, Optional
 from ..utils.data import Dataset
-from ..utils.model import BaseModel
+from ..utils.model import BaseModel, BaseClassifier
 from ..utils.loss import cross_entropy_loss, gini_index_loss
 
 
-class DecisionTree(BaseModel):
+class DecisionTreeClassifier(BaseModel, BaseClassifier):
     """Decision Tree Classifier"""
 
     class treeNode:
@@ -69,7 +69,7 @@ class DecisionTree(BaseModel):
                 self.loss_func(y[left_idx], self.num_classes, sample_weight[left_idx]) + \
                     np.mean(right_idx) * \
                         self.loss_func(y[right_idx], self.num_classes, sample_weight[right_idx])
-            split_importance[i - 1] = cur_loss - loss # gain
+            split_importance[i - 1] = max(0, cur_loss - loss) # gain
             split_threshold[i - 1] = threshold
         total_importance = np.sum(split_importance)
         if total_importance == 0:
@@ -113,24 +113,22 @@ class DecisionTree(BaseModel):
         right = self.__train(X[right_idx], y[right_idx], sample_weight[right_idx], depth+1)
         return self.treeNode(y, best_feature, threshold, left, right)
 
-    def fit(self, X_train, y_train, sample_weight=None):
-        super().fit(X_train, y_train, sample_weight) # check args
+    def fit(self, X, y, sample_weight=None):
+        super().fit(X, y, sample_weight) # check args
         if sample_weight is None:
-            sample_weight = np.ones(len(y_train))
-        self.X_train = X_train
-        self.y_train = y_train
+            sample_weight = np.ones(len(y))
         if self.max_features is None:
-            self.n_features = X_train.shape[1]
+            self.n_features = X.shape[1]
         if isinstance(self.max_features, float):
-            self.n_features = int(X_train.shape[1] * self.max_features)
+            self.n_features = int(X.shape[1] * self.max_features)
         elif isinstance(self.max_features, int):
             self.n_features = self.max_features
         elif self.max_features == 'sqrt':
-            self.n_features = int(np.sqrt(X_train.shape[1]))
+            self.n_features = int(np.sqrt(X.shape[1]))
         else:
-            self.n_features = int(np.log2(X_train.shape[1]))
-        self.num_classes = len(set(y_train))
-        self.root = self.__train(X_train, y_train, sample_weight=sample_weight)
+            self.n_features = int(np.log2(X.shape[1]))
+        self.num_classes = len(set(y))
+        self.root = self.__train(X, y, sample_weight=sample_weight)
         return self
     
     def __predict(self, node, x):

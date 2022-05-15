@@ -1,9 +1,10 @@
 import numpy as np
 from ._base import EnsembleModel
-from ..tree_model import DecisionTree
+from ..tree_model import DecisionTreeClassifier
+from ..utils.model import BaseClassifier
 
 
-class AdaBoostClassifier(EnsembleModel):
+class AdaBoostClassifier(EnsembleModel, BaseClassifier):
 
     def __init__(self,
             base_estimator=None,
@@ -13,7 +14,7 @@ class AdaBoostClassifier(EnsembleModel):
         if n_estimators <= 0:
             raise ValueError("n_estimators must be greater than 0")
         if base_estimator is None:
-            base_estimator = DecisionTree(max_depth=3, splitter='best', random_state=random_state)
+            base_estimator = DecisionTreeClassifier(max_depth=3, splitter='best', random_state=random_state)
         super().__init__(base_estimator, n_estimators, 1, random_state)
         self.learning_rate = learning_rate
     

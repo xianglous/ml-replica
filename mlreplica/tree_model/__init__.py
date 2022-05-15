@@ -1,6 +1,6 @@
-from ._decision_tree import DecisionTree
+from ._decision_tree import DecisionTreeClassifier
 
 
 __all__ = [
-    "DecisionTree",
+    "DecisionTreeClassifier",
 ]

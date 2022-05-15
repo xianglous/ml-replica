@@ -37,6 +37,20 @@ def l2_grad(weights):
     return weights
 
 
+def l1_loss(weights):
+    """
+    weights: (m, )
+    """
+    return np.sum(np.abs(weights))
+
+
+def l2_loss(weights):
+    """
+    weights: (m, )
+    """
+    return np.sum(weights**2) / 2
+
+
 def GD(
     X:np.ndarray, 
     y:np.ndarray, 
@@ -61,19 +75,24 @@ def GD(
     num_iter = 0
     los, prev_los = None, None
     reg_grad = None
+    reg_loss = None
     if regularization == 'l1':
         reg_grad = l1_grad
+        reg_loss = l1_loss
     elif regularization == 'l2':
         reg_grad = l2_grad
+        reg_loss = l2_loss
     elif regularization is not None:
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
         grad = loss.grad(X, y, weights) +\
             (alpha * reg_grad(weights)
-             if regularization is not None else 0) # gradient of all samples
+                if regularization is not None else 0) # gradient of all samples
         weights = weights - lr * grad # gradient descent
         prev_los = los
-        los = loss(y, X @ weights)
+        los = loss(y, X @ weights) +\
+            (alpha * reg_loss(weights)
+                if regularization is not None else 0)
         if prev_los and abs(los-prev_los) < tol:
             return weights
         num_iter += 1
@@ -104,10 +123,13 @@ def SGD(
     num_iter = 0
     los, prev_los = None, None
     reg_grad = None
+    reg_loss = None
     if regularization == 'l1':
         reg_grad = l1_grad
+        reg_loss = l1_loss
     elif regularization == 'l2':
         reg_grad = l2_grad
+        reg_loss = l2_loss
     elif regularization is not None:
         raise ValueError('regularization must be None or "l1" or "l2"')
     while num_iter < max_iter:
@@ -117,7 +139,9 @@ def SGD(
                  if regularization is not None else 0) # gradient of one sample
             weights = weights - lr * grad # gradient descent
             prev_los = los
-            los = loss(y[i], X[i] @ weights)
+            los = loss(y[i], X[i] @ weights) +\
+                (alpha * reg_loss(weights)
+                    if regularization is not None else 0)
             if prev_los and abs(los-prev_los) < tol:
                 return weights
             num_iter += 1

@@ -3,7 +3,7 @@ sys.path.append('..')
 import time
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
-from mlreplica.tree_model import DecisionTree
+from mlreplica.tree_model import DecisionTreeClassifier
 
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", verbose=False):
@@ -11,12 +11,12 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", verbose=Fal
         print("==========================")
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    clf = DecisionTree(criterion=criterion, max_depth=max_depth)
+    clf = DecisionTreeClassifier(criterion=criterion, max_depth=max_depth)
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
-    train_acc = accuracy(y_train, y_train_pred)
-    test_acc = accuracy(y_test, y_test_pred)
+    train_acc = clf.score(X_train, y_train)
+    test_acc = clf.score(X_test, y_test)
     if verbose:
         print("Training accuracy:", train_acc)
         print("Testing accuracy:", test_acc)
@@ -53,7 +53,7 @@ if __name__ == "__main__":
     y_col = "Drug"
     data = Dataset("../Data/drug200.csv", random_state=42)
     for x_cols in features:
-        ent_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy")
-        gini_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="gini")
-        print(ent_clf)
-        print(gini_clf)
+        ent_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", verbose=True)
+        gini_clf = evaluate(data, x_cols, y_col, max_depth=10, criterion="gini", verbose=True)
+        # print(ent_clf)
+        # print(gini_clf)

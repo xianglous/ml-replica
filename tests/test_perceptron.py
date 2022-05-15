@@ -1,6 +1,5 @@
 import sys
 sys.path.append('..')
-import numpy as np
 from mlreplica.linear_model import Perceptron
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.metrics import accuracy
@@ -12,10 +11,8 @@ def evaluate(data, x_cols, y_col, offset_enabled=False, max_iter=1000):
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     clf = Perceptron(bias=offset_enabled, max_iter=max_iter)
     clf.fit(X_train, y_train)
-    y_train_pred = clf.predict(X_train)
-    y_test_pred = clf.predict(X_test)
-    train_acc = accuracy(y_train, y_train_pred)
-    test_acc = accuracy(y_test, y_test_pred)
+    train_acc = clf.score(X_train, y_train)
+    test_acc = clf.score(X_test, y_test)
     print(clf.str(x_cols, y_col))
     print(f"Train accuracy: {train_acc}")
     print(f"Test accuracy: {test_acc}")

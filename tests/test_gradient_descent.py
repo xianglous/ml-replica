@@ -1,4 +1,6 @@
 import sys
+
+from sklearn.ensemble import BaggingClassifier
 sys.path.append('..')
 import numpy as np
 from mlreplica.utils.data import Dataset
@@ -13,6 +15,7 @@ def evaluate(data, x_cols, y_col, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000
     print("==========================")
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     clf = LinearModel(
+        bias=True,
         solver=SGD if method == 'SGD' else GD, 
         transform=np.sign, 
         loss=HingeLoss(), 
@@ -20,10 +23,8 @@ def evaluate(data, x_cols, y_col, method='SGD', lr=1e-3, tol=1e-3, max_iter=1000
         tol=tol, 
         max_iter=max_iter)
     clf.fit(X_train, y_train)
-    y_train_pred = clf.predict(X_train)
-    y_test_pred = clf.predict(X_test)
-    train_acc = accuracy(y_train, y_train_pred)
-    test_acc = accuracy(y_test, y_test_pred)
+    train_acc = accuracy(y_train, clf.predict(X_train))
+    test_acc = accuracy(y_test, clf.predict(X_test))
     print(clf.str(x_cols, y_col)+f" using {method}")
     print(f"Train accuracy: {train_acc}")
     print(f"Test accuracy: {test_acc}")

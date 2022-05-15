@@ -1,11 +1,24 @@
 import numpy as np
 
-def accuracy(y_true, y_pred):
+def accuracy(y_true, y_pred, sample_weight=None):
     """
     y_true: (n, )
     y_pred: (n, )
     """
-    return np.mean(y_true == y_pred)
+    return np.average(y_true == y_pred, axis=0, weights=sample_weight)
+
+
+def r_squared(y_true, y_pred, sample_weight=None):
+    """
+    y_true: (n, )
+    y_pred: (n, )
+    """
+    y_true_mean = np.average(y_true, axis=0, weights=sample_weight)
+    rss = np.average((y_true - y_pred)**2, axis=0, weights=sample_weight)
+    tss = np.average((y_true - y_true_mean)**2, axis=0, weights=sample_weight)
+    if tss == 0:
+        return 0
+    return 1 - rss / tss
 
 
 def precision(y_true, y_pred, pos_class=1):

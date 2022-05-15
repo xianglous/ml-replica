@@ -3,26 +3,26 @@ sys.path.append('..')
 import time
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
-from mlreplica.ensemble_model import RandomForest
+from mlreplica.ensemble_model import RandomForestClassifier
 
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_state=None):
     print("==========================")
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    clf = RandomForest(
+    clf = RandomForestClassifier(
         n_estimators=5,
         criterion=criterion,
         max_depth=max_depth,
         max_samples=0.8, 
-        max_features=0.3, 
+        max_features=0.4, 
         n_jobs=3,
         random_state=random_state)
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
-    print("Training accuracy:", accuracy(y_train, y_train_pred))
-    print("Testing accuracy:", accuracy(y_test, y_test_pred))
+    print("Training accuracy:", clf.score(X_train, y_train))
+    print("Testing accuracy:", clf.score(X_test, y_test))
     print("Training Confusion matrix:")
     print(confusion_matrix(y_train, y_train_pred))
     print("Testing Confusion matrix:")

@@ -16,7 +16,7 @@ def evaluate(data, x_cols, y_col, C, kernel, tol, heuristic, max_iter):
         X_train = X_train@X_train.T
     clf.fit(X_train, y_train)
     y_pred = clf.predict(X_test)
-    print("Accuracy:", accuracy(y_test, y_pred))
+    print("Accuracy:", clf.score(X_test, y_pred))
     print("Precision:", precision(y_test, y_pred))
     print("Recall:", recall(y_test, y_pred))
     print("F1:", f1_score(y_test, y_pred))

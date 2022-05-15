@@ -1,6 +1,7 @@
 from ._regression import LinearRegression
 from ..utils.function import sigmoid
 from ..utils.loss import LogLoss
+from ..utils.model import BaseClassifier
 
 
 class LogisticRegression(LinearRegression):
@@ -28,3 +29,6 @@ class LogisticRegression(LinearRegression):
 
     def predict_proba(self, X):
         return super().predict(X)
+    
+    def score(self, X, y):
+        return BaseClassifier.score(self, X, y)

@@ -4,14 +4,14 @@ import time
 from mlreplica.utils.data import Dataset
 from mlreplica.utils.metrics import accuracy, precision, recall, f1_score, confusion_matrix
 from mlreplica.ensemble_model import BaggingClassifier
-from mlreplica.tree_model import DecisionTree
+from mlreplica.tree_model import DecisionTreeClassifier
 
 
 def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_state=None):
     print("==========================")
     start = time.time()
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
-    base = DecisionTree(criterion=criterion, max_depth=max_depth)
+    base = DecisionTreeClassifier(criterion=criterion, max_depth=max_depth)
     clf = BaggingClassifier(
         base_estimator=base, 
         n_estimators=5, 
@@ -22,8 +22,8 @@ def evaluate(data, x_cols, y_col, max_depth=10, criterion="entropy", random_stat
     clf.fit(X_train, y_train)
     y_train_pred = clf.predict(X_train)
     y_test_pred = clf.predict(X_test)
-    print("Training accuracy:", accuracy(y_train, y_train_pred))
-    print("Testing accuracy:", accuracy(y_test, y_test_pred))
+    print("Training accuracy:", clf.score(X_train, y_train))
+    print("Testing accuracy:", clf.score(X_test, y_test))
     print("Training Confusion matrix:")
     print(confusion_matrix(y_train, y_train_pred))
     print("Testing Confusion matrix:")

@@ -3,7 +3,6 @@ sys.path.append('..')
 import time
 from mlreplica.linear_model import RidgeRegression
 from mlreplica.utils.data import Dataset
-from mlreplica.utils.loss import MSELoss
 
 
 def evaluate(data, x_cols, y_col, reg, method, lr=1e-2, tol=1e-3, max_iter=1000):
@@ -12,14 +11,11 @@ def evaluate(data, x_cols, y_col, reg, method, lr=1e-2, tol=1e-3, max_iter=1000)
     X_train, y_train, X_test, y_test = data.get_split(x_cols, y_col)
     model = RidgeRegression(solver=method, alpha=reg, lr=lr, tol=tol, max_iter=max_iter)
     model.fit(X_train, y_train)
-    y_train_pred = model.predict(X_train)
-    y_test_pred = model.predict(X_test)
-    mse_loss = MSELoss()
-    train_loss = mse_loss(y_train, y_train_pred)
-    test_loss = mse_loss(y_test, y_test_pred)
+    train_r2 = model.score(X_train, y_train)
+    test_r2 = model.score(X_test, y_test)
     print(model.str(x_cols, y_col)+f" using {method} ridge regression with reg={reg}")
-    print(f"Train loss: {train_loss}")
-    print(f"Test loss: {test_loss}")
+    print(f"Train R2: {train_r2}")
+    print(f"Test R2: {test_r2}")
     print(f"Training used {time.time()-start} seconds")
     print("==========================")
 

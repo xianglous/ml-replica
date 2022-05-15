@@ -3,6 +3,7 @@ from typing import Type
 from ._base import LinearModel
 from ..utils.algorithm import SGD, GD
 from ..utils.loss import Loss, MSELoss
+from ..utils.model import BaseRegressor
 
 
 def closed_form(X, y, reg):
@@ -15,7 +16,7 @@ def closed_form(X, y, reg):
     return np.linalg.pinv(X.T @ X + reg * np.eye(X.shape[1])) @ X.T @ y
 
 
-class LinearRegression(LinearModel):
+class LinearRegression(LinearModel, BaseRegressor):
 
     def __init__(self,
             bias=True,
@@ -83,8 +84,6 @@ class LassoRegression(LinearRegression):
             lr=1e-3,
             tol=1e-3,
             max_iter=1000):
-        if isinstance(solver, str) and solver != 'SGD' and solver != 'GD':
-            raise ValueError('Unknown solver: {}'.format(solver))
         super().__init__(
             bias=bias, 
             regularization="l1", 

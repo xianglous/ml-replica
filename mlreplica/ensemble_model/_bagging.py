@@ -1,8 +1,8 @@
 import numpy as np
 from typing import Union, Type, Optional
 from ._base import EnsembleModel
-from ..utils.model import BaseModel
-from ..tree_model import DecisionTree
+from ..utils.model import BaseClassifier
+from ..tree_model import DecisionTreeClassifier
 from concurrent.futures import ProcessPoolExecutor
 from scipy.stats import mode
 
@@ -24,7 +24,7 @@ def predict_single(estimator, X):
     return estimator.predict(X)
 
 
-class BaggingClassifier(EnsembleModel):
+class BaggingClassifier(EnsembleModel, BaseClassifier):
 
     def __init__(self, 
             base_estimator=None,
@@ -36,7 +36,7 @@ class BaggingClassifier(EnsembleModel):
             n_jobs:int=1,
             random_state:Optional[int]=None):
         if base_estimator is None:
-            base_estimator = DecisionTree(random_state=random_state)
+            base_estimator = DecisionTreeClassifier(random_state=random_state)
         super().__init__(base_estimator, n_estimators, n_jobs, random_state)
         self.max_samples = max_samples
         self.max_features = max_features
