@@ -1,0 +1,16 @@
+@font-face {
+    font-family: Siyuansongti;
+    font-weight: bold;
+    src: url("/assets/static/font/SiYuanSongTi-SC-Light.otf") format("opentype");
+}
+
+pre {
+    font-family: "Lucida Console", Monaco, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    margin: 0;
+    padding: 0;
+    white-space: pre;
+    word-wrap: normal;
+    background-color: #f4f4f4;
+}
